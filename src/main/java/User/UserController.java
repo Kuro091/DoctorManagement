@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 public class UserController {
 
     public static UserController userController = null;
-    private User user;
     private UserDataIO userDataIO;
     private Validate validate;
 
@@ -40,31 +39,27 @@ public class UserController {
 
     //Return true if log in successfully
     //Return false if not
-    public Boolean login() {
+    
+    User newUser;
+    public Boolean login(User user) {
+        
         try {
             //Doc file
             ArrayList<User> users = UserView.getInstance().getUsers();
 
-            //Read userInput
-            String userName;
-            String password;
-
-            userName = validate.getString("Input username: ");
-            password = validate.getString("Input password: ");
-
             users.forEach((u) -> {
                 if (u.getUserRole() == UserRole.ADMIN || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR) {
-                    if (u.getUserName().equals(userName) && u.getPassword().equals(password)) {
-                        user = new User();
-                        user.setUserName(userName);
-                        user.setPassword(password);
-                        user.setUserCode(u.getUserCode());
-                        user.setUserRole(u.getUserRole());
+                    if (u.getUserName().equals(user.getUserName()) && u.getPassword().equals(user.getPassword())) {
+                        newUser = new User();
+                        newUser.setUserName(user.getUserName());
+                        newUser.setPassword(user.getPassword());
+                        newUser.setUserCode(u.getUserCode());
+                        newUser.setUserRole(u.getUserRole());
                     }
                 }
             });
 
-            return (user != null);
+            return (newUser!=null);
 
         } catch (Exception ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,7 +69,7 @@ public class UserController {
     }
 
     public void logout() {
-        this.user = null;
+        this.newUser = null;
     }
 
     public void changePassword() {
@@ -95,17 +90,17 @@ public class UserController {
                         return;
 
                     case 1:
-                        if (user != null) {
+                        if (newUser != null) {
 
                             String oldPassword = validate.getString("Enter old password: ");
-                            if (user.getPassword().equals(oldPassword)) {
+                            if (newUser.getPassword().equals(oldPassword)) {
 
                                 String newPassword = validate.getPassword("Enter new password: ");
                                 String confirmNewPassword = validate.getPassword("Confirm new password: ");
 
                                 if (confirmNewPassword.equals(newPassword)) {
-                                    user.setPassword(newPassword);
-                                    UserView.getInstance().updateUser(user);
+                                    newUser.setPassword(newPassword);
+                                    UserView.getInstance().updateUser(newUser);
 
                                     System.out.println(ConsoleColors.GREEN_BOLD + "Password changed successfully!!");
                                 } else {
@@ -127,7 +122,7 @@ public class UserController {
     }
 
     public User getLoggedInUser() {
-        return user;
+        return newUser;
     }
 
 }

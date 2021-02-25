@@ -14,6 +14,8 @@ import Utilities.Validate;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -71,6 +73,30 @@ public class UserView {
         }
         userDataIO.writeData(users);
     }
+    
+    User user;
+    
+    public User getLoginInfo(){
+        
+        try {
+            //Read userInput
+            String userName;
+            String password;
+
+            userName = validate.getString("Input username: ");
+            password = validate.getString("Input password: ");
+
+            return new User(userName, password, UserRole.USER);
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
+    
 
     public void updateUser(User userUpdate) {
         users = userDataIO.readData();

@@ -112,7 +112,8 @@ public class Main {
                     case 0:
                         return;
                     case 1:
-                        isLoggedIn = userController.login();
+                        User u = UserView.getInstance().getLoginInfo();
+                        isLoggedIn = userController.login(u);
                         break;
                     default:
                 }
