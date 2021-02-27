@@ -1,4 +1,4 @@
-package Consult;
+package boundary;
 
 import Common.Patient;
 import Common.UserRole;
@@ -13,7 +13,7 @@ import java.util.Comparator;
  * Dùng class để in danh sách bệnh nhân ra màn hình: gọi hàm callPrintPatientByDiseaseType
  * @author Vân
  */
-public class ConsultManager {
+public class PrintPatient {
     /**
      * Call print function: print to console list of all patients sort by disease type
      * @param userList list user

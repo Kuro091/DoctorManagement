@@ -8,7 +8,7 @@ import Admin.Admin;
 import Admin.AdminController;
 import Common.ConsoleColors;
 import Common.UserRole;
-import Consult.ConsultManager;
+import boundary.PrintPatient;
 import Consult.Specialization;
 import Doctor.Doctor;
 import Doctor.DoctorController;
@@ -35,7 +35,7 @@ public class Main {
     static UserController userController;
     static AdminController adminController;
     static DoctorController doctorController;
-    private static ConsultManager consultManager = new ConsultManager();
+    private static PrintPatient consultManager = new PrintPatient();
     
 
     public static void main(String[] args) {
@@ -222,7 +222,7 @@ public class Main {
      * Query & getAllPatientsFromDoctors of the patients grouped by disease type
      */
     private static void functionBlock5() {
-        ConsultManager.callPrintPatientByDiseaseType(users);
+        PrintPatient.callPrintPatientByDiseaseType(users);
     }
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Consult;
+package boundary;
 
 import Common.Patient;
 import org.junit.After;
@@ -41,7 +41,7 @@ public class sortByDiseaseTypeTest {
     /**
      * Test of compare method, of class sortByDiseaseType.
      */
-    @org.junit.Test
+    @Test
     public void testCompare() {
         System.out.println("compare");
         Patient o1 = null;
