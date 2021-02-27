@@ -220,10 +220,10 @@ public class Main {
 
     
     /**
-     * Query & print of the patients grouped by disease type
+     * Query & getAllPatientsFromDoctors of the patients grouped by disease type
      */
     private static void functionBlock5() {
-        consultManager.printUserByDiseaseType();
+        ConsultManager.callPrintPatientByDiseaseType(users);
     }
 
 }

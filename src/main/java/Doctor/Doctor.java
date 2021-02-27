@@ -5,7 +5,6 @@ package Doctor;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Common.ConsoleColors;
 import Common.Patient;
 import Common.UserRole;
 import Consult.Specialization;
