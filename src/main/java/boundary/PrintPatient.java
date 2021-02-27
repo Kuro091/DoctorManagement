@@ -52,8 +52,10 @@ public class PrintPatient {
         ArrayList<Patient> patientList = new ArrayList<>();
         for (User currentUser : userList) {
             if (currentUser.getUserRole() == UserRole.AUTHORIZED_DOCTOR) {
+                System.out.println("Found a doctor! now checking patient list");
                 Doctor currentDoctor = (Doctor) currentUser;
                 for (Patient patient : currentDoctor.getPatients()) {
+                    System.out.println("Found patient ID = " + patient.getPatientId());
                     patientList.add(patient);
                 }
             }

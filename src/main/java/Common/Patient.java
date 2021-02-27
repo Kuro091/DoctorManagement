@@ -73,7 +73,8 @@ public class Patient implements Serializable {
     }
 
     public String toString(SimpleDateFormat dateFormat) {
-        return String.format("%-10s|%-15s|%-15s|%-15s|%-15s", patientId, name, diseaseType, dateFormat.format(consultDate), consultNote);
+        return (patientId + " | " + name + " | " + diseaseType + " | " + dateFormat.format(consultDate) + " | " + consultNote);
+//        return String.format("%-10s|%-15s|%-15s|%-15s|%-15s", patientId, name, diseaseType, dateFormat.format(consultDate), consultNote);
     }
 
     @Override
@@ -81,4 +82,30 @@ public class Patient implements Serializable {
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
         return toString(df);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Patient other = (Patient) obj;
+        if (this.patientId != other.patientId) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
