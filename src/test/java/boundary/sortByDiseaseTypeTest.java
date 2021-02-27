@@ -6,6 +6,7 @@
 package boundary;
 
 import Common.Patient;
+import java.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,22 +19,22 @@ import static org.junit.Assert.*;
  * @author shado
  */
 public class sortByDiseaseTypeTest {
-    
+
     public sortByDiseaseTypeTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,14 +45,20 @@ public class sortByDiseaseTypeTest {
     @Test
     public void testCompare() {
         System.out.println("compare");
-        Patient o1 = null;
-        Patient o2 = null;
+        Patient o1 = new Patient(8, "p8", "d5", java.sql.Date.valueOf(LocalDate.of(2021, 9, 14)), "patient 8");
+        Patient o2 = new Patient(1, "p1", "d1", java.sql.Date.valueOf(LocalDate.of(2020, 11, 10)), "patient 1");
         sortByDiseaseType instance = new sortByDiseaseType();
-        int expResult = 0;
         int result = instance.compare(o1, o2);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println(result);
+        assert(result > 0);
+        result = instance.compare(o2, o1);
+        System.out.println(result);
+        assertTrue(result < 0);
+        Patient o3 = new Patient(3, "p3", "d5", java.sql.Date.valueOf(LocalDate.of(2021, 9, 9)), "patient 3");
+        result = instance.compare(o1, o3);
+        System.out.println(result);
+        assertTrue(result == 0);
+        
     }
-    
+
 }
