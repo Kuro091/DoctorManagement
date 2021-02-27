@@ -9,10 +9,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * Dùng class để in danh sách bệnh nhân ra màn hình: gọi hàm callPrintPatientByDiseaseType
+ * @author Vân
+ */
 public class ConsultManager {
     /**
      * Call print function: print to console list of all patients sort by disease type
-     * @param userList 
+     * @param userList list user
      */
     public static void callPrintPatientByDiseaseType(ArrayList<User> userList) {
         System.out.println(printPatientsByDiseaseType(getAllPatientsFromDoctors(userList)));

@@ -7,7 +7,6 @@
 import Admin.Admin;
 import Admin.AdminController;
 import Common.ConsoleColors;
-import Common.Patient;
 import Common.UserRole;
 import Consult.ConsultManager;
 import Consult.Specialization;
@@ -17,8 +16,8 @@ import Doctor.DoctorView;
 import User.User;
 import User.UserController;
 import User.UserView;
-import Utilities.UserDataIO;
 import Utilities.Validate;
+import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,7 +61,7 @@ public class Main {
         users.add(new Doctor(8, "doctor08",Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         
 
-        new UserDataIO().writeData(users);
+        (new DataIO<User>()).writeData(users);
         //------------------ADD TAM DATA VAO FILE USERS.DAT DE TEST, XOA SAU
 
         loginMenu();

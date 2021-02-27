@@ -3,27 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Consult;
+package boundary;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
- * @author Admin
+ * Cách sử dụng: gọi (new DataIO\<Kiểu dữ liệu cần ghi\>()).đọcHoặcViếtGìĐó(mảng cần đọc hoặc viết)
+ * @author 
  * @param <T>
  */
 public final class DataIO<T> {
@@ -39,35 +33,35 @@ public final class DataIO<T> {
 
     // ******************* Main methods *******************
     /**
-     * Read list of users from binary file
+     * Đọc file
      *
      * @return
      */
     public ArrayList<T> readData() {
-        ArrayList<T> users = new ArrayList<>();
+        ArrayList<T> theList = new ArrayList<>();
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(USER_SAVE_FILE_NAME));
-            users = (ArrayList<T>) in.readObject();
+            theList = (ArrayList<T>) in.readObject();
             in.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return users;
+        return theList;
     }
 
     /**
-     * Write list of users to file
+     * Ghi file
      *
-     * @param users
+     * @param theList
      */
-    public void writeData(List<T> users) {
+    public void writeData(List<T> theList) {
         try {
             FileOutputStream fos = new FileOutputStream(USER_SAVE_FILE_NAME, false);
             PrintWriter writer = new PrintWriter(new File(USER_SAVE_FILE_NAME));
             writer.print("");
             writer.close();
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(users);
+            oos.writeObject(theList);
             oos.close();
             fos.close();
         } catch (IOException ioe) {
