@@ -22,7 +22,7 @@ import java.util.List;
  */
 public final class DataIO<T> {
 
-    private String USER_SAVE_FILE_NAME;
+    private String USER_SAVE_FILE_NAME = "users.dat";
 
     public DataIO() {
     }

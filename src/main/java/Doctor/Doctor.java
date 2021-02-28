@@ -64,7 +64,14 @@ public class Doctor extends User implements Serializable {
         this.patients = patients;
     }
     
-    
+    public static Specialization selectSpecialization() {
+        int count = 0;
+        for (Specialization currentSpecialization : Specialization.values()) {
+            count++;
+            System.out.println(count + ". " + currentSpecialization.name());
+        }
+        return Specialization.values()[boundary.Validate.getINT_LIMIT("Select specialization: ", 1, count) - 1];
+    }
     
 
     public int getDoctorId() {

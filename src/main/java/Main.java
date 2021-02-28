@@ -158,9 +158,7 @@ public class Main {
                         adminController.queryDoctorInfo();
                         break;
                     case 4:
-                        UserView u = new UserView();
-                        u.doFunction4();
-
+                        doFunction4();
                         break;
                     case 5:
                         functionBlock5();
@@ -184,7 +182,7 @@ public class Main {
         }
 
     }
-
+    
     private static void doctorMenu() {
         int choice;
         while (true) {
@@ -217,7 +215,34 @@ public class Main {
         }
     }
 
-    
+    public static void doFunction4() throws IOException {
+        UserView uv = new UserView();
+       int choice ;
+        while (true) {
+            System.out.println("--------------------------------\n" + "Option 4 please choose what you want to do\n"
+                    + " 1. view list of all user\n" + " 2. add user\n" + " 3. update user\n" + " 4. deleted user\n"
+                    + " 0. Back to main menu\n" + "--------------------------------");
+            choice = validate.getINT_LIMIT("Choose: ", 0, 4);
+            switch (choice) {
+                case 1:
+                    uv.showAllUser();
+                    break;
+                case 2:
+                    userController.inputNewUser();
+                    break;
+                case 3:
+                    uv.findAndUpdateByUserCode();
+                    break;
+                case 4:
+                    uv.findAndDeletedByUserCode();
+                    break;
+                case 0:
+                    return;
+                default:
+                    break;
+            }
+        }
+    }
     /**
      * Query & getAllPatientsFromDoctors of the patients grouped by disease type
      */

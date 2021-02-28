@@ -73,11 +73,11 @@ public class UserView {
         }
         userDataIO.writeData(users);
     }
-    
+
     User user;
-    
-    public User getLoginInfo(){
-        
+
+    public User getLoginInfo() {
+
         try {
             //Read userInput
             String userName;
@@ -87,18 +87,14 @@ public class UserView {
             password = validate.getString("Input password: ");
 
             return new User(userName, password, UserRole.USER);
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
-    
-    
 
-    public void updateUser(User userUpdate) {
+    public boolean updateUser(User userUpdate) {
         users = userDataIO.readData();
         users.forEach((u) -> {
             if (u.getUserCode() != null) {
@@ -109,6 +105,7 @@ public class UserView {
             }
         });
         userDataIO.writeData(users);
+        return true;
     }
 
     public String inputUserCode() throws IOException {
@@ -159,99 +156,20 @@ public class UserView {
                 }
             }
         }
-        return id+1;
-    }
-
-    // function4.2
-    public void inputNewUser() {
-        users = getUsers();
-        String askPass = "Type in your Password: ";
-        String askDoctorSpecialization = "Enter doctor Specialization: ";
-        String askDoctorAvailability = "Enter availability: ";
-        int choice;
-        try {
-            System.out.println("what account you want to create\n" + "1.Admin\n" + "2.Authorized_Doctor\n"
-                    + "3.Doctor\n" + "4.Normal User\n" + "0.Cancel");
-            choice = validate.getINT_LIMIT("Your choice: ", 0, 4);
-            if (choice == 0) {
-                return;
-            }
-            String UserCode = inputUserCode();
-            String UserName = inputUserName();
-            String password;
-            switch (choice) {
-                case 1://admin
-                    password = validate.getPassword(askPass);
-                    Admin newAdmin = new Admin(UserCode, UserName, password, UserRole.ADMIN);
-                    addUser(newAdmin);
-                    break;
-
-                case 2://authDoctor
-                    String authDocName = validate.getUsername("Enter the doctor name: ");
-                    password = validate.getPassword(askPass);
-                    int AuthDocID = getNewDoctorHighestID();
-                    Doctor newAuthDoctor = new Doctor(UserCode, UserName, password, UserRole.AUTHORIZED_DOCTOR);
-                    newAuthDoctor.setDoctorId(AuthDocID);
-                    newAuthDoctor.setName(authDocName);
-                    System.out.print(askDoctorSpecialization);
-                    newAuthDoctor.setSpecialization(selectSpecialization());
-                    newAuthDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
-                    addUser(newAuthDoctor);
-                    break;
-
-                case 3://doctor
-                    String docName = validate.getUsername("Enter the doctor name: ");
-                    int docID = getNewDoctorHighestID();
-                    Doctor newDoctor = new Doctor(UserCode, UserName, null, UserRole.DOCTOR);
-                    newDoctor.setDoctorId(docID);
-                    newDoctor.setName(docName);
-                    System.out.print(askDoctorSpecialization);
-                    newDoctor.setSpecialization(selectSpecialization());
-                    newDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
-                    addUser(newDoctor);
-                    break;
-
-                case 4://normal user
-                    password = validate.getPassword("Type in your Password: ");
-                    User u = new User(UserName, password, UserRole.USER);
-                    addUser(u);
-                    break;
-                case 0:
-                    break;
-                default:
-                    break;
-            }
-
-        } catch (IOException e) {
-            System.out.println("error inputNewUser");
-            System.out.println(e);
-        }
-    }
-
-    public User askUpdate(User updateMe) throws IOException {
-        updateMe.setUserName(inputUserName());
-        while (true) {
-            String pass = validate.getPassword("Type in this account new password: ");
-            if (pass.equals(validate.getPassword("Confirm account new password: "))) {
-                updateMe.setPassword(pass);
-                break;
-            } else {
-                System.out.println("confirm new password is wrong! pls retype new password");
-            }
-        }
-        return updateMe;
+        return id + 1;
     }
 
     // function4.3
     public void findAndUpdateByUserCode() throws IOException {
         users = getUsers();
         while (true) {
-            String code = validate.getUsername("Enter userCode needed to be deleted: ");
+            String code = validate.getUsername("Enter userCode needed to be update: ");
             users = userDataIO.readData();
             for (User find : users) {
                 if (find.getUserCode() != null) {
                     if (find.getUserCode().equals(code)) {
-                        find = askUpdate(find);
+                        UserController uc = new UserController();
+                        find = uc.askUpdate(find);
                         updateUser(find);
                         return;
                     }
@@ -263,51 +181,29 @@ public class UserView {
     }
 
     // function4.4
-    public void findAndDeletedByUserCode() throws IOException {
+    public boolean findAndDeletedByUserCode() throws IOException {
         users = getUsers();
         String code = validate.getUsername("Enter usercode needed to be deleted: ");
         deleteUser(code);
+        return true;
     }
 
-    public void doFunction4() throws IOException {
-        int choice = 1;
-        while (true) {
-            System.out.println("--------------------------------\n" + "Option 4 please choose what you want to do\n"
-                    + " 1. view list of all user\n" + " 2. add user\n" + " 3. update user\n" + " 4. deleted user\n"
-                    + " 0. Back to main menu\n" + "--------------------------------");
-            choice = validate.getINT_LIMIT("Choose: ", 0, 4);
-            switch (choice) {
-                case 1:
-                    users = getUsers();
-                    System.out.println("List of all User");
-                    for (User u : users) {
-                        if (u instanceof Doctor) {
-                            System.out.print("DoctorID: " + ((Doctor) u).getDoctorId() + "; ");
-                        } else if (u instanceof Admin) {
-                            System.out.print("Admin user: ");
-                        } else {
-                            System.out.print("Normal user: ");
-                        }
-                        System.out.println(u.showUserInfo());
-                    }
-                    System.out.println();
-                    break;
-                case 2:
-                    inputNewUser();
-                    break;
-                case 3:
-                    findAndUpdateByUserCode();
-                    break;
-                case 4:
-                    findAndDeletedByUserCode();
-                    break;
-                case 0:
-                    return;
-                default:
-                    break;
+    //function4.1
+    public boolean showAllUser() {
+        users = getUsers();
+        System.out.println("List of all User");
+        for (User u : users) {
+            if (u instanceof Doctor) {
+                System.out.print("DoctorID: " + ((Doctor) u).getDoctorId() + "; ");
+            } else if (u instanceof Admin) {
+                System.out.print("Admin user: ");
+            } else {
+                System.out.print("Normal user: ");
             }
-            userDataIO.writeData(users);
+            System.out.println(u.showUserInfo());
         }
+        System.out.println("");
+        return true;
     }
 
 }
