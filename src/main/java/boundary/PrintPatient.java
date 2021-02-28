@@ -4,59 +4,75 @@ import Common.Patient;
 import Common.UserRole;
 import Doctor.Doctor;
 import User.User;
-import boundary.Validate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * Dùng class để in danh sách bệnh nhân ra màn hình: gọi hàm callPrintPatientByDiseaseType
+ * Dùng class để in danh sách bệnh nhân ra màn hình: gọi hàm
+ * callPrintPatientByDiseaseType
+ *
  * @author Vân
  */
 public class PrintPatient {
+
     /**
-     * Call print function: print to console list of all patients sort by disease type
+     * Call print function: print to console list of all patients sort by
+     * disease type
+     *
      * @param userList list user
      */
     public static void callPrintPatientByDiseaseType(ArrayList<User> userList) {
         System.out.println(printPatientsByDiseaseType(getAllPatientsFromDoctors(userList)));
     }
-    
+
     /**
      * Return a string list of all patients sort by disease type
+     *
      * @param patientList
-     * @return 
+     * @return
      */
     public static String printPatientsByDiseaseType(ArrayList<Patient> patientList) {
-        patientList = sortByDiseaseType(patientList);
-        String print = "";
-        String currentDisease = patientList.get(0).getDiseaseType();
-        print += currentDisease + System.lineSeparator();
-        for (Patient currentPatient : patientList) {
-            if (!currentPatient.getDiseaseType().equals(currentDisease)) {
-                currentDisease = currentPatient.getDiseaseType();
+        if (patientList != null) {
+            if (patientList.size() > 0) {
+                String print = "";
+                patientList = sortByDiseaseType(patientList);
+                String currentDisease = patientList.get(0).getDiseaseType();
                 print += currentDisease + System.lineSeparator();
+                for (Patient currentPatient : patientList) {
+                    if (!currentPatient.getDiseaseType().equals(currentDisease)) {
+                        currentDisease = currentPatient.getDiseaseType();
+                        print += currentDisease + System.lineSeparator();
+                    }
+                    print += currentPatient.toString() + System.lineSeparator();
+                }
+                return print;
+            } else {
             }
-            print += currentPatient.toString() + System.lineSeparator();
         }
-        return print;
+        return "No patient found";
     }
 
     /**
      * Get all patients of all doctors
+     *
      * @param userList
-     * @return 
+     * @return
      */
     public static ArrayList<Patient> getAllPatientsFromDoctors(ArrayList<User> userList) {
-        // Get all patients of all doctors
         ArrayList<Patient> patientList = new ArrayList<>();
-        for (User currentUser : userList) {
-            if (currentUser.getUserRole() == UserRole.AUTHORIZED_DOCTOR) {
-                System.out.println("Found a doctor! now checking patient list");
-                Doctor currentDoctor = (Doctor) currentUser;
-                for (Patient patient : currentDoctor.getPatients()) {
-                    System.out.println("Found patient ID = " + patient.getPatientId());
-                    patientList.add(patient);
+        if (userList != null) {
+            if (userList.size() > 0) {
+                for (User currentUser : userList) {
+                    if ((currentUser.getUserRole() == UserRole.AUTHORIZED_DOCTOR) && (currentUser instanceof Doctor)) {
+                        Doctor currentDoctor = (Doctor) currentUser;
+                        ArrayList<Patient> tempPatientList = currentDoctor.getPatients();
+                        if (tempPatientList != null) {
+                            for (Patient patient : tempPatientList) {
+                                patientList.add(patient);
+                            }
+                        }
+
+                    }
                 }
             }
         }
@@ -65,11 +81,16 @@ public class PrintPatient {
 
     /**
      * Sort patient list by disease type
+     *
      * @param patientList
-     * @return 
+     * @return
      */
     public static ArrayList<Patient> sortByDiseaseType(ArrayList<Patient> patientList) {
-        patientList.sort(new sortByDiseaseType());
+        if (patientList != null) {
+            if (patientList.size() > 0) {
+                patientList.sort(new sortByDiseaseType());
+            }
+        }
         return patientList;
     }
 }

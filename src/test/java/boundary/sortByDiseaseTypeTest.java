@@ -50,7 +50,7 @@ public class sortByDiseaseTypeTest {
         sortByDiseaseType instance = new sortByDiseaseType();
         int result = instance.compare(o1, o2);
         System.out.println(result);
-        assert(result > 0);
+        assert (result > 0);
         result = instance.compare(o2, o1);
         System.out.println(result);
         assertTrue(result < 0);
@@ -58,7 +58,6 @@ public class sortByDiseaseTypeTest {
         result = instance.compare(o1, o3);
         System.out.println(result);
         assertTrue(result == 0);
-        
     }
 
 }

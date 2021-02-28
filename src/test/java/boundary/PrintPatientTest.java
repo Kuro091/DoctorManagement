@@ -21,6 +21,7 @@ import org.junit.Ignore;
 
 /**
  * 2021/02/27 | PASSED
+ *
  * @author Vân
  */
 public class PrintPatientTest {
@@ -63,20 +64,34 @@ public class PrintPatientTest {
      */
     @Test
     public void testPrintPatientsByDiseaseType() {
+        // --- Test when list null ↓
+        ArrayList<Patient> patientList = null;
+        String expResult = "No patient found";
+        String result = PrintPatient.printPatientsByDiseaseType(new ArrayList<>());
+        assertEquals(expResult, result);
+        // --- Test when list null ↑
+        // --- Test when list have no patient ↓
+        patientList = new ArrayList<>();
+        result = PrintPatient.printPatientsByDiseaseType(new ArrayList<>());
+        assertEquals(expResult, result);
+        // --- Test when list have no patient ↑
+        // --- Test when patient list have patient ↓
         System.out.println("printPatientsByDiseaseType");
-        ArrayList<Patient> patientList = new ArrayList<>();
+        patientList = new ArrayList<>();
         patientList.add(new Patient(1, "p1", "d1", java.sql.Date.valueOf(LocalDate.of(2020, 11, 10)), "patient 1"));
         patientList.add(new Patient(2, "p2", "d1", java.sql.Date.valueOf(LocalDate.of(2021, 1, 1)), "patient 2"));
         patientList.add(new Patient(3, "p3", "d3", java.sql.Date.valueOf(LocalDate.of(2021, 9, 9)), "patient 3"));
         patientList.add(new Patient(4, "p4", "d1", java.sql.Date.valueOf(LocalDate.of(2019, 8, 8)), "patient 4"));
-        String expResult = "";
+        expResult = "";
         expResult += "d1" + System.lineSeparator();
         expResult += "1 | p1 | d1 | 2020/11/10 | patient 1" + System.lineSeparator();
         expResult += "2 | p2 | d1 | 2021/01/01 | patient 2" + System.lineSeparator();
         expResult += "4 | p4 | d1 | 2019/08/08 | patient 4" + System.lineSeparator();
         expResult += "d3" + System.lineSeparator();
         expResult += "3 | p3 | d3 | 2021/09/09 | patient 3" + System.lineSeparator();
-        String result = PrintPatient.printPatientsByDiseaseType(patientList);
+        result = PrintPatient.printPatientsByDiseaseType(patientList);
+        assertEquals(expResult, result);
+        // --- Test when patient list have patient ↑
     }
 
     /**
@@ -84,6 +99,26 @@ public class PrintPatientTest {
      */
     @Test
     public void testGetAllPatientsFromDoctors() {
+        // --- Test when null ↓
+        ArrayList<User> userList = null;
+        ArrayList<Patient> expResult = new ArrayList<>();
+        ArrayList<Patient> result = PrintPatient.getAllPatientsFromDoctors(userList);
+        assertArrayEquals(expResult.toArray(), result.toArray());
+        // --- Test when null ↑
+        // --- Test empty arraylist ↓
+        userList = new ArrayList<>();
+        result = PrintPatient.getAllPatientsFromDoctors(userList);
+        assertArrayEquals(expResult.toArray(), result.toArray());
+        // --- Test empty arraylist ↑
+        // --- Array list not empty but have no patient ↓
+        userList.add(new User(UserRole.USER));
+        userList.add(new User(UserRole.ADMIN));
+        userList.add(new User(UserRole.DOCTOR));
+        userList.add(new User(UserRole.AUTHORIZED_DOCTOR));
+        result = PrintPatient.getAllPatientsFromDoctors(userList);
+        assertArrayEquals(expResult.toArray(), result.toArray());
+        // --- Array list not empty but have no patient ↑
+        // --- Array list have doctors and user ↓
         System.out.println("getAllPatientsFromDoctors");
         Doctor doc1 = new Doctor();
         doc1.setUserRole(UserRole.AUTHORIZED_DOCTOR);
@@ -117,7 +152,7 @@ public class PrintPatientTest {
         ArrayList<Patient> tempList4 = new ArrayList<>();
         tempList4.add(p7);
         doc4.setPatients(tempList4);
-        ArrayList<User> userList = new ArrayList<>();
+        userList = new ArrayList<>();
         userList.add(doc1);
         userList.add(new User(UserRole.USER));
         userList.add(new User(UserRole.ADMIN));
@@ -125,7 +160,7 @@ public class PrintPatientTest {
         userList.add(doc3);
         userList.add(new User(UserRole.USER));
         userList.add(doc4);
-        ArrayList<Patient> expResult = new ArrayList<>();
+        expResult = new ArrayList<>();
         expResult.add(p1);
         expResult.add(p3);
         expResult.add(p8);
@@ -134,8 +169,10 @@ public class PrintPatientTest {
         expResult.add(p2);
         expResult.add(p5);
         expResult.add(p7);
-        ArrayList<Patient> result = PrintPatient.getAllPatientsFromDoctors(userList);
+        result = PrintPatient.getAllPatientsFromDoctors(userList);
         assertArrayEquals(expResult.toArray(), result.toArray());
+        // --- Array list have doctors and user ↑
+
     }
 
     /**
