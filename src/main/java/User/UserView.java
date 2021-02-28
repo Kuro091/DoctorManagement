@@ -42,15 +42,6 @@ public class UserView {
         return userView;
     }
 
-    public Specialization selectSpecialization() {
-        int count = 0;
-        for (Specialization currentSpecialization : Specialization.values()) {
-            count++;
-            System.out.println(count + ". " + currentSpecialization.name());
-        }
-        return Specialization.values()[boundary.Validate.getINT_LIMIT("Select specialization: ", 1, count) - 1];
-    }
-
     public ArrayList<User> getUsers() {
         return userDataIO.readData();
     }
@@ -181,11 +172,10 @@ public class UserView {
     }
 
     // function4.4
-    public boolean findAndDeletedByUserCode() throws IOException {
+    public void findAndDeletedByUserCode() throws IOException {
         users = getUsers();
         String code = validate.getUsername("Enter usercode needed to be deleted: ");
         deleteUser(code);
-        return true;
     }
 
     //function4.1

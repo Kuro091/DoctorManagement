@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: User.UserViewTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.188 sec <<< FAILURE! - in User.UserViewTest
-testGetUsers(User.UserViewTest)  Time elapsed: 0.188 sec  <<< FAILURE!
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.138 sec <<< FAILURE! - in User.UserViewTest
+testGetUsers(User.UserViewTest)  Time elapsed: 0.086 sec  <<< FAILURE!
 java.lang.AssertionError: expected:<12> but was:<11>
 	at User.UserViewTest.testGetUsers(UserViewTest.java:51)
 
