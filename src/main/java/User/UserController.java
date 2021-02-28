@@ -5,8 +5,11 @@
  */
 package User;
 
+import Admin.Admin;
 import Common.ConsoleColors;
 import Common.UserRole;
+import Doctor.Doctor;
+import static User.UserView.validate;
 import Utilities.UserDataIO;
 import Utilities.Validate;
 import java.io.IOException;
@@ -120,7 +123,129 @@ public class UserController {
             }
         }
     }
+    
+    public String inputUserCode() throws IOException {
+        UserView uv = new UserView();
+        uv.users = uv.getUsers();
+        while (true) {
+            String code = validate.getUsername("input new user code: ");
+            for (User u : uv.users) {
+                if (u.getUserCode() != null) {//chi check nhung user co usercode
+                    if (u.getUserCode().equalsIgnoreCase(code)) {
+                        code = null;
+                        break;
+                    }
+                }
+            }
+            if (code == null) {
+                System.out.println("this code already exist pls input another one");
+            } else {
+                return code;
+            }
+        }
+    }
 
+    public String inputUserName() throws IOException {
+        UserView uv = new UserView();
+        uv.users = uv.getUsers();
+        while (true) {
+            String userName = validate.getUsername("Type in the new UserName: ");
+            for (User u : uv.users) {
+                if (u.getUserName() != null) {
+                    if (u.getUserName().equals(userName)) {
+                        userName = null;
+                        break;
+                    }
+                }
+            }
+            if (userName == null) {
+                System.out.println("this userName already exist pls input a different one");
+            } else {
+                return userName;
+            }
+        }
+    }
+    
+    // function4.2
+    public void inputNewUser() {
+        UserView uv = new UserView();
+        String askPass = "Type in your Password: ";
+        String askDoctorSpecialization = "Enter doctor Specialization: ";
+        String askDoctorAvailability = "Enter availability: ";
+        int choice;
+        try {
+            System.out.println("what account you want to create\n" + "1.Admin\n" + "2.Authorized_Doctor\n"
+                    + "3.Doctor\n" + "4.Normal User\n" + "0.Cancel");
+            choice = validate.getINT_LIMIT("Your choice: ", 0, 4);
+            if (choice == 0) {
+                return;
+            }
+            String UserCode = inputUserCode();
+            String UserName = inputUserName();
+            String password;
+            switch (choice) {
+                case 1://admin
+                    password = validate.getPassword(askPass);
+                    Admin newAdmin = new Admin(UserCode, UserName, password, UserRole.ADMIN);
+                    uv.addUser(newAdmin);
+                    break;
+
+                case 2://authDoctor
+                    String authDocName = validate.getUsername("Enter the doctor name: ");
+                    password = validate.getPassword(askPass);
+                    int AuthDocID = uv.getNewDoctorHighestID();
+                    Doctor newAuthDoctor = new Doctor(UserCode, UserName, password, UserRole.AUTHORIZED_DOCTOR);
+                    newAuthDoctor.setDoctorId(AuthDocID);
+                    newAuthDoctor.setName(authDocName);
+                    System.out.print(askDoctorSpecialization);
+                    newAuthDoctor.setSpecialization(Doctor.selectSpecialization());
+                    newAuthDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
+                    uv.addUser(newAuthDoctor);
+                    break;
+
+                case 3://doctor
+                    String docName = validate.getUsername("Enter the doctor name: ");
+                    int docID = uv.getNewDoctorHighestID();
+                    Doctor newDoctor = new Doctor(UserCode, UserName, null, UserRole.DOCTOR);
+                    newDoctor.setDoctorId(docID);
+                    newDoctor.setName(docName);
+                    System.out.print(askDoctorSpecialization);
+                    newDoctor.setSpecialization(Doctor.selectSpecialization());
+                    newDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
+                    uv.addUser(newDoctor);
+                    break;
+
+                case 4://normal user
+                    password = validate.getPassword("Type in your Password: ");
+                    User u = new User(UserName, password, UserRole.USER);
+                    uv.addUser(u);
+                    break;
+                case 0:
+                    break;
+                default:
+                    break;
+            }
+
+        } catch (IOException e) {
+            System.out.println("error inputNewUser");
+            System.out.println(e);
+        }
+    }
+
+    public User askUpdate(User updateMe) throws IOException {
+        updateMe.setUserName(inputUserName());
+        while (true) {
+            String pass = validate.getPassword("Type in this account new password: ");
+            if (pass.equals(validate.getPassword("Confirm account new password: "))) {
+                updateMe.setPassword(pass);
+                break;
+            } else {
+                System.out.println("confirm new password is wrong! pls retype new password");
+            }
+        }
+        return updateMe;
+    }
+    
     public User getLoggedInUser() {
         return newUser;
     }
