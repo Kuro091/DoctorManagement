@@ -45,6 +45,10 @@ public class UserView {
     public ArrayList<User> getUsers() {
         return userDataIO.readData();
     }
+    
+    public int getUsersSize() {
+        return userDataIO.readData().size();
+    }
 
     public void addUser(User user) {
         users = userDataIO.readData();
@@ -84,19 +88,22 @@ public class UserView {
         }
         return null;
     }
-
+    
+    int count;
     public boolean updateUser(User userUpdate) {
         users = userDataIO.readData();
+        count = 0;
         users.forEach((u) -> {
             if (u.getUserCode() != null) {
                 if (u.getUserCode().equalsIgnoreCase(userUpdate.getUserCode())) {
+                    count++;
                     u.setUserName(userUpdate.getUserName());
                     u.setPassword(userUpdate.getPassword());
                 }
             }
         });
         userDataIO.writeData(users);
-        return true;
+        return (count>0);
     }
 
     public String inputUserCode() throws IOException {

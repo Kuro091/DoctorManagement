@@ -5,8 +5,15 @@
  */
 package User;
 
+import Common.UserRole;
 import Consult.Specialization;
+import Doctor.Doctor;
+import static User.UserView.validate;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,12 +51,27 @@ public class UserViewTest {
      */
     @Test
     public void testGetUsers() {
-        System.out.println("getUsers");
         UserView instance = new UserView();
         ArrayList<User> expResult = new ArrayList<User>();
         ArrayList<User> result = instance.getUsers();
-        assertEquals(12, result.size());
-        // TODO review the generated test code and remove the default call to fail.
+        assertEquals(instance.getUsersSize(), result.size());
     }
-    
+
+    /**
+     * Test of updateUser method, of class UserView.
+     */
+    @Test
+    public void testUpdateUser() {
+        User userUpdate = new User();
+        userUpdate.setUserCode("doctor02");
+        userUpdate.setUserName("doctor02");
+        userUpdate.setPassword("doctor02");
+        
+        UserView instance = new UserView();
+        boolean expResult = true;
+        boolean result = instance.updateUser(userUpdate);
+        assertEquals(expResult, result);
+    }
+
+   
 }
