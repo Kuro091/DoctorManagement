@@ -67,12 +67,12 @@ public class PrintPatientTest {
         // --- Test when list null ↓
         ArrayList<Patient> patientList = null;
         String expResult = "No patient found";
-        String result = PrintPatient.printPatientsByDiseaseType(new ArrayList<>());
+        String result = PrintPatient.printPatientsByDiseaseType(patientList);
         assertEquals(expResult, result);
         // --- Test when list null ↑
         // --- Test when list have no patient ↓
         patientList = new ArrayList<>();
-        result = PrintPatient.printPatientsByDiseaseType(new ArrayList<>());
+        result = PrintPatient.printPatientsByDiseaseType(patientList);
         assertEquals(expResult, result);
         // --- Test when list have no patient ↑
         // --- Test when patient list have patient ↓
@@ -208,8 +208,6 @@ public class PrintPatientTest {
         expResult.add(p8);
         expResult.add(p7);
         ArrayList<Patient> result = PrintPatient.sortByDiseaseType(patientList);
-        System.out.println("*****************************");
-        System.out.println(result.toString());
         assertArrayEquals(expResult.toArray(), result.toArray());
     }
 
