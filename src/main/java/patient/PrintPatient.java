@@ -39,21 +39,19 @@ public class PrintPatient {
      * @return
      */
     public static String printPatientsByDiseaseType(List<Patient> patientList) {
-        if (patientList != null) {
-            if (!patientList.isEmpty()) {
-                String print = "";
-                patientList = sortByDiseaseType(patientList);
-                String currentDisease = patientList.get(0).getDiseaseType();
-                print += currentDisease + System.lineSeparator();
-                for (Patient currentPatient : patientList) {
-                    if (!currentPatient.getDiseaseType().equals(currentDisease)) {
-                        currentDisease = currentPatient.getDiseaseType();
-                        print += currentDisease + System.lineSeparator();
-                    }
-                    print += currentPatient.toString() + System.lineSeparator();
+        if ((patientList != null) && (!patientList.isEmpty())) {
+            String print = "";
+            patientList = sortByDiseaseType(patientList);
+            String currentDisease = patientList.get(0).getDiseaseType();
+            print += currentDisease + System.lineSeparator();
+            for (Patient currentPatient : patientList) {
+                if (!currentPatient.getDiseaseType().equals(currentDisease)) {
+                    currentDisease = currentPatient.getDiseaseType();
+                    print += currentDisease + System.lineSeparator();
                 }
-                return print;
+                print += currentPatient.toString() + System.lineSeparator();
             }
+            return print;
         }
         return "No patient found";
     }
@@ -66,19 +64,17 @@ public class PrintPatient {
      */
     public static List<Patient> getAllPatientsFromDoctors(List<User> userList) {
         ArrayList<Patient> patientList = new ArrayList<>();
-        if (userList != null) {
-            if (!userList.isEmpty()) {
-                for (User currentUser : userList) {
-                    if ((currentUser.getUserRole() == UserRole.AUTHORIZED_DOCTOR) && (currentUser instanceof Doctor)) {
-                        Doctor currentDoctor = (Doctor) currentUser;
-                        ArrayList<Patient> tempPatientList = currentDoctor.getPatients();
-                        if (tempPatientList != null) {
-                            for (Patient patient : tempPatientList) {
-                                patientList.add(patient);
-                            }
+        if ((userList != null) && (!userList.isEmpty())) {
+            for (User currentUser : userList) {
+                if ((currentUser.getUserRole() == UserRole.AUTHORIZED_DOCTOR) && (currentUser instanceof Doctor)) {
+                    Doctor currentDoctor = (Doctor) currentUser;
+                    ArrayList<Patient> tempPatientList = currentDoctor.getPatients();
+                    if (tempPatientList != null) {
+                        for (Patient patient : tempPatientList) {
+                            patientList.add(patient);
                         }
-
                     }
+
                 }
             }
         }
@@ -92,10 +88,8 @@ public class PrintPatient {
      * @return
      */
     public static List<Patient> sortByDiseaseType(List<Patient> patientList) {
-        if (patientList != null) {
-            if (!patientList.isEmpty()) {
-                patientList.sort(new SortByDiseaseType());
-            }
+        if ((patientList != null) && (!patientList.isEmpty())) {
+            patientList.sort(new SortByDiseaseType());
         }
         return patientList;
     }
