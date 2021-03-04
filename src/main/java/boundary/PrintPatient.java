@@ -6,6 +6,7 @@ import Doctor.Doctor;
 import User.User;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Dùng class để in danh sách bệnh nhân ra màn hình: gọi hàm
@@ -15,13 +16,17 @@ import java.util.Comparator;
  */
 public class PrintPatient {
 
+    private PrintPatient() {
+    }
+    
+
     /**
      * Call print function: print to console list of all patients sort by
      * disease type
      *
      * @param userList list user
      */
-    public static void callPrintPatientByDiseaseType(ArrayList<User> userList) {
+    public static void callPrintPatientByDiseaseType(List<User> userList) {
         System.out.println(printPatientsByDiseaseType(getAllPatientsFromDoctors(userList)));
     }
 
@@ -31,7 +36,7 @@ public class PrintPatient {
      * @param patientList
      * @return
      */
-    public static String printPatientsByDiseaseType(ArrayList<Patient> patientList) {
+    public static String printPatientsByDiseaseType(List<Patient> patientList) {
         if (patientList != null) {
             if (patientList.size() > 0) {
                 String print = "";
@@ -58,7 +63,7 @@ public class PrintPatient {
      * @param userList
      * @return
      */
-    public static ArrayList<Patient> getAllPatientsFromDoctors(ArrayList<User> userList) {
+    public static ArrayList<Patient> getAllPatientsFromDoctors(List<User> userList) {
         ArrayList<Patient> patientList = new ArrayList<>();
         if (userList != null) {
             if (userList.size() > 0) {
@@ -85,7 +90,7 @@ public class PrintPatient {
      * @param patientList
      * @return
      */
-    public static ArrayList<Patient> sortByDiseaseType(ArrayList<Patient> patientList) {
+    public static List<Patient> sortByDiseaseType(List<Patient> patientList) {
         if (patientList != null) {
             if (patientList.size() > 0) {
                 patientList.sort(new sortByDiseaseType());

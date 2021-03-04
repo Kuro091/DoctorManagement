@@ -11,6 +11,7 @@ import Doctor.Doctor;
 import User.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,7 +54,7 @@ public class PrintPatientTest {
     @Test
     public void testCallPrintPatientByDiseaseType() {
         System.out.println("callPrintPatientByDiseaseType");
-        ArrayList<User> userList = null;
+        List<User> userList = null;
         PrintPatient.callPrintPatientByDiseaseType(userList);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -65,7 +66,7 @@ public class PrintPatientTest {
     @Test
     public void testPrintPatientsByDiseaseType() {
         // --- Test when list null ↓
-        ArrayList<Patient> patientList = null;
+        List<Patient> patientList = null;
         String expResult = "No patient found";
         String result = PrintPatient.printPatientsByDiseaseType(patientList);
         assertEquals(expResult, result);
@@ -100,9 +101,9 @@ public class PrintPatientTest {
     @Test
     public void testGetAllPatientsFromDoctors() {
         // --- Test when null ↓
-        ArrayList<User> userList = null;
-        ArrayList<Patient> expResult = new ArrayList<>();
-        ArrayList<Patient> result = PrintPatient.getAllPatientsFromDoctors(userList);
+        List<User> userList = null;
+        List<Patient> expResult = new ArrayList<>();
+        List<Patient> result = PrintPatient.getAllPatientsFromDoctors(userList);
         assertArrayEquals(expResult.toArray(), result.toArray());
         // --- Test when null ↑
         // --- Test empty arraylist ↓
@@ -189,7 +190,7 @@ public class PrintPatientTest {
         Patient p6 = new Patient(6, "p6", "d4", java.sql.Date.valueOf(LocalDate.of(2021, 1, 12)), "patient 6");
         Patient p7 = new Patient(7, "p7", "d5", java.sql.Date.valueOf(LocalDate.of(2019, 8, 13)), "patient 7");
         Patient p8 = new Patient(8, "p8", "d5", java.sql.Date.valueOf(LocalDate.of(2021, 9, 14)), "patient 8");
-        ArrayList<Patient> patientList = new ArrayList<>();
+        List<Patient> patientList = new ArrayList<>();
         patientList.add(p8);
         patientList.add(p6);
         patientList.add(p2);
@@ -198,7 +199,7 @@ public class PrintPatientTest {
         patientList.add(p7);
         patientList.add(p4);
         patientList.add(p3);
-        ArrayList<Patient> expResult = new ArrayList<>();
+        List<Patient> expResult = new ArrayList<>();
         expResult.add(p2);
         expResult.add(p1);
         expResult.add(p4);
@@ -207,7 +208,7 @@ public class PrintPatientTest {
         expResult.add(p6);
         expResult.add(p8);
         expResult.add(p7);
-        ArrayList<Patient> result = PrintPatient.sortByDiseaseType(patientList);
+        List<Patient> result = PrintPatient.sortByDiseaseType(patientList);
         assertArrayEquals(expResult.toArray(), result.toArray());
     }
 
