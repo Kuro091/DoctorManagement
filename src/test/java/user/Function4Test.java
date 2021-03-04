@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package User;
+package user;
 
 import user.UserView;
 import java.io.ByteArrayInputStream;
