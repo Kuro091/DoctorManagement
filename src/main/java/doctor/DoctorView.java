@@ -7,8 +7,8 @@ package doctor;
 
 import common.UserRole;
 import user.User;
-import utilities.Validate;
-import boundary.DataIO;
+import common.Validate;
+import common.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
