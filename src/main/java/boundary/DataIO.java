@@ -22,13 +22,13 @@ import java.util.List;
  */
 public final class DataIO<T> {
 
-    private String USER_SAVE_FILE_NAME = "users.dat";
+    private String SAVE_FILE_NAME = "users.dat"; // Default
 
     public DataIO() {
     }
 
     public DataIO(String USER_SAVE_FILE_NAME) {
-        this.USER_SAVE_FILE_NAME = USER_SAVE_FILE_NAME;
+        this.SAVE_FILE_NAME = USER_SAVE_FILE_NAME;
     }
 
     // ******************* Main methods *******************
@@ -40,7 +40,7 @@ public final class DataIO<T> {
     public ArrayList<T> readData() {
         ArrayList<T> theList = new ArrayList<>();
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(USER_SAVE_FILE_NAME));
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVE_FILE_NAME));
             theList = (ArrayList<T>) in.readObject();
             in.close();
         } catch (Exception e) {
@@ -56,8 +56,8 @@ public final class DataIO<T> {
      */
     public void writeData(List<T> theList) {
         try {
-            FileOutputStream fos = new FileOutputStream(USER_SAVE_FILE_NAME, false);
-            PrintWriter writer = new PrintWriter(new File(USER_SAVE_FILE_NAME));
+            FileOutputStream fos = new FileOutputStream(SAVE_FILE_NAME, false);
+            PrintWriter writer = new PrintWriter(new File(SAVE_FILE_NAME));
             writer.print("");
             writer.close();
             ObjectOutputStream oos = new ObjectOutputStream(fos);

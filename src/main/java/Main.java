@@ -35,7 +35,6 @@ public class Main {
     static UserController userController;
     static AdminController adminController;
     static DoctorController doctorController;
-    private static PrintPatient consultManager = new PrintPatient();
     
 
     public static void main(String[] args) {

@@ -7,6 +7,8 @@ import User.User;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Dùng class để in danh sách bệnh nhân ra màn hình: gọi hàm
@@ -18,7 +20,6 @@ public class PrintPatient {
 
     private PrintPatient() {
     }
-    
 
     /**
      * Call print function: print to console list of all patients sort by
@@ -27,7 +28,8 @@ public class PrintPatient {
      * @param userList list user
      */
     public static void callPrintPatientByDiseaseType(List<User> userList) {
-        System.out.println(printPatientsByDiseaseType(getAllPatientsFromDoctors(userList)));
+        Logger theLogger = Logger.getLogger(PrintPatient.class.getName());
+        theLogger.log(Level.INFO, "{0}", printPatientsByDiseaseType(getAllPatientsFromDoctors(userList)));
     }
 
     /**

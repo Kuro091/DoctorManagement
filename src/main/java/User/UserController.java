@@ -9,9 +9,8 @@ import Admin.Admin;
 import Common.ConsoleColors;
 import Common.UserRole;
 import Doctor.Doctor;
-import static User.UserView.validate;
-import Utilities.UserDataIO;
 import Utilities.Validate;
+import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,11 +23,11 @@ import java.util.logging.Logger;
 public class UserController {
 
     public static UserController userController = null;
-    private UserDataIO userDataIO;
+    private DataIO<User> userDataIO;
     private Validate validate;
 
     public UserController() {
-        userDataIO = new UserDataIO();
+        userDataIO = new DataIO<>("users.dat");
         validate = new Validate();
     }
 

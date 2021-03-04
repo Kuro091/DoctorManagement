@@ -12,7 +12,7 @@ import Utilities.Validate;
 import java.io.IOException;
 import Doctor.Doctor;
 import User.User;
-import Utilities.UserDataIO;
+import boundary.DataIO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,7 @@ public class AdminController {
 
     Validate validate;
     ValidationAdminManager adminManager;
-    UserDataIO userDataIO;
+    DataIO<User> userDataIO;
 
     ArrayList<User> listUsers;
     ArrayList<Patient> listPatients;
@@ -36,7 +36,7 @@ public class AdminController {
     public AdminController() {
         validate = new Validate();
         adminManager = new ValidationAdminManager();
-        userDataIO = new UserDataIO();
+        userDataIO = new DataIO<>("users.dat");
         initMemoryData();
         dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
     }

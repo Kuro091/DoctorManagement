@@ -7,10 +7,9 @@ package User;
 
 import Admin.Admin;
 import Common.UserRole;
-import Consult.Specialization;
 import Doctor.Doctor;
-import Utilities.UserDataIO;
 import Utilities.Validate;
+import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,23 +21,21 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class UserView {
-
+    DataIO<User> userDataIO;
     Scanner in = new Scanner(System.in);
     ArrayList<User> users;
-    UserDataIO userDataIO;
     static Validate validate = new Validate();
     public static UserView userView = null;
 
     public UserView() {
         users = new ArrayList<>();
-        userDataIO = new UserDataIO();
+        userDataIO = new DataIO<>("users.dat");
     }
 
     public static UserView getInstance() {
         if (userView == null) {
             userView = new UserView();
         }
-
         return userView;
     }
 

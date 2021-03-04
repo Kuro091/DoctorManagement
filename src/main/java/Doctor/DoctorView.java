@@ -5,13 +5,11 @@
  */
 package Doctor;
 
-import Admin.Admin;
 import Common.UserRole;
 import Consult.Specialization;
 import User.User;
-import User.UserView;
-import Utilities.UserDataIO;
 import Utilities.Validate;
+import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,13 +22,13 @@ public class DoctorView {
 
     Scanner in = new Scanner(System.in);
     ArrayList<User> users;
-    UserDataIO userDataIO;
+    DataIO<User> userDataIO;
     static Validate validate = new Validate();
     public static DoctorView doctorView = null;
 
     public DoctorView() {
         users = new ArrayList<>();
-        userDataIO = new UserDataIO();
+        userDataIO = new DataIO<>("users.dat");
     }
 
     public static DoctorView getInstance() {
@@ -130,7 +128,7 @@ public class DoctorView {
                 }
             }
         }
-        return id+1;
+        return id + 1;
     }
 
     // function4.2
@@ -215,18 +213,18 @@ public class DoctorView {
         return updateMe;
     }
 
-    void updateDoc(User docUpdate){
+    void updateDoc(User docUpdate) {
         users = userDataIO.readData();
         users.forEach((u) -> {
-            if(u instanceof Doctor){
-                if(((Doctor) u).getDoctorId() == ((Doctor) docUpdate).getDoctorId()){
+            if (u instanceof Doctor) {
+                if (((Doctor) u).getDoctorId() == ((Doctor) docUpdate).getDoctorId()) {
                     u = docUpdate;
                 }
             }
         });
         userDataIO.writeData(users);
     }
-    
+
     // function4.3
     public void findAndUpdateByDoctorID() throws IOException {
         users = getUsers();
