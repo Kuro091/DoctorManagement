@@ -5,6 +5,7 @@
  */
 package boundary;
 
+import User.User;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,21 +15,26 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Cách sử dụng: gọi (new DataIO\<Kiểu dữ liệu cần ghi\>()).đọcHoặcViếtGìĐó(mảng cần đọc hoặc viết)
- * @author 
+ * Cách sử dụng: gọi (new DataIO\<Kiểu dữ liệu cần ghi\>()).đọcHoặcViếtGìĐó(mảng
+ * cần đọc hoặc viết)
+ *
+ * @author
  * @param <T>
  */
 public final class DataIO<T> {
 
-    private String SAVE_FILE_NAME = "users.dat"; // Default
+    private String saveFileName; // Default
 
     public DataIO() {
+        saveFileName = "users.dat";
     }
 
     public DataIO(String USER_SAVE_FILE_NAME) {
-        this.SAVE_FILE_NAME = USER_SAVE_FILE_NAME;
+        this.saveFileName = USER_SAVE_FILE_NAME;
     }
 
     // ******************* Main methods *******************
@@ -38,14 +44,21 @@ public final class DataIO<T> {
      * @return
      */
     public ArrayList<T> readData() {
-        ArrayList<T> theList = new ArrayList<>();
+        ObjectInputStream in = null;
+        ArrayList<T> theList = null;
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVE_FILE_NAME));
+            in = new ObjectInputStream(new FileInputStream("users.dat"));
             theList = (ArrayList<T>) in.readObject();
-            in.close();
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
+        } finally {
+            try {
+                in.close();
+            } catch (IOException ex) {
+                Logger.getLogger(UserDataIO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
         return theList;
     }
 
@@ -55,17 +68,22 @@ public final class DataIO<T> {
      * @param theList
      */
     public void writeData(List<T> theList) {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
         try {
-            FileOutputStream fos = new FileOutputStream(SAVE_FILE_NAME, false);
-            PrintWriter writer = new PrintWriter(new File(SAVE_FILE_NAME));
-            writer.print("");
-            writer.close();
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            fos = new FileOutputStream(saveFileName);
+            oos = new ObjectOutputStream(fos);
             oos.writeObject(theList);
-            oos.close();
-            fos.close();
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        } finally {
+            try {
+                oos.close();
+                fos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(UserDataIO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

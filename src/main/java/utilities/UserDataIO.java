@@ -23,10 +23,10 @@ public class UserDataIO {
 
     public ArrayList<User> readData() {
         ObjectInputStream in = null;
-        ArrayList<User> users = null;
+        ArrayList<User> theList = null;
         try {
             in = new ObjectInputStream(new FileInputStream("users.dat"));
-            users = (ArrayList<User>) in.readObject();
+            theList = (ArrayList<User>) in.readObject();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -37,16 +37,16 @@ public class UserDataIO {
             }
         }
 
-        return users;
+        return theList;
     }
 
-    public void writeData(List<User> users) {
+    public void writeData(List<User> theList) {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
             fos = new FileOutputStream("users.dat");
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(users);
+            oos.writeObject(theList);
 
         } catch (IOException ioe) {
             ioe.printStackTrace();
