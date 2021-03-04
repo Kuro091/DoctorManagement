@@ -6,6 +6,7 @@
 
 package User;
 
+import user.UserView;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;

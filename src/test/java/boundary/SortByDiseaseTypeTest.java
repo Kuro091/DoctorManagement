@@ -5,7 +5,7 @@
  */
 package boundary;
 
-import Common.Patient;
+import common.Patient;
 import java.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;

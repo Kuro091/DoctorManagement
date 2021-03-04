@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Admin;
+package admin;
 
-import Common.UserRole;
-import User.User;
+import common.UserRole;
+import user.User;
 import java.io.Serializable;
 
 /**
  *
  * @author Admin
  */
-public class Admin extends User implements Serializable{
+public class Admin extends User implements Serializable {
 
     public Admin() {
     }
@@ -25,7 +25,5 @@ public class Admin extends User implements Serializable{
     public Admin(String userCode, String userName, String password, UserRole userRole) {
         super(userCode, userName, password, userRole);
     }
-    
-    
-    
+
 }

@@ -1,17 +1,19 @@
-package Doctor;
+package doctor;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Common.Patient;
-import Common.UserRole;
-import Consult.Specialization;
-import User.User;
+import common.Patient;
+import common.UserRole;
+import user.User;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -64,14 +66,7 @@ public class Doctor extends User implements Serializable {
         this.patients = patients;
     }
     
-    public static Specialization selectSpecialization() {
-        int count = 0;
-        for (Specialization currentSpecialization : Specialization.values()) {
-            count++;
-            System.out.println(count + ". " + currentSpecialization.name());
-        }
-        return Specialization.values()[boundary.Validate.getINT_LIMIT("Select specialization: ", 1, count) - 1];
-    }
+    
     
 
     public int getDoctorId() {

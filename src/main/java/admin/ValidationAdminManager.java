@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Admin;
+package admin;
 
-import Common.Patient;
-import Common.UserRole;
-import User.User;
+import common.Patient;
+import common.UserRole;
+import user.User;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +27,7 @@ public class ValidationAdminManager {
 
     public User getDoctorByUserCode(String usercode, ArrayList<User> users) {
         for (User user : users) {
-            if (user.getUserRole() == UserRole.AUTHORIZED_DOCTOR 
+            if (user.getUserRole() == UserRole.AUTHORIZED_DOCTOR
                     && usercode.equals(user.getUserCode())) {
                 return user;
             }

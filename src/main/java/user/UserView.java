@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package User;
+package user;
 
-import Admin.Admin;
-import Common.UserRole;
-import Doctor.Doctor;
-import Utilities.Validate;
+import admin.Admin;
+import common.UserRole;
+import doctor.Doctor;
+import utilities.Validate;
 import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ public class UserView {
     DataIO<User> userDataIO;
     Scanner in = new Scanner(System.in);
     ArrayList<User> users;
-    static Validate validate = new Validate();
     public static UserView userView = null;
 
     public UserView() {
@@ -75,8 +74,8 @@ public class UserView {
             String userName;
             String password;
 
-            userName = validate.getString("Input username: ");
-            password = validate.getString("Input password: ");
+            userName = Validate.getString("Input username: ");
+            password = Validate.getString("Input password: ");
 
             return new User(userName, password, UserRole.USER);
 
@@ -105,7 +104,7 @@ public class UserView {
 
     public String inputUserCode() throws IOException {
         while (true) {
-            String code = validate.getUsername("input new user code: ");
+            String code = Validate.getUsername("input new user code: ");
             for (User u : users) {
                 if (u.getUserCode() != null) {//chi check nhung user co usercode
                     if (u.getUserCode().equalsIgnoreCase(code)) {
@@ -124,7 +123,7 @@ public class UserView {
 
     public String inputUserName() throws IOException {
         while (true) {
-            String userName = validate.getUsername("Type in the new UserName: ");
+            String userName = Validate.getUsername("Type in the new UserName: ");
             for (User u : users) {
                 if (u.getUserName() != null) {
                     if (u.getUserName().equals(userName)) {
@@ -158,7 +157,7 @@ public class UserView {
     public void findAndUpdateByUserCode() throws IOException {
         users = getUsers();
         while (true) {
-            String code = validate.getUsername("Enter userCode needed to be update: ");
+            String code = Validate.getUsername("Enter userCode needed to be update: ");
             users = userDataIO.readData();
             for (User find : users) {
                 if (find.getUserCode() != null) {
@@ -178,7 +177,7 @@ public class UserView {
     // function4.4
     public void findAndDeletedByUserCode() throws IOException {
         users = getUsers();
-        String code = validate.getUsername("Enter usercode needed to be deleted: ");
+        String code = Validate.getUsername("Enter usercode needed to be deleted: ");
         deleteUser(code);
     }
 

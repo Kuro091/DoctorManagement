@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package User;
+package user;
 
-import Common.UserRole;
+import common.UserRole;
 import java.io.Serializable;
 
 /**

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Utilities;
+package utilities;
 
-import User.User;
+import user.User;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

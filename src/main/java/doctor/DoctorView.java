@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Doctor;
+package doctor;
 
-import Common.UserRole;
-import Consult.Specialization;
-import User.User;
-import Utilities.Validate;
+import common.UserRole;
+import user.User;
+import utilities.Validate;
 import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,7 +24,6 @@ public class DoctorView {
     Scanner in = new Scanner(System.in);
     ArrayList<User> users;
     DataIO<User> userDataIO;
-    static Validate validate = new Validate();
     public static DoctorView doctorView = null;
 
     public DoctorView() {
@@ -37,15 +37,6 @@ public class DoctorView {
         }
 
         return doctorView;
-    }
-
-    public Specialization selectSpecialization() {
-        int count = 0;
-        for (Specialization currentSpecialization : Specialization.values()) {
-            count++;
-            System.out.println(count + ". " + currentSpecialization.name());
-        }
-        return Specialization.values()[boundary.Validate.getINT_LIMIT("Select specialization: ", 1, count) - 1];
     }
 
     public ArrayList<User> getUsers() {
@@ -82,7 +73,7 @@ public class DoctorView {
 
     public String inputUserCode() throws IOException {
         while (true) {
-            String code = validate.getUsername("input new user code: ");
+            String code = Validate.getUsername("input new user code: ");
             for (User u : users) {
                 if (u.getUserCode() != null) {
                     if (u.getUserCode().equalsIgnoreCase(code)) {
@@ -101,7 +92,7 @@ public class DoctorView {
 
     public String inputUserName() throws IOException {
         while (true) {
-            String userName = validate.getUsername("Type in the new doctor UserName: ");
+            String userName = Validate.getUsername("Type in the new doctor UserName: ");
             for (User u : users) {
                 if (u.getUserName() != null) {
                     if (u.getUserName().equals(userName)) {
@@ -143,7 +134,7 @@ public class DoctorView {
                     + "1.Authorized_Doctor\n"
                     + "2.Doctor\n"
                     + "0.Cancel");
-            choice = validate.getINT_LIMIT("Your choice: ", 0, 2);
+            choice = Validate.getINT_LIMIT("Your choice: ", 0, 2);
             if (choice == 0) {
                 return;
             }
@@ -153,15 +144,15 @@ public class DoctorView {
                 case 1:
                     String UserCode = inputUserCode();
                     String UserName = inputUserName();
-                    String password = validate.getPassword(askPass);
+                    String password = Validate.getPassword(askPass);
 
                     int AuthDocID = getNewDoctorHighestID();
                     Doctor newAuthDoctor = new Doctor(UserCode, UserName, password, UserRole.AUTHORIZED_DOCTOR);
                     newAuthDoctor.setDoctorId(AuthDocID);
                     newAuthDoctor.setName(docName);
                     System.out.print(askDoctorSpecialization);
-                    newAuthDoctor.setSpecialization(selectSpecialization());
-                    newAuthDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
+                    newAuthDoctor.setSpecialization(Validate.selectSpecialization());
+                    newAuthDoctor.setAvailability(Validate.getDate_LimitToCurrent(askDoctorAvailability));
 
                     addUser(newAuthDoctor);
                     break;
@@ -172,8 +163,8 @@ public class DoctorView {
                     newDoctor.setDoctorId(docID);
                     newDoctor.setName(docName);
                     System.out.print(askDoctorSpecialization);
-                    newDoctor.setSpecialization(selectSpecialization());
-                    newDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
+                    newDoctor.setSpecialization(Validate.selectSpecialization());
+                    newDoctor.setAvailability(Validate.getDate_LimitToCurrent(askDoctorAvailability));
 
                     addUser(newDoctor);
                     break;
@@ -194,8 +185,8 @@ public class DoctorView {
         if (updateMe.getUserRole().equals(UserRole.AUTHORIZED_DOCTOR)) {
             updateMe.setUserName(inputUserName());
             while (true) {
-                String pass = validate.getPassword("Type in this account new password: ");
-                if (pass.equals(validate.getPassword("Confirm account new password: "))) {
+                String pass = Validate.getPassword("Type in this account new password: ");
+                if (pass.equals(Validate.getPassword("Confirm account new password: "))) {
                     updateMe.setPassword(pass);
                     break;
                 } else {
@@ -207,8 +198,8 @@ public class DoctorView {
         String docName = in.nextLine();
         ((Doctor) updateMe).setName(docName);
         System.out.print("Enter the doctor update Specialization: ");
-        ((Doctor) updateMe).setSpecialization(selectSpecialization());
-        ((Doctor) updateMe).setAvailability(validate.getDate_LimitToCurrent("Enter doctor update availability: "));
+        ((Doctor) updateMe).setSpecialization(Validate.selectSpecialization());
+        ((Doctor) updateMe).setAvailability(Validate.getDate_LimitToCurrent("Enter doctor update availability: "));
 
         return updateMe;
     }
@@ -229,7 +220,7 @@ public class DoctorView {
     public void findAndUpdateByDoctorID() throws IOException {
         users = getUsers();
         while (true) {
-            int id = validate.getINT("Enter doctorID that needed to be update");
+            int id = Validate.getINT("Enter doctorID that needed to be update");
             users = userDataIO.readData();
             for (User find : users) {
                 if (find instanceof Doctor) {//in all user if that a doctor check id
@@ -248,7 +239,7 @@ public class DoctorView {
     // function4.4
     public void findAndDeletedByDoctorID() throws IOException {
         users = getUsers();
-        int id = validate.getINT("Enter doctorID that needed to be deleted");
+        int id = Validate.getINT("Enter doctorID that needed to be deleted");
         users = userDataIO.readData();
         for (User find : users) {
             if (find instanceof Doctor) {
@@ -271,7 +262,7 @@ public class DoctorView {
                     + " 3. update doctor\n"
                     + " 4. deleted doctor\n"
                     + " 0. Back to main menu\n" + "--------------------------------");
-            choice = validate.getINT_LIMIT("Choose: ", 0, 4);
+            choice = Validate.getINT_LIMIT("Choose: ", 0, 4);
             switch (choice) {
                 case 1:
                     users = getUsers();

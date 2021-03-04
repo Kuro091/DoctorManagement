@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Admin;
+package common;
 
 /**
  *
  * @author Admin
  */
-public class AdminView {
-    
-    
+public enum UserRole {
+    ADMIN,
+    DOCTOR,
+    AUTHORIZED_DOCTOR,
+    USER
 }

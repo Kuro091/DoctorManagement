@@ -1,22 +1,24 @@
+package main;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import Admin.Admin;
-import Admin.AdminController;
-import Common.ConsoleColors;
-import Common.UserRole;
+import admin.Admin;
+import admin.AdminController;
+import common.ConsoleColors;
+import common.UserRole;
 import boundary.PrintPatient;
-import Consult.Specialization;
-import Doctor.Doctor;
-import Doctor.DoctorController;
-import Doctor.DoctorView;
-import User.User;
-import User.UserController;
-import User.UserView;
-import Utilities.Validate;
+import doctor.Specialization;
+import doctor.Doctor;
+import doctor.DoctorController;
+import doctor.DoctorView;
+import user.User;
+import user.UserController;
+import user.UserView;
+import utilities.Validate;
 import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,15 +33,11 @@ import java.util.logging.Logger;
 public class Main {
 
     static ArrayList<User> users;
-    static Validate validate;
     static UserController userController;
     static AdminController adminController;
     static DoctorController doctorController;
-    
 
     public static void main(String[] args) {
-
-        validate = new Validate();
         adminController = new AdminController();
         doctorController = new DoctorController();
         userController = UserController.getInstance();
@@ -54,11 +52,10 @@ public class Main {
         users.add(new Doctor(2, "doctor02", Specialization.DA_LIEU, new Date(), new ArrayList<>(), "doctor02", "doctor02", "doctor02", UserRole.AUTHORIZED_DOCTOR));
         users.add(new Doctor(3, "doctor03", Specialization.NHA_KHOA, new Date(), new ArrayList<>(), "doctor03", "doctor03", "doctor03", UserRole.AUTHORIZED_DOCTOR));
         users.add(new Doctor(4, "doctor04", Specialization.UNG_BUOU, new Date(), new ArrayList<>(), "doctor04", "doctor04", "doctor04", UserRole.AUTHORIZED_DOCTOR));
-        users.add(new Doctor(5, "doctor05",Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
-        users.add(new Doctor(6, "doctor06",Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
-        users.add(new Doctor(7, "doctor07",Specialization.NHA_KHOA, new Date(), new ArrayList<>(), UserRole.DOCTOR));
-        users.add(new Doctor(8, "doctor08",Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
-        
+        users.add(new Doctor(5, "doctor05", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
+        users.add(new Doctor(6, "doctor06", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
+        users.add(new Doctor(7, "doctor07", Specialization.NHA_KHOA, new Date(), new ArrayList<>(), UserRole.DOCTOR));
+        users.add(new Doctor(8, "doctor08", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
 
         (new DataIO<User>()).writeData(users);
         //------------------ADD TAM DATA VAO FILE USERS.DAT DE TEST, XOA SAU
@@ -104,7 +101,7 @@ public class Main {
         while (true) {
             try {
                 printLoginMenu();
-                choice = validate.getINT_LIMIT("Your choice: ", 0, 1);
+                choice = Validate.getINT_LIMIT("Your choice: ", 0, 1);
                 Boolean isLoggedIn = false;
                 switch (choice) {
                     case 0:
@@ -144,7 +141,7 @@ public class Main {
         while (true) {
             try {
                 printAdminMenu();
-                choice = validate.getINT_LIMIT("Your choice: ", 1, 7);
+                choice = Validate.getINT_LIMIT("Your choice: ", 1, 7);
                 switch (choice) {
                     case 1:
                         DoctorView d = new DoctorView();
@@ -160,7 +157,7 @@ public class Main {
                         doFunction4();
                         break;
                     case 5:
-                        functionBlock5();
+                        PrintPatient.callPrintPatientByDiseaseType(users);
                         break;
                     case 6:
                         userController.changePassword();
@@ -181,13 +178,13 @@ public class Main {
         }
 
     }
-    
+
     private static void doctorMenu() {
         int choice;
         while (true) {
             try {
                 printDoctorMenu();
-                choice = validate.getINT_LIMIT("Your choice: ", 1, 4);
+                choice = Validate.getINT_LIMIT("Your choice: ", 1, 4);
 
                 switch (choice) {
                     case 1:
@@ -216,12 +213,12 @@ public class Main {
 
     public static void doFunction4() throws IOException {
         UserView uv = new UserView();
-       int choice ;
+        int choice;
         while (true) {
             System.out.println("--------------------------------\n" + "Option 4 please choose what you want to do\n"
                     + " 1. view list of all user\n" + " 2. add user\n" + " 3. update user\n" + " 4. deleted user\n"
                     + " 0. Back to main menu\n" + "--------------------------------");
-            choice = validate.getINT_LIMIT("Choose: ", 0, 4);
+            choice = Validate.getINT_LIMIT("Choose: ", 0, 4);
             switch (choice) {
                 case 1:
                     uv.showAllUser();
@@ -241,12 +238,6 @@ public class Main {
                     break;
             }
         }
-    }
-    /**
-     * Query & getAllPatientsFromDoctors of the patients grouped by disease type
-     */
-    private static void functionBlock5() {
-        PrintPatient.callPrintPatientByDiseaseType(users);
     }
 
 }

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Admin;
+package admin;
 
-import Common.ConsoleColors;
-import Common.Patient;
-import Common.UserRole;
-import Utilities.Validate;
+import common.ConsoleColors;
+import common.Patient;
+import common.UserRole;
+import utilities.Validate;
 import java.io.IOException;
-import Doctor.Doctor;
-import User.User;
+import doctor.Doctor;
+import user.User;
 import boundary.DataIO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,18 +23,14 @@ import java.util.Date;
  */
 public class AdminController {
 
-    Validate validate;
     ValidationAdminManager adminManager;
     DataIO<User> userDataIO;
-
     ArrayList<User> listUsers;
     ArrayList<Patient> listPatients;
     Doctor doctorGotByUserCode;
-
     SimpleDateFormat dateFormat;
 
     public AdminController() {
-        validate = new Validate();
         adminManager = new ValidationAdminManager();
         userDataIO = new DataIO<>("users.dat");
         initMemoryData();
@@ -57,7 +53,7 @@ public class AdminController {
             System.out.println("");
 
             while (true) {
-                String usercode = validate.getString("Enter usercode: ");
+                String usercode = Validate.getString("Enter usercode: ");
                 doctorGotByUserCode = (Doctor) adminManager.getDoctorByUserCode(usercode, listUsers);
                 if (doctorGotByUserCode == null) {
                     System.out.println(ConsoleColors.RED + "This usercode does not exist,  enter a new usercode ");
@@ -80,7 +76,7 @@ public class AdminController {
             }
 
             printMENU_AddUpdatePatient();
-            int selection = validate.getINT_LIMIT("Enter selection: ", 1, 2);
+            int selection = Validate.getINT_LIMIT("Enter selection: ", 1, 2);
             switch (selection) {
                 case 1:
                     addNewPatient();
@@ -108,17 +104,17 @@ public class AdminController {
 
     private void addNewPatient() throws IOException {
         while (true) {
-            int patientid = validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = adminManager.getPatientByPatientID(patientid, listPatients);
             if (patient != null) {
                 System.out.println(ConsoleColors.RED + "ID exist");
                 continue;
             }
 
-            String name = validate.getString("Enter name: ");
-            String diseaseType = validate.getString("Enter diseaseType: ");
-            Date consultDate = validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String consultNote = validate.getString("Enter consultNote: ");
+            String name = Validate.getString("Enter name: ");
+            String diseaseType = Validate.getString("Enter diseaseType: ");
+            Date consultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
+            String consultNote = Validate.getString("Enter consultNote: ");
             listPatients.add(new Patient(patientid, name, diseaseType, consultDate, consultNote));
             break;
         }
@@ -127,17 +123,17 @@ public class AdminController {
 
     private void updateAPatient() throws IOException {
         while (true) {
-            int patientid = validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = adminManager.getPatientByPatientID(patientid, listPatients);
             if (patient == null) {
                 System.out.println(ConsoleColors.RED + "ID is not exist");
                 continue;
             }
 
-            String newName = validate.getString("Enter name: ");
-            String newDiseaseType = validate.getString("Enter diseaseType: ");
-            Date newConsultDate = validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String newConsultNote = validate.getString("Enter consultNote: ");
+            String newName = Validate.getString("Enter name: ");
+            String newDiseaseType = Validate.getString("Enter diseaseType: ");
+            Date newConsultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
+            String newConsultNote = Validate.getString("Enter consultNote: ");
 
             patient.setName(newName);
             patient.setDiseaseType(newDiseaseType);
@@ -148,40 +144,40 @@ public class AdminController {
     }
 
     public void queryDoctorInfo() throws IOException {
-        while(true){
-        listUsers = userDataIO.readData();
-        System.out.println(ConsoleColors.BLUE_BOLD + "List of all doctors: ");
-        listUsers.forEach(u -> {
-            if (u.getUserRole() == UserRole.DOCTOR || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR) {
-                Doctor doc = (Doctor) u;
-                System.out.println(doc.getDoctorId() + " | " + doc.getName());
-            }
-        });
-
-        int doctorCode = validate.getINT("Enter doctor code (Enter 0 to exit): ");
-
-        if(doctorCode==0){
-            break;
-        }
-        
-        listUsers.forEach(u -> {
-            if (u.getUserRole() == UserRole.DOCTOR || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR) {
-                Doctor doc = (Doctor) u;
-                if (doc.getDoctorId() == doctorCode) {
-                    System.out.println(ConsoleColors.BLUE_BOLD + "DoctorCode : " + doc.getDoctorId() + "| DoctorName " + doc.getName());
-                    System.out.println(ConsoleColors.BLUE_BOLD + "Availability : " + doc.getAvailability() + "| Spec: " + doc.getSpecialization());
-                    System.out.println(ConsoleColors.BLUE_BOLD + "Patients : ");
-
-                    doc.getPatients().forEach(p -> {
-                        System.out.println(ConsoleColors.PURPLE_BOLD + "PatientName: " + p.getName() + " |PatientDisease: " + p.getDiseaseType() + " |Note: " + p.getConsultNote());
-                        System.out.println(ConsoleColors.PURPLE_BOLD + "Note: " + p.getConsultNote());
-                        System.out.println("***");
-                    });
-                    
-                    System.out.println("------------");
+        while (true) {
+            listUsers = userDataIO.readData();
+            System.out.println(ConsoleColors.BLUE_BOLD + "List of all doctors: ");
+            listUsers.forEach(u -> {
+                if (u.getUserRole() == UserRole.DOCTOR || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR) {
+                    Doctor doc = (Doctor) u;
+                    System.out.println(doc.getDoctorId() + " | " + doc.getName());
                 }
+            });
+
+            int doctorCode = Validate.getINT("Enter doctor code (Enter 0 to exit): ");
+
+            if (doctorCode == 0) {
+                break;
             }
-        });
+
+            listUsers.forEach(u -> {
+                if (u.getUserRole() == UserRole.DOCTOR || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR) {
+                    Doctor doc = (Doctor) u;
+                    if (doc.getDoctorId() == doctorCode) {
+                        System.out.println(ConsoleColors.BLUE_BOLD + "DoctorCode : " + doc.getDoctorId() + "| DoctorName " + doc.getName());
+                        System.out.println(ConsoleColors.BLUE_BOLD + "Availability : " + doc.getAvailability() + "| Spec: " + doc.getSpecialization());
+                        System.out.println(ConsoleColors.BLUE_BOLD + "Patients : ");
+
+                        doc.getPatients().forEach(p -> {
+                            System.out.println(ConsoleColors.PURPLE_BOLD + "PatientName: " + p.getName() + " |PatientDisease: " + p.getDiseaseType() + " |Note: " + p.getConsultNote());
+                            System.out.println(ConsoleColors.PURPLE_BOLD + "Note: " + p.getConsultNote());
+                            System.out.println("***");
+                        });
+
+                        System.out.println("------------");
+                    }
+                }
+            });
         }
     }
 

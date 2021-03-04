@@ -5,15 +5,9 @@
  */
 package User;
 
-import Common.UserRole;
-import Consult.Specialization;
-import Doctor.Doctor;
-import static User.UserView.validate;
-import java.io.IOException;
+import user.UserView;
+import user.User;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

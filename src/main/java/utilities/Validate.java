@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Utilities;
+package utilities;
 
-import Common.ConsoleColors;
+import common.ConsoleColors;
+import doctor.Specialization;
+import doctor.Doctor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -20,6 +24,9 @@ import java.util.regex.Pattern;
  * @author nanht
  */
 public final class Validate {
+
+    private Validate() {
+    }
 
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
@@ -33,12 +40,11 @@ public final class Validate {
     static Pattern PHONE_NUMBER_4 = Pattern.compile("^[0-9]{3} [0-9]{3} [0-9]{4}$");
     static Pattern PHONE_NUMBER_5 = Pattern.compile("^[0-9]{3}-[0-9]{3}-[0-9]{4} [e|ext][0-9]{4}$");
     static Pattern PHONE_NUMBER_6 = Pattern.compile("^\\([0-9]{3}\\)-[0-9]{3}-[0-9]{4}$");
-    
-    
+
     static Pattern PATTERN_USERNAME = Pattern.compile("^[A-Za-z][A-Za-z0-9]{4,}$");
     static Pattern PATTERN_PASSWORD = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{6,}$");
 
-    public String getPassword(String MSG) throws IOException {
+    public static String getPassword(String MSG) throws IOException {
         while (true) {
             System.out.print(MSG);
             String check = in.readLine().trim();
@@ -51,7 +57,7 @@ public final class Validate {
         }
     }
 
-    public String getUsername(String MSG) throws IOException {
+    public static String getUsername(String MSG) throws IOException {
         while (true) {
             System.out.print(MSG);
             String check = in.readLine().trim();
@@ -64,7 +70,7 @@ public final class Validate {
         }
     }
 
-    public String getString(String MSG) throws IOException {
+    public static String getString(String MSG) throws IOException {
         while (true) {
             System.out.print(MSG);
             String check = in.readLine().trim();
@@ -76,7 +82,7 @@ public final class Validate {
         }
     }
 
-    public int getINT(String MSG) throws IOException {
+    public static int getINT(String MSG) throws IOException {
         while (true) {
             try {
                 System.out.print(MSG);
@@ -88,7 +94,7 @@ public final class Validate {
         }
     }
 
-    public int getINT_LIMIT(String MSG, int MIN, int MAX) throws IOException {
+    public static int getINT_LIMIT(String MSG, int MIN, int MAX) throws IOException {
         while (true) {
             try {
                 System.out.print(MSG);
@@ -103,7 +109,7 @@ public final class Validate {
         }
     }
 
-    public double getDOUBLE(String MSG) throws IOException {
+    public static double getDOUBLE(String MSG) throws IOException {
         while (true) {
             try {
                 System.out.print(MSG);
@@ -115,7 +121,7 @@ public final class Validate {
         }
     }
 
-    public double getDOUBLE_LIMIT(String MSG, double MIN, double MAX) throws IOException {
+    public static double getDOUBLE_LIMIT(String MSG, double MIN, double MAX) throws IOException {
         while (true) {
             try {
                 System.out.print(MSG);
@@ -130,7 +136,7 @@ public final class Validate {
         }
     }
 
-    public float getFLOAT(String MSG) throws IOException {
+    public static float getFLOAT(String MSG) throws IOException {
         while (true) {
             try {
                 System.out.print(MSG);
@@ -142,7 +148,7 @@ public final class Validate {
         }
     }
 
-    public float getFLOAT_LIMIT(String MSG, float MIN, float MAX) throws IOException {
+    public static float getFLOAT_LIMIT(String MSG, float MIN, float MAX) throws IOException {
         while (true) {
             try {
                 System.out.print(MSG);
@@ -157,7 +163,7 @@ public final class Validate {
         }
     }
 
-    public boolean getYesNo(String MSG) throws IOException {
+    public static boolean getYesNo(String MSG) throws IOException {
         while (true) {
             String check = getString(MSG);
             if (check.equalsIgnoreCase("Y")) {
@@ -170,7 +176,7 @@ public final class Validate {
         }
     }
 
-    public boolean getUpdateDelete(String MSG) throws IOException {
+    public static boolean getUpdateDelete(String MSG) throws IOException {
         while (true) {
             String check = getString(MSG);
             if (check.equalsIgnoreCase("U")) {
@@ -183,7 +189,7 @@ public final class Validate {
         }
     }
 
-    public String getEmail(String MSG) throws IOException {
+    public static String getEmail(String MSG) throws IOException {
         while (true) {
             String email = getString(MSG);
             if (email.matches(EMAIL_VALID)) {
@@ -194,7 +200,7 @@ public final class Validate {
         }
     }
 
-    public String getPhone(String MSG) throws IOException {
+    public static String getPhone(String MSG) throws IOException {
         while (true) {
             String phone = getString(MSG);
             if (PHONE_NUMBER_1.matcher(phone).find() || PHONE_NUMBER_2.matcher(phone).find()
@@ -217,7 +223,7 @@ public final class Validate {
         }
     }
 
-    public Date getDate(String MSG) throws IOException {
+    public static Date getDate(String MSG) throws IOException {
         while (true) {
             String check = getString(MSG);
             SimpleDateFormat fd = new SimpleDateFormat("dd/MM/yyyy");
@@ -231,7 +237,7 @@ public final class Validate {
         }
     }
 
-    public Date getDate_LimitToCurrent(String MSG) throws IOException {
+    public static Date getDate_LimitToCurrent(String MSG) throws IOException {
         Date now = new Date();
         while (true) {
             String check = getString(MSG);
@@ -249,7 +255,7 @@ public final class Validate {
         }
     }
 
-    public int getAge(Date birthDay) {
+    public static int getAge(Date birthDay) {
         Calendar now = Calendar.getInstance();
         Calendar birth = Calendar.getInstance();
 
@@ -276,5 +282,20 @@ public final class Validate {
             }
         }
         return age;
+    }
+
+    public static Specialization selectSpecialization() {
+        Specialization theSpecialization = null;
+        try {
+            int count = 0;
+            for (Specialization currentSpecialization : Specialization.values()) {
+                count++;
+                System.out.println(count + ". " + currentSpecialization.name());
+            }
+            theSpecialization = Specialization.values()[getINT_LIMIT("Select specialization: ", 1, count) - 1];
+        } catch (IOException ex) {
+            Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return theSpecialization;
     }
 }

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package User;
+package user;
 
-import Admin.Admin;
-import Common.ConsoleColors;
-import Common.UserRole;
-import Doctor.Doctor;
-import Utilities.Validate;
+import admin.Admin;
+import common.ConsoleColors;
+import common.UserRole;
+import doctor.Doctor;
+import utilities.Validate;
 import boundary.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,11 +24,9 @@ public class UserController {
 
     public static UserController userController = null;
     private DataIO<User> userDataIO;
-    private Validate validate;
 
     public UserController() {
         userDataIO = new DataIO<>("users.dat");
-        validate = new Validate();
     }
 
     public static UserController getInstance() {
@@ -84,7 +82,7 @@ public class UserController {
                 System.out.println(ConsoleColors.BLUE_BOLD + "0. Cancel");
                 System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
 
-                int choice = validate.getINT_LIMIT("Your choice: ", 0, 1);
+                int choice = Validate.getINT_LIMIT("Your choice: ", 0, 1);
 
                 switch (choice) {
                     case 0:
@@ -94,11 +92,11 @@ public class UserController {
                     case 1:
                         if (newUser != null) {
 
-                            String oldPassword = validate.getString("Enter old password: ");
+                            String oldPassword = Validate.getString("Enter old password: ");
                             if (newUser.getPassword().equals(oldPassword)) {
 
-                                String newPassword = validate.getPassword("Enter new password: ");
-                                String confirmNewPassword = validate.getPassword("Confirm new password: ");
+                                String newPassword = Validate.getPassword("Enter new password: ");
+                                String confirmNewPassword = Validate.getPassword("Confirm new password: ");
 
                                 if (confirmNewPassword.equals(newPassword)) {
                                     newUser.setPassword(newPassword);
@@ -127,7 +125,7 @@ public class UserController {
         UserView uv = new UserView();
         uv.users = uv.getUsers();
         while (true) {
-            String code = validate.getUsername("input new user code: ");
+            String code = Validate.getUsername("input new user code: ");
             for (User u : uv.users) {
                 if (u.getUserCode() != null) {//chi check nhung user co usercode
                     if (u.getUserCode().equalsIgnoreCase(code)) {
@@ -148,7 +146,7 @@ public class UserController {
         UserView uv = new UserView();
         uv.users = uv.getUsers();
         while (true) {
-            String userName = validate.getUsername("Type in the new UserName: ");
+            String userName = Validate.getUsername("Type in the new UserName: ");
             for (User u : uv.users) {
                 if (u.getUserName() != null) {
                     if (u.getUserName().equals(userName)) {
@@ -175,7 +173,7 @@ public class UserController {
         try {
             System.out.println("what account you want to create\n" + "1.Admin\n" + "2.Authorized_Doctor\n"
                     + "3.Doctor\n" + "4.Normal User\n" + "0.Cancel");
-            choice = validate.getINT_LIMIT("Your choice: ", 0, 4);
+            choice = Validate.getINT_LIMIT("Your choice: ", 0, 4);
             if (choice == 0) {
                 return;
             }
@@ -184,38 +182,38 @@ public class UserController {
             String password;
             switch (choice) {
                 case 1://admin
-                    password = validate.getPassword(askPass);
+                    password = Validate.getPassword(askPass);
                     Admin newAdmin = new Admin(UserCode, UserName, password, UserRole.ADMIN);
                     uv.addUser(newAdmin);
                     break;
 
                 case 2://authDoctor
-                    String authDocName = validate.getUsername("Enter the doctor name: ");
-                    password = validate.getPassword(askPass);
+                    String authDocName = Validate.getUsername("Enter the doctor name: ");
+                    password = Validate.getPassword(askPass);
                     int AuthDocID = uv.getNewDoctorHighestID();
                     Doctor newAuthDoctor = new Doctor(UserCode, UserName, password, UserRole.AUTHORIZED_DOCTOR);
                     newAuthDoctor.setDoctorId(AuthDocID);
                     newAuthDoctor.setName(authDocName);
                     System.out.print(askDoctorSpecialization);
-                    newAuthDoctor.setSpecialization(Doctor.selectSpecialization());
-                    newAuthDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
+                    newAuthDoctor.setSpecialization(Validate.selectSpecialization());
+                    newAuthDoctor.setAvailability(Validate.getDate_LimitToCurrent(askDoctorAvailability));
                     uv.addUser(newAuthDoctor);
                     break;
 
                 case 3://doctor
-                    String docName = validate.getUsername("Enter the doctor name: ");
+                    String docName = Validate.getUsername("Enter the doctor name: ");
                     int docID = uv.getNewDoctorHighestID();
                     Doctor newDoctor = new Doctor(UserCode, UserName, null, UserRole.DOCTOR);
                     newDoctor.setDoctorId(docID);
                     newDoctor.setName(docName);
                     System.out.print(askDoctorSpecialization);
-                    newDoctor.setSpecialization(Doctor.selectSpecialization());
-                    newDoctor.setAvailability(validate.getDate_LimitToCurrent(askDoctorAvailability));
+                    newDoctor.setSpecialization(Validate.selectSpecialization());
+                    newDoctor.setAvailability(Validate.getDate_LimitToCurrent(askDoctorAvailability));
                     uv.addUser(newDoctor);
                     break;
 
                 case 4://normal user
-                    password = validate.getPassword("Type in your Password: ");
+                    password = Validate.getPassword("Type in your Password: ");
                     User u = new User(UserName, password, UserRole.USER);
                     uv.addUser(u);
                     break;
@@ -234,8 +232,8 @@ public class UserController {
     public User askUpdate(User updateMe) throws IOException {
         updateMe.setUserName(inputUserName());
         while (true) {
-            String pass = validate.getPassword("Type in this account new password: ");
-            if (pass.equals(validate.getPassword("Confirm account new password: "))) {
+            String pass = Validate.getPassword("Type in this account new password: ");
+            if (pass.equals(Validate.getPassword("Confirm account new password: "))) {
                 updateMe.setPassword(pass);
                 break;
             } else {

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Doctor;
+package doctor;
 
-import Admin.ValidationAdminManager;
-import Common.ConsoleColors;
-import Common.Patient;
-import User.User;
-import Utilities.Validate;
+import admin.ValidationAdminManager;
+import common.ConsoleColors;
+import common.Patient;
+import user.User;
+import utilities.Validate;
 import boundary.DataIO;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,8 +21,6 @@ import java.util.Date;
  * @author Admin
  */
 public class DoctorController {
-
-    Validate validate;
     DataIO<User> userDataIO;
     ValidationAdminManager validationAdminManager;
 
@@ -32,7 +30,6 @@ public class DoctorController {
     SimpleDateFormat dateFormat;
 
     public DoctorController() {
-        validate = new Validate();
         validationAdminManager = new ValidationAdminManager();
         userDataIO = new DataIO<>("users.dat");
         dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
@@ -47,7 +44,7 @@ public class DoctorController {
 
         if (listPatients.isEmpty()) {
             System.out.println(ConsoleColors.RED + "You don't have any patients yet!!!");
-            if (validate.getYesNo("Do you want add a new patient(Y/N): ")) {
+            if (Validate.getYesNo("Do you want add a new patient(Y/N): ")) {
                 addNewPatient();
                 userDataIO.writeData(listUsers);
                 return;
@@ -61,7 +58,7 @@ public class DoctorController {
         }
 
         printMENU_AddUpdatePatient();
-        int choice = validate.getINT_LIMIT("Enter choice: ", 1, 2);
+        int choice = Validate.getINT_LIMIT("Enter choice: ", 1, 2);
         switch (choice) {
             case 1:
                 addNewPatient();
@@ -83,17 +80,17 @@ public class DoctorController {
 
     private void addNewPatient() throws IOException {
         while (true) {
-            int patientid = validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = validationAdminManager.getPatientByPatientID(patientid, listPatients);
             if (patient != null) {
                 System.out.println(ConsoleColors.RED + "ID exist");
                 continue;
             }
 
-            String name = validate.getString("Enter name: ");
-            String diseaseType = validate.getString("Enter diseaseType: ");
-            Date consultDate = validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String consultNote = validate.getString("Enter consultNote: ");
+            String name = Validate.getString("Enter name: ");
+            String diseaseType = Validate.getString("Enter diseaseType: ");
+            Date consultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
+            String consultNote = Validate.getString("Enter consultNote: ");
 
             listPatients.add(new Patient(patientid, name, diseaseType, consultDate, consultNote));
             break;
@@ -103,17 +100,17 @@ public class DoctorController {
 
     private void updateAPatient() throws IOException {
         while (true) {
-            int patientid = validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = validationAdminManager.getPatientByPatientID(patientid, listPatients);
             if (patient == null) {
                 System.out.println(ConsoleColors.RED + "ID is not exist");
                 continue;
             }
 
-            String newName = validate.getString("Enter name: ");
-            String newDiseaseType = validate.getString("Enter diseaseType: ");
-            Date newConsultDate = validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String newConsultNote = validate.getString("Enter consultNote: ");
+            String newName = Validate.getString("Enter name: ");
+            String newDiseaseType = Validate.getString("Enter diseaseType: ");
+            Date newConsultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
+            String newConsultNote = Validate.getString("Enter consultNote: ");
 
             patient.setName(newName);
             patient.setDiseaseType(newDiseaseType);

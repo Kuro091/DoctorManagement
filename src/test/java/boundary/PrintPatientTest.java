@@ -5,10 +5,10 @@
  */
 package boundary;
 
-import Common.Patient;
-import Common.UserRole;
-import Doctor.Doctor;
-import User.User;
+import common.Patient;
+import common.UserRole;
+import doctor.Doctor;
+import user.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
