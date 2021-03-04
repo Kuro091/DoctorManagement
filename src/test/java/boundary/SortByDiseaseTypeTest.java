@@ -18,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author shado
  */
-public class sortByDiseaseTypeTest {
+public class SortByDiseaseTypeTest {
 
-    public sortByDiseaseTypeTest() {
+    public SortByDiseaseTypeTest() {
     }
 
     @BeforeClass
@@ -40,14 +40,14 @@ public class sortByDiseaseTypeTest {
     }
 
     /**
-     * Test of compare method, of class sortByDiseaseType.
+     * Test of compare method, of class SortByDiseaseType.
      */
     @Test
     public void testCompare() {
         System.out.println("compare");
         Patient o1 = new Patient(8, "p8", "d5", java.sql.Date.valueOf(LocalDate.of(2021, 9, 14)), "patient 8");
         Patient o2 = new Patient(1, "p1", "d1", java.sql.Date.valueOf(LocalDate.of(2020, 11, 10)), "patient 1");
-        sortByDiseaseType instance = new sortByDiseaseType();
+        SortByDiseaseType instance = new SortByDiseaseType();
         int result = instance.compare(o1, o2);
         System.out.println(result);
         assert (result > 0);

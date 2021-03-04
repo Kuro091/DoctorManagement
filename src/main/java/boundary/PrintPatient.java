@@ -62,7 +62,7 @@ public class PrintPatient {
      * @param userList
      * @return
      */
-    public static ArrayList<Patient> getAllPatientsFromDoctors(List<User> userList) {
+    public static List<Patient> getAllPatientsFromDoctors(List<User> userList) {
         ArrayList<Patient> patientList = new ArrayList<>();
         if (userList != null) {
             if (!userList.isEmpty()) {
@@ -92,7 +92,7 @@ public class PrintPatient {
     public static List<Patient> sortByDiseaseType(List<Patient> patientList) {
         if (patientList != null) {
             if (!patientList.isEmpty()) {
-                patientList.sort(new sortByDiseaseType());
+                patientList.sort(new SortByDiseaseType());
             }
         }
         return patientList;
@@ -100,7 +100,7 @@ public class PrintPatient {
 }
 // ******************* Sorting class *******************
 
-class sortByDiseaseType implements Comparator<Patient> {
+class SortByDiseaseType implements Comparator<Patient> {
 
     @Override
     public int compare(Patient o1, Patient o2) {

@@ -1,6 +1,6 @@
-projectKey=DoctorManagement
+projectKey=doctorManagement
 serverUrl=http://localhost:9000
 serverVersion=8.7.0.41497
-dashboardUrl=http://localhost:9000/dashboard?id=DoctorManagement
-ceTaskId=AXf7WI_-Nkl1hyfcp4D5
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXf7WI_-Nkl1hyfcp4D5
+dashboardUrl=http://localhost:9000/dashboard?id=doctorManagement
+ceTaskId=AXf7hk_bNkl1hyfcp4EB
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXf7hk_bNkl1hyfcp4EB
