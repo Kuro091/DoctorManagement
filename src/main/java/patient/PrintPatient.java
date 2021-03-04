@@ -40,18 +40,18 @@ public class PrintPatient {
      */
     public static String printPatientsByDiseaseType(List<Patient> patientList) {
         if ((patientList != null) && (!patientList.isEmpty())) {
-            String print = "";
+            StringBuilder print = new StringBuilder("");
             patientList = sortByDiseaseType(patientList);
             String currentDisease = patientList.get(0).getDiseaseType();
-            print += currentDisease + System.lineSeparator();
+            print.append(currentDisease).append(System.lineSeparator());
             for (Patient currentPatient : patientList) {
                 if (!currentPatient.getDiseaseType().equals(currentDisease)) {
                     currentDisease = currentPatient.getDiseaseType();
-                    print += currentDisease + System.lineSeparator();
+                    print.append(currentDisease).append(System.lineSeparator());
                 }
-                print += currentPatient.toString() + System.lineSeparator();
+                print.append(currentPatient.toString()).append(System.lineSeparator());
             }
-            return print;
+            return print.toString();
         }
         return "No patient found";
     }
