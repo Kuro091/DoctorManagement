@@ -112,7 +112,7 @@ public class DoctorController {
             Date newConsultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
             String newConsultNote = Validate.getString("Enter consultNote: ");
 
-            patient.setName(newName);
+            patient.setPatientName(newName);
             patient.setDiseaseType(newDiseaseType);
             patient.setConsultDate(newConsultDate);
             patient.setConsultNote(newConsultNote);

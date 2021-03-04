@@ -96,19 +96,19 @@ public class PrintPatientTest {
     }
 
     /**
-     * Test of getAllPatientsFromDoctors method, of class PrintPatient.
+     * Test of getAllPatients method, of class PrintPatient.
      */
     @Test
     public void testGetAllPatientsFromDoctors() {
         // --- Test when null ↓
         List<User> userList = null;
         List<Patient> expResult = new ArrayList<>();
-        List<Patient> result = PrintPatient.getAllPatientsFromDoctors(userList);
+        List<Patient> result = PrintPatient.getAllPatients(userList);
         assertArrayEquals(expResult.toArray(), result.toArray());
         // --- Test when null ↑
         // --- Test empty arraylist ↓
         userList = new ArrayList<>();
-        result = PrintPatient.getAllPatientsFromDoctors(userList);
+        result = PrintPatient.getAllPatients(userList);
         assertArrayEquals(expResult.toArray(), result.toArray());
         // --- Test empty arraylist ↑
         // --- Array list not empty but have no patient ↓
@@ -116,7 +116,7 @@ public class PrintPatientTest {
         userList.add(new User(UserRole.ADMIN));
         userList.add(new User(UserRole.DOCTOR));
         userList.add(new User(UserRole.AUTHORIZED_DOCTOR));
-        result = PrintPatient.getAllPatientsFromDoctors(userList);
+        result = PrintPatient.getAllPatients(userList);
         assertArrayEquals(expResult.toArray(), result.toArray());
         // --- Array list not empty but have no patient ↑
         // --- Array list have doctors and user ↓
@@ -170,7 +170,7 @@ public class PrintPatientTest {
         expResult.add(p2);
         expResult.add(p5);
         expResult.add(p7);
-        result = PrintPatient.getAllPatientsFromDoctors(userList);
+        result = PrintPatient.getAllPatients(userList);
         assertArrayEquals(expResult.toArray(), result.toArray());
         // --- Array list have doctors and user ↑
 

@@ -18,7 +18,7 @@ public class ValidationAdminManager {
 
     public Patient getPatientByPatientID(int patientid, ArrayList<Patient> patients) {
         for (Patient patient : patients) {
-            if (patient.getPatientId() == patientid) {
+            if (patient.getPatientID() == patientid) {
                 return patient;
             }
         }

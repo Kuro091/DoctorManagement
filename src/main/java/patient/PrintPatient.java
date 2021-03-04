@@ -1,6 +1,5 @@
 package patient;
 
-import patient.Patient;
 import common.UserRole;
 import doctor.Doctor;
 import user.User;
@@ -29,7 +28,7 @@ public class PrintPatient {
      */
     public static void callPrintPatientByDiseaseType(List<User> userList) {
         Logger theLogger = Logger.getLogger(PrintPatient.class.getName());
-        theLogger.log(Level.INFO, "{0}", printPatientsByDiseaseType(getAllPatientsFromDoctors(userList)));
+        theLogger.log(Level.INFO, "{0}", printPatientsByDiseaseType(getAllPatients(userList)));
     }
 
     /**
@@ -41,7 +40,7 @@ public class PrintPatient {
     public static String printPatientsByDiseaseType(List<Patient> patientList) {
         if ((patientList != null) && (!patientList.isEmpty())) {
             StringBuilder print = new StringBuilder("");
-            patientList = sortByDiseaseType(patientList);
+            sortByDiseaseType(patientList);
             String currentDisease = patientList.get(0).getDiseaseType();
             print.append(currentDisease).append(System.lineSeparator());
             for (Patient currentPatient : patientList) {
@@ -62,7 +61,7 @@ public class PrintPatient {
      * @param userList
      * @return
      */
-    public static List<Patient> getAllPatientsFromDoctors(List<User> userList) {
+    public static List<Patient> getAllPatients(List<User> userList) {
         ArrayList<Patient> patientList = new ArrayList<>();
         if ((userList != null) && (!userList.isEmpty())) {
             for (User currentUser : userList) {

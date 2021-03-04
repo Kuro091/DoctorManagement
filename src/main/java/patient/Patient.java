@@ -15,8 +15,8 @@ import java.util.Date;
  */
 public class Patient implements Serializable {
 
-    private int patientId;
-    private String name;
+    private int patientID;
+    private String patientName;
     private String diseaseType;
     private Date consultDate;
     private String consultNote;
@@ -25,27 +25,27 @@ public class Patient implements Serializable {
     }
 
     public Patient(int patientId, String name, String diseaseType, Date consultDate, String consultNote) {
-        this.patientId = patientId;
-        this.name = name;
+        this.patientID = patientId;
+        this.patientName = name;
         this.diseaseType = diseaseType;
         this.consultDate = consultDate;
         this.consultNote = consultNote;
     }
 
-    public int getPatientId() {
-        return patientId;
+    public int getPatientID() {
+        return patientID;
     }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
+    public void setPatientID(int patientID) {
+        this.patientID = patientID;
     }
 
-    public String getName() {
-        return name;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
     public String getDiseaseType() {
@@ -73,8 +73,7 @@ public class Patient implements Serializable {
     }
 
     public String toString(SimpleDateFormat dateFormat) {
-        return (patientId + " | " + name + " | " + diseaseType + " | " + dateFormat.format(consultDate) + " | " + consultNote);
-//        return String.format("%-10s|%-15s|%-15s|%-15s|%-15s", patientId, name, diseaseType, dateFormat.format(consultDate), consultNote);
+        return (patientID + " | " + patientName + " | " + diseaseType + " | " + dateFormat.format(consultDate) + " | " + consultNote);
     }
 
     @Override
@@ -85,8 +84,7 @@ public class Patient implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        return hash;
+        return 7;
     }
 
     @Override
@@ -101,11 +99,7 @@ public class Patient implements Serializable {
             return false;
         }
         final Patient other = (Patient) obj;
-        if (this.patientId != other.patientId) {
-            return false;
-        }
-        return true;
+        return this.patientID == other.patientID;
     }
-    
-    
+
 }

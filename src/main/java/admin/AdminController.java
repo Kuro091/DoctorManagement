@@ -135,7 +135,7 @@ public class AdminController {
             Date newConsultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
             String newConsultNote = Validate.getString("Enter consultNote: ");
 
-            patient.setName(newName);
+            patient.setPatientName(newName);
             patient.setDiseaseType(newDiseaseType);
             patient.setConsultDate(newConsultDate);
             patient.setConsultNote(newConsultNote);
@@ -169,7 +169,7 @@ public class AdminController {
                         System.out.println(ConsoleColors.BLUE_BOLD + "Patients : ");
 
                         doc.getPatients().forEach(p -> {
-                            System.out.println(ConsoleColors.PURPLE_BOLD + "PatientName: " + p.getName() + " |PatientDisease: " + p.getDiseaseType() + " |Note: " + p.getConsultNote());
+                            System.out.println(ConsoleColors.PURPLE_BOLD + "PatientName: " + p.getPatientName() + " |PatientDisease: " + p.getDiseaseType() + " |Note: " + p.getConsultNote());
                             System.out.println(ConsoleColors.PURPLE_BOLD + "Note: " + p.getConsultNote());
                             System.out.println("***");
                         });
