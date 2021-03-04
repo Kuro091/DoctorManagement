@@ -5,14 +5,12 @@
  */
 package boundary;
 
-import User.User;
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,8 +31,8 @@ public final class DataIO<T> {
         saveFileName = "users.dat";
     }
 
-    public DataIO(String USER_SAVE_FILE_NAME) {
-        this.saveFileName = USER_SAVE_FILE_NAME;
+    public DataIO(String fileName) {
+        this.saveFileName = fileName;
     }
 
     // ******************* Main methods *******************
@@ -44,21 +42,33 @@ public final class DataIO<T> {
      * @return
      */
     public ArrayList<T> readData() {
+        ArrayList<T> theList = new ArrayList<>();
+        FileInputStream fin = null;
         ObjectInputStream in = null;
-        ArrayList<T> theList = null;
         try {
-            in = new ObjectInputStream(new FileInputStream("users.dat"));
+            fin = new FileInputStream("users.dat");
+            in = new ObjectInputStream(fin);
             theList = (ArrayList<T>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            try {
-                in.close();
-            } catch (IOException ex) {
-                Logger.getLogger(UserDataIO.class.getName()).log(Level.SEVERE, null, ex);
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (fin != null) {
+                try {
+                    fin.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-
         return theList;
     }
 
@@ -74,15 +84,24 @@ public final class DataIO<T> {
             fos = new FileOutputStream(saveFileName);
             oos = new ObjectOutputStream(fos);
             oos.writeObject(theList);
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            try {
-                oos.close();
-                fos.close();
-            } catch (IOException ex) {
-                Logger.getLogger(UserDataIO.class.getName()).log(Level.SEVERE, null, ex);
+            if (oos != null) {
+                try {
+                    oos.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
