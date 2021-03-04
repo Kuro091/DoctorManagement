@@ -28,7 +28,7 @@ public class PrintPatient {
      */
     public static void callPrintPatientByDiseaseType(List<User> userList) {
         Logger theLogger = Logger.getLogger(PrintPatient.class.getName());
-        theLogger.log(Level.INFO, "{0}", printPatientsByDiseaseType(getAllPatients(userList)));
+        theLogger.log(Level.INFO, "{0}", printPatientsByDiseaseType(getAllPatientsFromDoctors(userList)));
     }
 
     /**
@@ -61,7 +61,7 @@ public class PrintPatient {
      * @param userList
      * @return
      */
-    public static List<Patient> getAllPatients(List<User> userList) {
+    public static List<Patient> getAllPatientsFromDoctors(List<User> userList) {
         ArrayList<Patient> patientList = new ArrayList<>();
         if ((userList != null) && (!userList.isEmpty())) {
             for (User currentUser : userList) {
@@ -73,7 +73,6 @@ public class PrintPatient {
                             patientList.add(patient);
                         }
                     }
-
                 }
             }
         }

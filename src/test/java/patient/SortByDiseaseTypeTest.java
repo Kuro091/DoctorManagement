@@ -57,7 +57,7 @@ public class SortByDiseaseTypeTest {
         Patient o3 = new Patient(3, "p3", "d5", java.sql.Date.valueOf(LocalDate.of(2021, 9, 9)), "patient 3");
         result = instance.compare(o1, o3);
         System.out.println(result);
-        assertTrue(result == 0);
+        assertEquals(result, 0);
     }
 
 }
