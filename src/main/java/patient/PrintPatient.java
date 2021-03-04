@@ -56,6 +56,20 @@ public class PrintPatient {
     }
 
     /**
+     * Get patient form one doctor into the list
+     * @param currentDoctor
+     * @param patientList 
+     */
+    private static void getPatientFromOneDoctor(Doctor currentDoctor, List<Patient> patientList) {
+        ArrayList<Patient> tempPatientList = currentDoctor.getPatients();
+        if (tempPatientList != null) {
+            for (Patient patient : tempPatientList) {
+                patientList.add(patient);
+            }
+        }
+    }
+
+    /**
      * Get all patients of all doctors
      *
      * @param userList
@@ -67,12 +81,7 @@ public class PrintPatient {
             for (User currentUser : userList) {
                 if ((currentUser.getUserRole() == UserRole.AUTHORIZED_DOCTOR) && (currentUser instanceof Doctor)) {
                     Doctor currentDoctor = (Doctor) currentUser;
-                    ArrayList<Patient> tempPatientList = currentDoctor.getPatients();
-                    if (tempPatientList != null) {
-                        for (Patient patient : tempPatientList) {
-                            patientList.add(patient);
-                        }
-                    }
+                    getPatientFromOneDoctor(currentDoctor, patientList);
                 }
             }
         }

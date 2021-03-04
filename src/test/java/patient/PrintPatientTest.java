@@ -90,7 +90,7 @@ public class PrintPatientTest {
         assertEquals(expResult, result);
         // --- Test when patient list have patient ↑
     }
-
+    
     /**
      * Test of getAllPatientsFromDoctors method, of class PrintPatient.
      */
