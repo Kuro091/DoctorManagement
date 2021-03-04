@@ -6,7 +6,7 @@
 package admin;
 
 import common.ConsoleColors;
-import common.Patient;
+import patient.Patient;
 import common.UserRole;
 import utilities.Validate;
 import java.io.IOException;

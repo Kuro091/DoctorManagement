@@ -1,6 +1,6 @@
-package boundary;
+package patient;
 
-import common.Patient;
+import patient.Patient;
 import common.UserRole;
 import doctor.Doctor;
 import user.User;

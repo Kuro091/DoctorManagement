@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package boundary;
+package patient;
 
-import common.Patient;
 import common.UserRole;
 import doctor.Doctor;
-import user.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
+import user.User;
+
 
 /**
  * 2021/02/27 | PASSED

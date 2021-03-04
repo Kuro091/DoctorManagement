@@ -5,7 +5,7 @@ package doctor;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import common.Patient;
+import patient.Patient;
 import common.UserRole;
 import user.User;
 import java.io.IOException;

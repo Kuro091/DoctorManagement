@@ -10,7 +10,7 @@ import admin.Admin;
 import admin.AdminController;
 import common.ConsoleColors;
 import common.UserRole;
-import boundary.PrintPatient;
+import patient.PrintPatient;
 import doctor.Specialization;
 import doctor.Doctor;
 import doctor.DoctorController;

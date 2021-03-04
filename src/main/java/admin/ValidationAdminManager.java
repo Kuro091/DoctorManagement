@@ -5,7 +5,7 @@
  */
 package admin;
 
-import common.Patient;
+import patient.Patient;
 import common.UserRole;
 import user.User;
 import java.util.ArrayList;

@@ -7,7 +7,7 @@ package doctor;
 
 import admin.ValidationAdminManager;
 import common.ConsoleColors;
-import common.Patient;
+import patient.Patient;
 import user.User;
 import utilities.Validate;
 import boundary.DataIO;

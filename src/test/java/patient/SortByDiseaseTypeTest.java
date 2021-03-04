@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package boundary;
+package patient;
 
-import common.Patient;
 import java.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,8 +14,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * 2021/02/27 | PASSED
  *
- * @author shado
+ * @author Vân
  */
 public class SortByDiseaseTypeTest {
 
