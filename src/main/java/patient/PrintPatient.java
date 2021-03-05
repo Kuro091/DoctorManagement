@@ -61,7 +61,7 @@ public class PrintPatient {
      * @param patientList 
      */
     private static void getPatientFromOneDoctor(Doctor currentDoctor, List<Patient> patientList) {
-        ArrayList<Patient> tempPatientList = currentDoctor.getPatients();
+        ArrayList<Patient> tempPatientList = (ArrayList<Patient>) currentDoctor.getPatients();
         if (tempPatientList != null) {
             for (Patient patient : tempPatientList) {
                 patientList.add(patient);

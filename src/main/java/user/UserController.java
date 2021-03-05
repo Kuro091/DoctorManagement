@@ -35,7 +35,7 @@ public class UserController {
             List<User> users = UserView.getInstance().getUsers();
 
             users.forEach(u -> {
-                if (u.getUserRole() == UserRole.ADMIN || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR
+                if ( (u.getUserRole() == UserRole.ADMIN || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR)
                         && (u.getUserName().equals(user.getUserName()) && u.getPassword().equals(user.getPassword()))) {
                     newUser = new User();
                     newUser.setUserName(user.getUserName());

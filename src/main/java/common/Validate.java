@@ -59,7 +59,7 @@ public final class Validate {
 
     public static String getString(String msg) throws IOException {
         while (true) {
-            System.out.println(msg);
+            System.out.print(msg);
             String check = in.readLine().trim();
             if (check.isEmpty()) {
                 System.out.println(ConsoleColors.RED + "Input is not empty");
@@ -72,7 +72,7 @@ public final class Validate {
     public static int getIntLimit(String msg, int min, int max) throws IOException {
         while (true) {
             try {
-                System.out.println(msg);
+                System.out.print(msg);
                 int number = Integer.parseInt(in.readLine());
                 if (number < min || number > max) {
                     throw new NumberFormatException();

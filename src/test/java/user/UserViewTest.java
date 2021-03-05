@@ -47,7 +47,7 @@ public class UserViewTest {
     public void testGetUsers() {
         UserView instance = new UserView();
         ArrayList<User> expResult = new ArrayList<User>();
-        ArrayList<User> result = instance.getUsers();
+        ArrayList<User> result = (ArrayList<User>) instance.getUsers();
         assertEquals(instance.getUsersSize(), result.size());
     }
 
