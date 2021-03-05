@@ -1,11 +1,5 @@
 package main;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import admin.Admin;
 import admin.AdminController;
 import common.ConsoleColors;
@@ -23,6 +17,7 @@ import common.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,19 +27,19 @@ import java.util.logging.Logger;
  */
 public class Main {
 
-    static ArrayList<User> users;
+    static List<User> users;
     static UserController userController;
     static AdminController adminController;
     static DoctorController doctorController;
 
+    
     public static void main(String[] args) {
         adminController = new AdminController();
         doctorController = new DoctorController();
-        userController = UserController.getInstance();
+        userController = new UserController();
 
         //------------------ADD TAM DATA VAO FILE USERS.DAT DE TEST, XOA SAU
         users = new ArrayList<>();
-
         users.add(new Admin("admin01", "admin01", "admin01", UserRole.ADMIN));
         users.add(new Admin("admin02", "admin02", "admin02", UserRole.ADMIN));
         users.add(new Admin("admin03", "admin03", "admin03", UserRole.ADMIN));
@@ -57,43 +52,12 @@ public class Main {
         users.add(new Doctor(7, "doctor07", Specialization.NHA_KHOA, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         users.add(new Doctor(8, "doctor08", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
 
-        (new DataIO<User>()).writeData(users);
-        //------------------ADD TAM DATA VAO FILE USERS.DAT DE TEST, XOA SAU
+        //------------WRITE META DATA TO FILE
+        new DataIO().writeData(users);
 
         loginMenu();
         mainMenu();
 
-    }
-
-    private static void printLoginMenu() {
-        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
-        System.out.println(ConsoleColors.BLUE_BOLD + "Welcome to Doctor Management Program");
-        System.out.println(ConsoleColors.BLUE_BOLD + "1. Login");
-        System.out.println(ConsoleColors.BLUE_BOLD + "0. Exit");
-        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
-    }
-
-    private static void printAdminMenu() {
-        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
-        System.out.println(ConsoleColors.BLUE_BOLD + "ADMIN PANEL");
-        System.out.println(ConsoleColors.BLUE_BOLD + "1. View/Add/Update/Delete Doctor");
-        System.out.println(ConsoleColors.BLUE_BOLD + "2. Add/Update Patient info");
-        System.out.println(ConsoleColors.BLUE_BOLD + "3. View Doctor info incl. Patient info");
-        System.out.println(ConsoleColors.BLUE_BOLD + "4. View/Add/Update/Delete User; Change User's Password");
-        System.out.println(ConsoleColors.BLUE_BOLD + "5. Query & Print out patients info");
-        System.out.println(ConsoleColors.BLUE_BOLD + "6. Change password");
-        System.out.println(ConsoleColors.BLUE_BOLD + "7. Logout");
-        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
-    }
-
-    private static void printDoctorMenu() {
-        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
-        System.out.println(ConsoleColors.BLUE_BOLD + "DOCTOR PANEL");
-        System.out.println(ConsoleColors.BLUE_BOLD + "1. Add/Update Patient info");
-        System.out.println(ConsoleColors.BLUE_BOLD + "2. View Doctor info incl. Patient info");
-        System.out.println(ConsoleColors.BLUE_BOLD + "3. Change password");
-        System.out.println(ConsoleColors.BLUE_BOLD + "4. Log out");
-        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
     }
 
     private static void loginMenu() {
@@ -101,8 +65,8 @@ public class Main {
         while (true) {
             try {
                 printLoginMenu();
-                choice = Validate.getINT_LIMIT("Your choice: ", 0, 1);
-                Boolean isLoggedIn = false;
+                choice = Validate.getIntLimit("Your choice: ", 0, 1);
+                boolean isLoggedIn = false;
                 switch (choice) {
                     case 0:
                         return;
@@ -141,14 +105,14 @@ public class Main {
         while (true) {
             try {
                 printAdminMenu();
-                choice = Validate.getINT_LIMIT("Your choice: ", 1, 7);
+                choice = Validate.getIntLimit("Your choice: ", 1, 7);
                 switch (choice) {
                     case 1:
                         DoctorView d = new DoctorView();
                         d.doFunction1();
                         break;
                     case 2:
-                        adminController.processing();
+                        adminController.addUpPatient();
                         break;
                     case 3:
                         adminController.queryDoctorInfo();
@@ -184,7 +148,7 @@ public class Main {
         while (true) {
             try {
                 printDoctorMenu();
-                choice = Validate.getINT_LIMIT("Your choice: ", 1, 4);
+                choice = Validate.getIntLimit("Your choice: ", 1, 4);
 
                 switch (choice) {
                     case 1:
@@ -215,10 +179,12 @@ public class Main {
         UserView uv = new UserView();
         int choice;
         while (true) {
-            System.out.println("--------------------------------\n" + "Option 4 please choose what you want to do\n"
-                    + " 1. view list of all user\n" + " 2. add user\n" + " 3. update user\n" + " 4. deleted user\n"
-                    + " 0. Back to main menu\n" + "--------------------------------");
-            choice = Validate.getINT_LIMIT("Choose: ", 0, 4);
+            System.out.println("1. View list of all user");
+            System.out.println("2. Add user");
+            System.out.println("3. Update user");
+            System.out.println("4. Delete user");
+            System.out.println("0. Back to main menu");
+            choice = Validate.getIntLimit("Choose: ", 0, 4);
             switch (choice) {
                 case 1:
                     uv.showAllUser();
@@ -238,6 +204,37 @@ public class Main {
                     break;
             }
         }
+    }
+
+    private static void printLoginMenu() {
+        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
+        System.out.println(ConsoleColors.BLUE_BOLD + "Welcome to Doctor Management Program");
+        System.out.println(ConsoleColors.BLUE_BOLD + "1. Login");
+        System.out.println(ConsoleColors.BLUE_BOLD + "0. Exit");
+        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
+    }
+
+    private static void printAdminMenu() {
+        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
+        System.out.println(ConsoleColors.BLUE_BOLD + "ADMIN PANEL");
+        System.out.println(ConsoleColors.BLUE_BOLD + "1. View/Add/Update/Delete Doctor");
+        System.out.println(ConsoleColors.BLUE_BOLD + "2. Add/Update Patient info");
+        System.out.println(ConsoleColors.BLUE_BOLD + "3. View Doctor info incl. Patient info");
+        System.out.println(ConsoleColors.BLUE_BOLD + "4. View/Add/Update/Delete User; Change User's Password");
+        System.out.println(ConsoleColors.BLUE_BOLD + "5. Query & Print out patients info");
+        System.out.println(ConsoleColors.BLUE_BOLD + "6. Change password");
+        System.out.println(ConsoleColors.BLUE_BOLD + "7. Logout");
+        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
+    }
+
+    private static void printDoctorMenu() {
+        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
+        System.out.println(ConsoleColors.BLUE_BOLD + "DOCTOR PANEL");
+        System.out.println(ConsoleColors.BLUE_BOLD + "1. Add/Update Patient info");
+        System.out.println(ConsoleColors.BLUE_BOLD + "2. View Doctor info incl. Patient info");
+        System.out.println(ConsoleColors.BLUE_BOLD + "3. Change password");
+        System.out.println(ConsoleColors.BLUE_BOLD + "4. Log out");
+        System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
     }
 
 }

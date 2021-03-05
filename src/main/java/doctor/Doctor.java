@@ -8,12 +8,10 @@ package doctor;
 import patient.Patient;
 import common.UserRole;
 import user.User;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 
 /**
  *
@@ -25,7 +23,7 @@ public class Doctor extends User implements Serializable {
     private String name;
     private Specialization specialization;
     private Date availability; //
-    private ArrayList<Patient> patients;
+    private List<Patient> patients;
 
     public Doctor() {
     }
@@ -39,25 +37,12 @@ public class Doctor extends User implements Serializable {
         this.patients = new ArrayList<>();
     }
 
-    public Doctor(int doctorId, String name, Specialization specialization, Date availability, ArrayList<Patient> patients, UserRole userRole) {
-       super(userRole);
-        this.doctorId = doctorId;
-        this.name = name;
-        this.specialization = specialization;
-        this.availability = availability;
-        this.patients = patients;
+    public Doctor(int doctorId, String name, Specialization specialization, Date availability, List<Patient> patients, UserRole userRole) {
+
+        this(doctorId, name, specialization, availability, patients, null, null, null, userRole);
     }
 
-    public Doctor(int doctorId, String name, Specialization specialization, Date availability, ArrayList<Patient> patients, String userName, String password, UserRole userRole) {
-        super(userName, password, userRole);
-        this.doctorId = doctorId;
-        this.name = name;
-        this.specialization = specialization;
-        this.availability = availability;
-        this.patients = patients;
-    }
-
-    public Doctor(int doctorId, String name, Specialization specialization, Date availability, ArrayList<Patient> patients, String userCode, String userName, String password, UserRole userRole) {
+    public Doctor(int doctorId, String name, Specialization specialization, Date availability, List<Patient> patients, String userCode, String userName, String password, UserRole userRole) {
         super(userCode, userName, password, userRole);
         this.doctorId = doctorId;
         this.name = name;
@@ -65,9 +50,6 @@ public class Doctor extends User implements Serializable {
         this.availability = availability;
         this.patients = patients;
     }
-    
-    
-    
 
     public int getDoctorId() {
         return doctorId;
@@ -85,8 +67,6 @@ public class Doctor extends User implements Serializable {
         this.specialization = specialization;
     }
 
-    
-
     public Date getAvailability() {
         return availability;
     }
@@ -95,11 +75,11 @@ public class Doctor extends User implements Serializable {
         this.availability = availability;
     }
 
-    public ArrayList<Patient> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
-    public void setPatients(ArrayList<Patient> patients) {
+    public void setPatients(List<Patient> patients) {
         this.patients = patients;
     }
 

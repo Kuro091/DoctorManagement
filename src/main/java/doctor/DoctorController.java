@@ -15,23 +15,25 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Admin
  */
 public class DoctorController {
-    DataIO<User> userDataIO;
+
+    DataIO userDataIO;
     ValidationAdminManager validationAdminManager;
 
-    ArrayList<User> listUsers;
-    ArrayList<Patient> listPatients;
+    List<User> listUsers;
+    List<Patient> listPatients;
     Doctor doctorGotByUserCode;
     SimpleDateFormat dateFormat;
 
     public DoctorController() {
         validationAdminManager = new ValidationAdminManager();
-        userDataIO = new DataIO<>("users.dat");
+        userDataIO = new DataIO();
         dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
         initMemoryData();
     }
@@ -58,7 +60,7 @@ public class DoctorController {
         }
 
         printMENU_AddUpdatePatient();
-        int choice = Validate.getINT_LIMIT("Enter choice: ", 1, 2);
+        int choice = Validate.getIntLimit("Enter choice: ", 1, 2);
         switch (choice) {
             case 1:
                 addNewPatient();
@@ -80,43 +82,40 @@ public class DoctorController {
 
     private void addNewPatient() throws IOException {
         while (true) {
-            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getIntLimit("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = validationAdminManager.getPatientByPatientID(patientid, listPatients);
             if (patient != null) {
                 System.out.println(ConsoleColors.RED + "ID exist");
-                continue;
+            } else {
+                String name = Validate.getString("Enter name: ");
+                String diseaseType = Validate.getString("Enter diseaseType: ");
+                Date consultDate = Validate.getDateCurrent("Enter consultDate: ");
+                String consultNote = Validate.getString("Enter consultNote: ");
+
+                listPatients.add(new Patient(patientid, name, diseaseType, consultDate, consultNote));
+                return;
             }
-
-            String name = Validate.getString("Enter name: ");
-            String diseaseType = Validate.getString("Enter diseaseType: ");
-            Date consultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String consultNote = Validate.getString("Enter consultNote: ");
-
-            listPatients.add(new Patient(patientid, name, diseaseType, consultDate, consultNote));
-            break;
         }
-
     }
 
     private void updateAPatient() throws IOException {
         while (true) {
-            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getIntLimit("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = validationAdminManager.getPatientByPatientID(patientid, listPatients);
             if (patient == null) {
                 System.out.println(ConsoleColors.RED + "ID is not exist");
-                continue;
+            } else {
+                String newName = Validate.getString("Enter name: ");
+                String newDiseaseType = Validate.getString("Enter diseaseType: ");
+                Date newConsultDate = Validate.getDateCurrent("Enter consultDate: ");
+                String newConsultNote = Validate.getString("Enter consultNote: ");
+
+                patient.setPatientName(newName);
+                patient.setDiseaseType(newDiseaseType);
+                patient.setConsultDate(newConsultDate);
+                patient.setConsultNote(newConsultNote);
+                break;
             }
-
-            String newName = Validate.getString("Enter name: ");
-            String newDiseaseType = Validate.getString("Enter diseaseType: ");
-            Date newConsultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String newConsultNote = Validate.getString("Enter consultNote: ");
-
-            patient.setPatientName(newName);
-            patient.setDiseaseType(newDiseaseType);
-            patient.setConsultDate(newConsultDate);
-            patient.setConsultNote(newConsultNote);
-            break;
         }
     }
 

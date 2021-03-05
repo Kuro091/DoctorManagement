@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package admin;
 
 import common.ConsoleColors;
@@ -16,28 +11,26 @@ import common.DataIO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-/**
- *
- * @author Admin
- */
+
 public class AdminController {
 
     ValidationAdminManager adminManager;
-    DataIO<User> userDataIO;
-    ArrayList<User> listUsers;
-    ArrayList<Patient> listPatients;
+    DataIO userDataIO;
+    List<User> listUsers;
+    List<Patient> listPatients;
     Doctor doctorGotByUserCode;
     SimpleDateFormat dateFormat;
 
     public AdminController() {
         adminManager = new ValidationAdminManager();
-        userDataIO = new DataIO<>("users.dat");
-        initMemoryData();
+        userDataIO = new DataIO();
         dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
+        initMemoryData();
     }
 
-    public void processing() throws IOException {
+    public void addUpPatient() throws IOException {
         //--------Đọc data, xóa sau
         initMemoryData();
         while (true) {
@@ -52,16 +45,7 @@ public class AdminController {
             }
             System.out.println("");
 
-            while (true) {
-                String usercode = Validate.getString("Enter usercode: ");
-                doctorGotByUserCode = (Doctor) adminManager.getDoctorByUserCode(usercode, listUsers);
-                if (doctorGotByUserCode == null) {
-                    System.out.println(ConsoleColors.RED + "This usercode does not exist,  enter a new usercode ");
-                } else {
-                    break;
-                }
-            }
-
+            doctorGotByUserCode = getDoctorByUserCode();
             listPatients = doctorGotByUserCode.getPatients();
 
             if (listPatients.isEmpty()) {
@@ -69,14 +53,12 @@ public class AdminController {
             } else {
                 System.out.println(ConsoleColors.BLUE_BOLD + "LIST PATIENT");
                 System.out.println(String.format("%-10s|%-15s|%-15s|%-15s|%-15s", "ID", "NAME", "DESEASE TYPE", "CONSULT DATE", "CONSULT NOTE"));
-                listPatients.forEach((patient) -> {
-                    System.out.println(patient.toString(dateFormat));
-                });
+                listPatients.forEach(patient -> System.out.println(patient.toString(dateFormat)));
                 System.out.println("");
             }
 
-            printMENU_AddUpdatePatient();
-            int selection = Validate.getINT_LIMIT("Enter selection: ", 1, 2);
+            menuAddUpdatePatient();
+            int selection = Validate.getIntLimit("Enter selection: ", 1, 2);
             switch (selection) {
                 case 1:
                     addNewPatient();
@@ -90,12 +72,14 @@ public class AdminController {
                         System.out.println("This doctor is not in charge of any patient");
                     }
                     break;
+                default:
+                    break;
             }
             break;
         }
     }
 
-    private void printMENU_AddUpdatePatient() {
+    private void menuAddUpdatePatient() {
         System.out.println(ConsoleColors.BLUE_BOLD + "-----------------------------------");
         System.out.println(ConsoleColors.BLUE_BOLD + "1. Add new a patient");
         System.out.println(ConsoleColors.BLUE_BOLD + "2. Update a patient");
@@ -104,42 +88,39 @@ public class AdminController {
 
     private void addNewPatient() throws IOException {
         while (true) {
-            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getIntLimit("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = adminManager.getPatientByPatientID(patientid, listPatients);
             if (patient != null) {
                 System.out.println(ConsoleColors.RED + "ID exist");
-                continue;
+            } else {
+                String name = Validate.getString("Enter name: ");
+                String diseaseType = Validate.getString("Enter diseaseType: ");
+                Date consultDate = Validate.getDateCurrent("Enter consultDate: ");
+                String consultNote = Validate.getString("Enter consultNote: ");
+                listPatients.add(new Patient(patientid, name, diseaseType, consultDate, consultNote));
+                return;
             }
-
-            String name = Validate.getString("Enter name: ");
-            String diseaseType = Validate.getString("Enter diseaseType: ");
-            Date consultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String consultNote = Validate.getString("Enter consultNote: ");
-            listPatients.add(new Patient(patientid, name, diseaseType, consultDate, consultNote));
-            break;
         }
-
     }
 
     private void updateAPatient() throws IOException {
         while (true) {
-            int patientid = Validate.getINT_LIMIT("Enter patient id: ", 1, Integer.MAX_VALUE);
+            int patientid = Validate.getIntLimit("Enter patient id: ", 1, Integer.MAX_VALUE);
             Patient patient = adminManager.getPatientByPatientID(patientid, listPatients);
             if (patient == null) {
                 System.out.println(ConsoleColors.RED + "ID is not exist");
-                continue;
+            } else {
+                String newName = Validate.getString("Enter name: ");
+                String newDiseaseType = Validate.getString("Enter diseaseType: ");
+                Date newConsultDate = Validate.getDateCurrent("Enter consultDate: ");
+                String newConsultNote = Validate.getString("Enter consultNote: ");
+
+                patient.setPatientName(newName);
+                patient.setDiseaseType(newDiseaseType);
+                patient.setConsultDate(newConsultDate);
+                patient.setConsultNote(newConsultNote);
+                return;
             }
-
-            String newName = Validate.getString("Enter name: ");
-            String newDiseaseType = Validate.getString("Enter diseaseType: ");
-            Date newConsultDate = Validate.getDate_LimitToCurrent("Enter consultDate: ");
-            String newConsultNote = Validate.getString("Enter consultNote: ");
-
-            patient.setPatientName(newName);
-            patient.setDiseaseType(newDiseaseType);
-            patient.setConsultDate(newConsultDate);
-            patient.setConsultNote(newConsultNote);
-            break;
         }
     }
 
@@ -154,7 +135,7 @@ public class AdminController {
                 }
             });
 
-            int doctorCode = Validate.getINT("Enter doctor code (Enter 0 to exit): ");
+            int doctorCode = Validate.getIntLimit("Enter doctor code (Enter 0 to exit): ", 0, Integer.MAX_VALUE);
 
             if (doctorCode == 0) {
                 break;
@@ -178,6 +159,18 @@ public class AdminController {
                     }
                 }
             });
+        }
+    }
+
+    private Doctor getDoctorByUserCode() throws IOException {
+        while (true) {
+            String usercode = Validate.getString("Enter usercode: ");
+            Doctor doctor = (Doctor) adminManager.getDoctorByUserCode(usercode, listUsers);
+            if (doctor == null) {
+                System.out.println(ConsoleColors.RED + "This usercode does not exist,  enter a new usercode ");
+            } else {
+                return doctor;
+            }
         }
     }
 

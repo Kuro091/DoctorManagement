@@ -12,6 +12,7 @@ import common.Validate;
 import common.DataIO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,14 +22,15 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class UserView {
-    DataIO<User> userDataIO;
+
+    DataIO userDataIO;
     Scanner in = new Scanner(System.in);
-    ArrayList<User> users;
-    public static UserView userView = null;
+    List<User> users;
+    private static UserView userView = null;
 
     public UserView() {
         users = new ArrayList<>();
-        userDataIO = new DataIO<>("users.dat");
+        userDataIO = new DataIO();
     }
 
     public static UserView getInstance() {
@@ -38,10 +40,10 @@ public class UserView {
         return userView;
     }
 
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return userDataIO.readData();
     }
-    
+
     public int getUsersSize() {
         return userDataIO.readData().size();
     }
@@ -55,11 +57,9 @@ public class UserView {
     public void deleteUser(String userCode) {
         users = userDataIO.readData();
         for (User u : users) {
-            if (u.getUserCode() != null) {
-                if (u.getUserCode().equals(userCode)) {
-                    users.remove(u);
-                    break;
-                }
+            if (u.getUserCode() != null && u.getUserCode().equals(userCode)) {
+                users.remove(u);
+                break;
             }
         }
         userDataIO.writeData(users);
@@ -84,33 +84,32 @@ public class UserView {
         }
         return null;
     }
-    
+
     int count;
+
     public boolean updateUser(User userUpdate) {
         users = userDataIO.readData();
         count = 0;
-        users.forEach((u) -> {
-            if (u.getUserCode() != null) {
-                if (u.getUserCode().equalsIgnoreCase(userUpdate.getUserCode())) {
-                    count++;
-                    u.setUserName(userUpdate.getUserName());
-                    u.setPassword(userUpdate.getPassword());
-                }
+        users.forEach(u -> {
+            if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(userUpdate.getUserCode())) {
+                count++;
+                u.setUserName(userUpdate.getUserName());
+                u.setPassword(userUpdate.getPassword());
             }
         });
         userDataIO.writeData(users);
-        return (count>0);
+        return (count > 0);
     }
 
     public String inputUserCode() throws IOException {
         while (true) {
             String code = Validate.getUsername("input new user code: ");
             for (User u : users) {
-                if (u.getUserCode() != null) {//chi check nhung user co usercode
-                    if (u.getUserCode().equalsIgnoreCase(code)) {
-                        code = null;
-                        break;
-                    }
+                if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(code)) {//chi check nhung user co usercode
+
+                    code = null;
+                    break;
+
                 }
             }
             if (code == null) {
@@ -125,11 +124,9 @@ public class UserView {
         while (true) {
             String userName = Validate.getUsername("Type in the new UserName: ");
             for (User u : users) {
-                if (u.getUserName() != null) {
-                    if (u.getUserName().equals(userName)) {
-                        userName = null;
-                        break;
-                    }
+                if (u.getUserName() != null && u.getUserName().equals(userName)) {
+                    userName = null;
+                    break;
                 }
             }
             if (userName == null) {
@@ -160,13 +157,11 @@ public class UserView {
             String code = Validate.getUsername("Enter userCode needed to be update: ");
             users = userDataIO.readData();
             for (User find : users) {
-                if (find.getUserCode() != null) {
-                    if (find.getUserCode().equals(code)) {
-                        UserController uc = new UserController();
-                        find = uc.askUpdate(find);
-                        updateUser(find);
-                        return;
-                    }
+                if (find.getUserCode() != null && find.getUserCode().equals(code)) {
+                    UserController uc = new UserController();
+                    find = uc.askUpdate(find);
+                    updateUser(find);
+                    return;
                 }
             }
             System.out.println("Can't find the userCode: " + code);

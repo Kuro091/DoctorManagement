@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package common;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,94 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import user.User;
 
-/**
- * Cách sử dụng: gọi (new DataIO\<Kiểu dữ liệu cần ghi\>()).đọcHoặcViếtGìĐó(mảng
- * cần đọc hoặc viết)
- *
- * @author
- * @param <T>
- */
-public final class DataIO<T> {
+public final class DataIO {
 
-    private String saveFileName; // Default
+    private static final String FILE_SAVE_DATA = "users.dat";
 
-    public DataIO() {
-        saveFileName = "users.dat";
-    }
-
-    public DataIO(String fileName) {
-        this.saveFileName = fileName;
-    }
-
-    // ******************* Main methods *******************
-    /**
-     * Đọc file
-     *
-     * @return
-     */
-    public ArrayList<T> readData() {
-        ArrayList<T> theList = new ArrayList<>();
-        FileInputStream fin = null;
-        ObjectInputStream in = null;
-        try {
-            fin = new FileInputStream("users.dat");
-            in = new ObjectInputStream(fin);
-            theList = (ArrayList<T>) in.readObject();
-        } catch (FileNotFoundException ex) {
+    public List<User> readData() {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_SAVE_DATA))) {
+            return (List<User>) inputStream.readObject();
+        } catch (Exception ex) {
             Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (fin != null) {
-                try {
-                    fin.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            return new ArrayList<>();
         }
-        return theList;
     }
 
-    /**
-     * Ghi file
-     *
-     * @param theList
-     */
-    public void writeData(List<T> theList) {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
-        try {
-            fos = new FileOutputStream(saveFileName);
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(theList);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
+    public void writeData(List<User> users) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_SAVE_DATA))) {
+            objectOutputStream.writeObject(users);
         } catch (IOException ex) {
             Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(DataIO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
         }
     }
 }

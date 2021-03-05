@@ -5,7 +5,6 @@
  */
 package common;
 
-import common.ConsoleColors;
 import doctor.Specialization;
 import doctor.Doctor;
 import java.io.BufferedReader;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,28 +23,17 @@ import java.util.regex.Pattern;
  */
 public final class Validate {
 
+    static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    static final Pattern PATTERN_USERNAME = Pattern.compile("^[A-Za-z][A-Za-z0-9]{4,}$");
+    static final Pattern PATTERN_PASSWORD = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{6,}$");
+
     private Validate() {
+        throw new UnsupportedOperationException();
     }
 
-    static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-    //getMail
-    private static final String EMAIL_VALID = "^[A-Za-z0-9.+-_%]+@[A-Za-z.-]+\\.[A-Za-z]{2,4}$";
-
-    //getPhone
-    static Pattern PHONE_NUMBER_1 = Pattern.compile("^[0-9]{10}$");
-    static Pattern PHONE_NUMBER_2 = Pattern.compile("^[0-9]{3}-[0-9]{3}-[0-9]{4}$");
-    static Pattern PHONE_NUMBER_3 = Pattern.compile("^[0-9]{3}.[0-9]{3}.[0-9]{4}$");
-    static Pattern PHONE_NUMBER_4 = Pattern.compile("^[0-9]{3} [0-9]{3} [0-9]{4}$");
-    static Pattern PHONE_NUMBER_5 = Pattern.compile("^[0-9]{3}-[0-9]{3}-[0-9]{4} [e|ext][0-9]{4}$");
-    static Pattern PHONE_NUMBER_6 = Pattern.compile("^\\([0-9]{3}\\)-[0-9]{3}-[0-9]{4}$");
-
-    static Pattern PATTERN_USERNAME = Pattern.compile("^[A-Za-z][A-Za-z0-9]{4,}$");
-    static Pattern PATTERN_PASSWORD = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{6,}$");
-
-    public static String getPassword(String MSG) throws IOException {
+    public static String getPassword(String msg) throws IOException {
         while (true) {
-            System.out.print(MSG);
+            System.out.print(msg);
             String check = in.readLine().trim();
             if (PATTERN_PASSWORD.matcher(check).find()) {
                 return check;
@@ -57,9 +44,9 @@ public final class Validate {
         }
     }
 
-    public static String getUsername(String MSG) throws IOException {
+    public static String getUsername(String msg) throws IOException {
         while (true) {
-            System.out.print(MSG);
+            System.out.print(msg);
             String check = in.readLine().trim();
             if (PATTERN_USERNAME.matcher(check).find()) {
                 return check;
@@ -70,9 +57,9 @@ public final class Validate {
         }
     }
 
-    public static String getString(String MSG) throws IOException {
+    public static String getString(String msg) throws IOException {
         while (true) {
-            System.out.print(MSG);
+            System.out.println(msg);
             String check = in.readLine().trim();
             if (check.isEmpty()) {
                 System.out.println(ConsoleColors.RED + "Input is not empty");
@@ -82,90 +69,24 @@ public final class Validate {
         }
     }
 
-    public static int getINT(String MSG) throws IOException {
+    public static int getIntLimit(String msg, int min, int max) throws IOException {
         while (true) {
             try {
-                System.out.print(MSG);
+                System.out.println(msg);
                 int number = Integer.parseInt(in.readLine());
-                return number;
-            } catch (NumberFormatException e) {
-                System.out.println(ConsoleColors.RED + "Enter \"int\" type [" + Integer.MIN_VALUE + ", " + Integer.MAX_VALUE + "]");
-            }
-        }
-    }
-
-    public static int getINT_LIMIT(String MSG, int MIN, int MAX) throws IOException {
-        while (true) {
-            try {
-                System.out.print(MSG);
-                int number = Integer.parseInt(in.readLine());
-                if (number < MIN || number > MAX) {
+                if (number < min || number > max) {
                     throw new NumberFormatException();
                 }
                 return number;
             } catch (NumberFormatException e) {
-                System.out.println(ConsoleColors.RED + "Valid input are in the range of[" + MIN + ", " + MAX + "]. ");
+                System.out.println(ConsoleColors.RED + "Valid input are in the range of[" + min + ", " + max + "]. ");
             }
         }
     }
 
-    public static double getDOUBLE(String MSG) throws IOException {
+    public static boolean getYesNo(String msg) throws IOException {
         while (true) {
-            try {
-                System.out.print(MSG);
-                double number = Double.parseDouble(in.readLine());
-                return number;
-            } catch (NumberFormatException e) {
-                System.err.println("Enter \"double\" type [" + Double.MIN_VALUE + ", " + Double.MAX_VALUE + "]");
-            }
-        }
-    }
-
-    public static double getDOUBLE_LIMIT(String MSG, double MIN, double MAX) throws IOException {
-        while (true) {
-            try {
-                System.out.print(MSG);
-                double number = Double.parseDouble(in.readLine());
-                if (number < MIN || number > MAX) {
-                    throw new NumberFormatException();
-                }
-                return number;
-            } catch (NumberFormatException e) {
-                System.err.println("Enter \"double\" about [" + MIN + ", " + MAX + "]");
-            }
-        }
-    }
-
-    public static float getFLOAT(String MSG) throws IOException {
-        while (true) {
-            try {
-                System.out.print(MSG);
-                float number = Float.parseFloat(in.readLine());
-                return number;
-            } catch (NumberFormatException e) {
-                System.err.println("Enter \"float\" type [" + Float.MIN_VALUE + ", " + Float.MAX_VALUE + "]");
-            }
-        }
-    }
-
-    public static float getFLOAT_LIMIT(String MSG, float MIN, float MAX) throws IOException {
-        while (true) {
-            try {
-                System.out.print(MSG);
-                float number = Float.parseFloat(in.readLine());
-                if (number < MIN || number > MAX) {
-                    throw new NumberFormatException();
-                }
-                return number;
-            } catch (NumberFormatException e) {
-                System.err.println("Enter \"float\" about [" + MIN + ", " + MAX + "]");
-            }
-        }
-    }
-
-    public static boolean getYesNo(String MSG) throws IOException {
-        while (true) {
-            String check = getString(MSG);
+            String check = getString(msg);
             if (check.equalsIgnoreCase("Y")) {
                 return true;
             }
@@ -176,71 +97,10 @@ public final class Validate {
         }
     }
 
-    public static boolean getUpdateDelete(String MSG) throws IOException {
-        while (true) {
-            String check = getString(MSG);
-            if (check.equalsIgnoreCase("U")) {
-                return true;
-            }
-            if (check.equalsIgnoreCase("D")) {
-                return false;
-            }
-            System.err.println("Enter U/D(u/d)");
-        }
-    }
-
-    public static String getEmail(String MSG) throws IOException {
-        while (true) {
-            String email = getString(MSG);
-            if (email.matches(EMAIL_VALID)) {
-                return email;
-            } else {
-                System.err.println("Email with format <account_name>@<domain>");
-            }
-        }
-    }
-
-    public static String getPhone(String MSG) throws IOException {
-        while (true) {
-            String phone = getString(MSG);
-            if (PHONE_NUMBER_1.matcher(phone).find() || PHONE_NUMBER_2.matcher(phone).find()
-                    || PHONE_NUMBER_3.matcher(phone).find() || PHONE_NUMBER_4.matcher(phone).find()
-                    || PHONE_NUMBER_5.matcher(phone).find() || PHONE_NUMBER_6.matcher(phone).find()) {
-                return phone;
-            } else {
-                if (getYesNo("Do you want show fomat: ")) {
-                    System.err.println("Enter\n1234567890\n"
-                            + "123-456-7890\n"
-                            + "123.456.7890\n"
-                            + "123 456 7890\n"
-                            + "(123)-456-7890\n"
-                            + "123-456-7890 x1234\n"
-                            + "123-456-7890 ext1234");
-                } else {
-                    System.err.println("Enter again");
-                }
-            }
-        }
-    }
-
-    public static Date getDate(String MSG) throws IOException {
-        while (true) {
-            String check = getString(MSG);
-            SimpleDateFormat fd = new SimpleDateFormat("dd/MM/yyyy");
-            fd.setLenient(false);
-            try {
-                Date date = fd.parse(check);
-                return date;
-            } catch (ParseException e) {
-                System.err.println("That day was not found");
-            }
-        }
-    }
-
-    public static Date getDate_LimitToCurrent(String MSG) throws IOException {
+    public static Date getDateCurrent(String msg) throws IOException {
         Date now = new Date();
         while (true) {
-            String check = getString(MSG);
+            String check = getString(msg);
             SimpleDateFormat fd = new SimpleDateFormat("dd/MM/yyyy");
             fd.setLenient(false);
             try {
@@ -255,35 +115,6 @@ public final class Validate {
         }
     }
 
-    public static int getAge(Date birthDay) {
-        Calendar now = Calendar.getInstance();
-        Calendar birth = Calendar.getInstance();
-
-        //Sets this Calendar's time with the given
-        birth.setTime(birthDay);
-
-        if (birth.after(now)) {
-            throw new IllegalArgumentException("Can't be born in the future");
-        }
-
-        //Calculator age
-        int age = now.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
-        int month1 = now.get(Calendar.MONTH);
-        int month2 = birth.get(Calendar.MONTH);
-        if (month2 > month1) {
-            age--;
-        } else {
-            if (month1 == month2) {
-                int day1 = now.get(Calendar.DAY_OF_MONTH);
-                int day2 = birth.get(Calendar.DAY_OF_MONTH);
-                if (day2 > day1) {
-                    age--;
-                }
-            }
-        }
-        return age;
-    }
-
     public static Specialization selectSpecialization() {
         Specialization theSpecialization = null;
         try {
@@ -292,7 +123,7 @@ public final class Validate {
                 count++;
                 System.out.println(count + ". " + currentSpecialization.name());
             }
-            theSpecialization = Specialization.values()[getINT_LIMIT("Select specialization: ", 1, count) - 1];
+            theSpecialization = Specialization.values()[getIntLimit("Select specialization: ", 1, count) - 1];
         } catch (IOException ex) {
             Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
         }
