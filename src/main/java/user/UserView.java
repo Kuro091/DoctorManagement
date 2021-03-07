@@ -86,7 +86,7 @@ public class UserView {
         return null;
     }
     
-    public void getChangePasswordInfo(){
+    public void getChangePasswordInfo() throws Exception{
         while (true) {
             try {
                 System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");

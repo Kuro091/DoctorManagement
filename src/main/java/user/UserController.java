@@ -30,7 +30,7 @@ public class UserController {
     public UserController() {
         userDataIO = new DataIO();
     }
-    
+
     public static UserController getInstance() {
         if (userController == null) {
             userController = new UserController();
@@ -38,55 +38,49 @@ public class UserController {
         return userController;
     }
 
-    public Boolean login(User user) {
-        try {
-            //Doc file
-            List<User> users = UserView.getInstance().getUsers();
+    public Boolean login(User user) throws Exception {
+        //Doc file
+        List<User> users = UserView.getInstance().getUsers();
 
-            users.forEach(u -> {
-                if ( (u.getUserRole() == UserRole.ADMIN || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR)
-                        && (u.getUserName().equals(user.getUserName()) && u.getPassword().equals(user.getPassword()))) {
-                    newUser = new User();
-                    newUser.setUserName(user.getUserName());
-                    newUser.setPassword(user.getPassword());
-                    newUser.setUserCode(u.getUserCode());
-                    newUser.setUserRole(u.getUserRole());
-                }
-            });
+        users.forEach(u -> {
+            if ((u.getUserRole() == UserRole.ADMIN || u.getUserRole() == UserRole.AUTHORIZED_DOCTOR)
+                    && (u.getUserName().equals(user.getUserName()) && u.getPassword().equals(user.getPassword()))) {
+                newUser = new User();
+                newUser.setUserName(user.getUserName());
+                newUser.setPassword(user.getPassword());
+                newUser.setUserCode(u.getUserCode());
+                newUser.setUserRole(u.getUserRole());
+            }
+        });
 
-            return (newUser != null);
-
-        } catch (Exception ex) {
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+        return (newUser != null);
     }
 
     public void logout() {
         this.newUser = null;
     }
 
-    public boolean validatePassword(String userCode, String oldPassword){
+    public boolean validatePassword(String userCode, String oldPassword) throws Exception{
         List<User> users = userDataIO.readData();
-        
-        for(User u: users){
+
+        for (User u : users) {
             if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(userCode)) {
                 return newUser.getPassword().equals(oldPassword);
             }
         }
-        
+
         return false;
     }
-    
-    public boolean changePassword(String userCode, String newPassword) {
+
+    public boolean changePassword(String userCode, String newPassword) throws Exception{
         User user = UserController.getInstance().getLoggedInUser();
         user.setPassword(newPassword);
-        if(UserView.getInstance().updateUser(user)){
+        if (UserView.getInstance().updateUser(user)) {
             return true;
         }
-        
+
         return false;
-        
+
     }
 
     public String inputUserCode() throws IOException {

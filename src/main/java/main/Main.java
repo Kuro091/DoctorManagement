@@ -83,7 +83,7 @@ public class Main {
                 } else {
                     System.out.println(ConsoleColors.RED_BOLD + "LOGGED IN FAILED!!");
                 }
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -135,9 +135,8 @@ public class Main {
                         break;
 
                 }
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                break;
             }
         }
 
@@ -168,9 +167,8 @@ public class Main {
                     default:
                         break;
                 }
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                break;
             }
         }
     }
