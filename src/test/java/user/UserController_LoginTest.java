@@ -6,6 +6,8 @@
 package user;
 
 import common.UserRole;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import junitparams.JUnitParamsRunner;
 import static junitparams.JUnitParamsRunner.$;
 import junitparams.Parameters;
@@ -26,18 +28,23 @@ public class UserController_LoginTest {
      * Test of login method, of class UserController.
      * @param user
      */
-    @Test(expected = AssertionError.class)
+    @Test
     @Parameters(method = "parametersForLogin_True")
-    public void testLoginReturnsTrue(User user) throws Exception {
-        //Arrange
-        UserController instance = new UserController();
-        Boolean expResult = Boolean.TRUE;
-        
-        //Act
-        instance.login(user);
-        
-        //Assert
-        //assertEquals(expResult, result);
+    public void testLoginReturnsTrue(User user) {
+        try {
+            //Arrange
+            UserController instance = new UserController();
+            Boolean expResult = Boolean.TRUE;
+            
+            //Act
+            instance.login(user);
+            
+            //Assert
+            //assertEquals(expResult, result);
+            fail( "My method didn't throw when I expected it to" );
+        } catch (Exception ex) {
+            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private Object[] parametersForLogin_True(){
