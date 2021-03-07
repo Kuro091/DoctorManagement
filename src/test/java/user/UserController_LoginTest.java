@@ -20,12 +20,12 @@ import org.junit.runner.RunWith;
  *
  * @author Admin
  */
-
 @RunWith(JUnitParamsRunner.class)
 public class UserController_LoginTest {
 
     /**
      * Test of login method, of class UserController.
+     *
      * @param user
      */
     @Test
@@ -35,23 +35,78 @@ public class UserController_LoginTest {
             //Arrange
             UserController instance = new UserController();
             Boolean expResult = Boolean.TRUE;
-            
+
             //Act
-            instance.login(user);
-            
+            Boolean result = instance.login(user);
+
             //Assert
-            //assertEquals(expResult, result);
-            fail( "My method didn't throw when I expected it to" );
+            assertEquals(expResult, result);
         } catch (Exception ex) {
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private Object[] parametersForLogin_True(){
+
+    private Object[] parametersForLogin_True() {
+        return $($(new User("admin01", "admin01", "admin01", UserRole.USER))
+        );
+    }
+
+    /**
+     * Test of login method, of class UserController.
+     *
+     * @param user
+     */
+    @Test
+    @Parameters(method = "parametersForLogin_False")
+    public void testLoginReturnsFalse(User user) {
+        try {
+            //Arrange
+            UserController instance = new UserController();
+            Boolean expResult = Boolean.FALSE;
+
+            //Act
+            Boolean result = instance.login(user);
+
+            //Assert
+            assertEquals(expResult, result);
+        } catch (Exception ex) {
+            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private Object[] parametersForLogin_False() {
+        return $($(new User("admin100", "admin100", "admin100", UserRole.USER))
+        );
+    }
+
+    /**
+     * Test of login method, of class UserController.
+     *
+     * @param user
+     */
+    @Test
+    @Parameters(method = "parametersForLogin_Exception")
+    public void testLoginReturnsException(User user) {
+        try {
+            //Arrange
+            UserController instance = new UserController();
+            Boolean expResult = Boolean.TRUE;
+
+            //Act
+            instance.login(user);
+
+            //Assert
+            //assertEquals(expResult, result);
+            fail("My method didn't throw when I expected it to");
+        } catch (Exception ex) {
+            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private Object[] parametersForLogin_Exception() {
         return $($(new User(null, null, null, UserRole.USER)),
                 $(new User("", "", UserRole.ADMIN))
         );
     }
-    
-    
+
 }
