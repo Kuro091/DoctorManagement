@@ -36,7 +36,7 @@ public class Main {
     public static void main(String[] args) {
         adminController = new AdminController();
         doctorController = new DoctorController();
-        userController = new UserController();
+        userController = UserController.getInstance();
 
         //------------------ADD TAM DATA VAO FILE USERS.DAT DE TEST, XOA SAU
         users = new ArrayList<>();
@@ -124,7 +124,7 @@ public class Main {
                         PrintPatient.callPrintPatientByDiseaseType(users);
                         break;
                     case 6:
-                        userController.changePassword();
+                        UserView.getInstance().getChangePasswordInfo();
                         break;
                     case 7:
                         userController.logout();
@@ -158,7 +158,7 @@ public class Main {
                         adminController.queryDoctorInfo();
                         break;
                     case 3:
-                        userController.changePassword();
+                        UserView.getInstance().getChangePasswordInfo();
                         break;
                     case 4:
                         userController.logout();

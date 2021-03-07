@@ -12,6 +12,7 @@ import doctor.Doctor;
 import common.Validate;
 import common.DataIO;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +25,17 @@ public class UserController {
 
     final DataIO userDataIO;
     User newUser;
+    private static UserController userController;
 
     public UserController() {
         userDataIO = new DataIO();
+    }
+    
+    public static UserController getInstance() {
+        if (userController == null) {
+            userController = new UserController();
+        }
+        return userController;
     }
 
     public Boolean login(User user) {
@@ -50,7 +59,6 @@ public class UserController {
         } catch (Exception ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return false;
     }
 
@@ -58,47 +66,27 @@ public class UserController {
         this.newUser = null;
     }
 
-    public void changePassword() {
-
-        while (true) {
-            try {
-                System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
-                System.out.println(ConsoleColors.BLUE_BOLD + "CHANGE PASSWORD");
-                System.out.println(ConsoleColors.BLUE_BOLD + "1. Change Password");
-                System.out.println(ConsoleColors.BLUE_BOLD + "0. Cancel");
-                System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
-
-                int choice = Validate.getIntLimit("Your choice: ", 0, 1);
-
-                switch (choice) {
-                    case 0:
-                        return;
-                    case 1:
-                        if (newUser != null) {
-                            String oldPassword = Validate.getString("Enter old password: ");
-                            if (newUser.getPassword().equals(oldPassword)) {
-                                String newPassword = Validate.getPassword("Enter new password: ");
-                                String confirmNewPassword = Validate.getPassword("Confirm new password: ");
-                                if (confirmNewPassword.equals(newPassword)) {
-                                    newUser.setPassword(newPassword);
-                                    UserView.getInstance().updateUser(newUser);
-                                    System.out.println(ConsoleColors.GREEN_BOLD + "Password changed successfully!!");
-                                } else {
-                                    System.out.println(ConsoleColors.RED + "Passwords don't match!!");
-                                }
-                            } else {
-                                System.out.println(ConsoleColors.RED + "Wrong password!!");
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-            } catch (IOException ex) {
-                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+    public boolean validatePassword(String userCode, String oldPassword){
+        List<User> users = userDataIO.readData();
+        
+        for(User u: users){
+            if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(userCode)) {
+                return newUser.getPassword().equals(oldPassword);
             }
         }
+        
+        return false;
+    }
+    
+    public boolean changePassword(String userCode, String newPassword) {
+        User user = UserController.getInstance().getLoggedInUser();
+        user.setPassword(newPassword);
+        if(UserView.getInstance().updateUser(user)){
+            return true;
+        }
+        
+        return false;
+        
     }
 
     public String inputUserCode() throws IOException {

@@ -6,6 +6,7 @@
 package user;
 
 import admin.Admin;
+import common.ConsoleColors;
 import common.UserRole;
 import doctor.Doctor;
 import common.Validate;
@@ -83,6 +84,51 @@ public class UserView {
             Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public void getChangePasswordInfo(){
+        while (true) {
+            try {
+                System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
+                System.out.println(ConsoleColors.BLUE_BOLD + "CHANGE PASSWORD");
+                System.out.println(ConsoleColors.BLUE_BOLD + "1. Change Password");
+                System.out.println(ConsoleColors.BLUE_BOLD + "0. Cancel");
+                System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
+
+                int choice = Validate.getIntLimit("Your choice: ", 0, 1);
+
+                switch (choice) {
+                    case 0:
+                        return;
+                    case 1:
+                        User user = UserController.getInstance().getLoggedInUser();
+                        if (user != null) {
+                            String oldPassword = Validate.getString("Enter old password: ");
+                            if (UserController.getInstance().validatePassword(user.getUserCode(), oldPassword)) {
+                                String newPassword = Validate.getPassword("Enter new password: ");
+                                String confirmNewPassword = Validate.getPassword("Confirm new password: ");
+                                if (confirmNewPassword.equals(newPassword)) {
+                                    if(UserController.getInstance().changePassword(user.getUserCode(), newPassword)){
+                                        System.out.println(ConsoleColors.GREEN_BOLD + "Password changed successfully!!");
+                                    }else{
+                                        System.out.println(ConsoleColors.GREEN_BOLD + "Password changed failed!!");
+                                    }
+                                } else {
+                                    System.out.println(ConsoleColors.RED + "Passwords don't match!!");
+                                }
+                            } else {
+                                System.out.println(ConsoleColors.RED + "Wrong password!!");
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     int count;
