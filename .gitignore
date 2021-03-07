@@ -1,3 +1,4 @@
 /nbproject/
 /target/classes
 /target/surefire-reports
+*.class
