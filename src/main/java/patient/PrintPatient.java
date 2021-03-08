@@ -98,6 +98,8 @@ public class PrintPatient {
     public static List<Patient> sortByDiseaseType(List<Patient> patientList) {
         if ((patientList != null) && (!patientList.isEmpty())) {
             patientList.sort(new SortByDiseaseType());
+        } else {
+            patientList = new ArrayList<>();
         }
         return patientList;
     }
