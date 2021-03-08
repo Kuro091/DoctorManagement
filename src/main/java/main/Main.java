@@ -194,7 +194,8 @@ public class Main {
                     uv.findAndUpdateByUserCode();
                     break;
                 case 4:
-                    uv.findAndDeletedByUserCode();
+                    String code = Validate.getUsername("Enter usercode needed to be deleted: ");
+                    uv.findAndDeletedByUserCode(code);
                     break;
                 case 0:
                     return;

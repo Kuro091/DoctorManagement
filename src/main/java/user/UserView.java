@@ -55,15 +55,18 @@ public class UserView {
         userDataIO.writeData(users);
     }
 
-    public void deleteUser(String userCode) {
+    public boolean deleteUser(String userCode) {
+        boolean isDeleted = false;
         users = userDataIO.readData();
         for (User u : users) {
             if (u.getUserCode() != null && u.getUserCode().equals(userCode)) {
                 users.remove(u);
+                isDeleted = true;
                 break;
             }
         }
         userDataIO.writeData(users);
+        return isDeleted;
     }
 
     User user;
@@ -85,8 +88,8 @@ public class UserView {
         }
         return null;
     }
-    
-    public void getChangePasswordInfo() throws Exception{
+
+    public void getChangePasswordInfo() throws Exception {
         while (true) {
             try {
                 System.out.println(ConsoleColors.BLUE_BOLD + "--------------------------------");
@@ -108,9 +111,9 @@ public class UserView {
                                 String newPassword = Validate.getPassword("Enter new password: ");
                                 String confirmNewPassword = Validate.getPassword("Confirm new password: ");
                                 if (confirmNewPassword.equals(newPassword)) {
-                                    if(UserController.getInstance().changePassword(user.getUserCode(), newPassword)){
+                                    if (UserController.getInstance().changePassword(user.getUserCode(), newPassword)) {
                                         System.out.println(ConsoleColors.GREEN_BOLD + "Password changed successfully!!");
-                                    }else{
+                                    } else {
                                         System.out.println(ConsoleColors.GREEN_BOLD + "Password changed failed!!");
                                     }
                                 } else {
@@ -147,39 +150,28 @@ public class UserView {
         return (count > 0);
     }
 
-    public String inputUserCode() throws IOException {
+    public boolean checkExistUserCode(String code) throws IOException {
         while (true) {
-            String code = Validate.getUsername("input new user code: ");
+            //String code = Validate.getUsername("input new user code: ");
             for (User u : users) {
                 if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(code)) {//chi check nhung user co usercode
-
-                    code = null;
-                    break;
-
+                    return true;
                 }
             }
-            if (code == null) {
-                System.out.println("this code already exist pls input another one");
-            } else {
-                return code;
-            }
+            return false;
+
         }
     }
 
-    public String inputUserName() throws IOException {
+    public boolean checkExistUserName(String userName) throws IOException {
         while (true) {
-            String userName = Validate.getUsername("Type in the new UserName: ");
+            //String userName = Validate.getUsername("Type in the new UserName: ");
             for (User u : users) {
                 if (u.getUserName() != null && u.getUserName().equals(userName)) {
-                    userName = null;
-                    break;
+                    return true;
                 }
             }
-            if (userName == null) {
-                System.out.println("this userName already exist pls input a different one");
-            } else {
-                return userName;
-            }
+            return false;
         }
     }
 
@@ -216,10 +208,10 @@ public class UserView {
     }
 
     // function4.4
-    public void findAndDeletedByUserCode() throws IOException {
+    public boolean findAndDeletedByUserCode(String code) throws IOException {
         users = getUsers();
-        String code = Validate.getUsername("Enter usercode needed to be deleted: ");
-        deleteUser(code);
+        //String code = Validate.getUsername("Enter usercode needed to be deleted: ");
+        return deleteUser(code);
     }
 
     //function4.1

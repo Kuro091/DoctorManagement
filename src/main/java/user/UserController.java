@@ -83,18 +83,12 @@ public class UserController {
 
     }
 
-    public String inputUserCode() throws IOException {
+    private String inputUserCode() throws IOException {
         UserView uv = new UserView();
         uv.users = uv.getUsers();
         while (true) {
             String code = Validate.getUsername("input new user code: ");
-            for (User u : uv.users) {
-                if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(code)) {//chi check nhung user co usercode
-                    code = null;
-                    break;
-                }
-            }
-            if (code == null) {
+            if (uv.checkExistUserCode(code)) {
                 System.out.println("this code already exist pls input another one");
             } else {
                 return code;
@@ -102,18 +96,13 @@ public class UserController {
         }
     }
 
-    public String inputUserName() throws IOException {
+    private String inputUserName() throws IOException {
         UserView uv = new UserView();
         uv.users = uv.getUsers();
         while (true) {
             String userName = Validate.getUsername("Type in the new UserName: ");
-            for (User u : uv.users) {
-                if (u.getUserName() != null && u.getUserName().equals(userName)) {
-                    userName = null;
-                    break;
-                }
-            }
-            if (userName == null) {
+            
+            if (uv.checkExistUserName(userName)) {
                 System.out.println("this userName already exist pls input a different one");
             } else {
                 return userName;
