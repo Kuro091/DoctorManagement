@@ -141,6 +141,7 @@ public class UserView {
                 count++;
                 u.setUserName(userUpdate.getUserName());
                 u.setPassword(userUpdate.getPassword());
+                u.setUserRole(userUpdate.getUserRole());
             }
         });
         userDataIO.writeData(users);
