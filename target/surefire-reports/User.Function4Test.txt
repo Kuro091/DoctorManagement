@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: User.Function4Test
+Test set: user.Function4Test
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.155 sec - in User.Function4Test
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.188 sec - in user.Function4Test

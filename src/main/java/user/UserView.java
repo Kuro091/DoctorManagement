@@ -49,10 +49,16 @@ public class UserView {
         return userDataIO.readData().size();
     }
 
-    public void addUser(User user) {
-        users = userDataIO.readData();
-        users.add(user);
-        userDataIO.writeData(users);
+    public boolean addUser(User user) {
+        try {
+            users = userDataIO.readData();
+            users.add(user);
+            userDataIO.writeData(users);
+        } catch (Exception ex) {
+            System.out.println("error add user " + ex);
+            return false;
+        }
+        return true;
     }
 
     public boolean deleteUser(String userCode) {
@@ -151,6 +157,7 @@ public class UserView {
     }
 
     public boolean checkExistUserCode(String code) throws IOException {
+        users = getUsers();
         while (true) {
             //String code = Validate.getUsername("input new user code: ");
             for (User u : users) {
@@ -164,6 +171,7 @@ public class UserView {
     }
 
     public boolean checkExistUserName(String userName) throws IOException {
+        users = getUsers();
         while (true) {
             //String userName = Validate.getUsername("Type in the new UserName: ");
             for (User u : users) {

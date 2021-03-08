@@ -72,45 +72,69 @@ public class Function4Test {
     // public void hello() {}
     @Test
     public void testShowAllUser() {
-        System.out.println("showAllUser");
-        UserView instance = new UserView();
-        assertEquals(true, instance.showAllUser());
+        try {
+            //System.out.println("showAllUser");
+            UserView instance = new UserView();
+            assertEquals("testShowAllUser",true, instance.showAllUser());
+        } catch (Exception ex) {
+            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Test
     public void testCheckExistUserCode() {
-        System.out.println("testCheckExistUser");
+        //System.out.println("testCheckExistUser");
         UserView uv = new UserView();
-        //UserController uc = new UserController();
         try {
-            assertEquals(false, uv.checkExistUserCode("admin01"));
-            assertEquals(true, uv.checkExistUserCode("qweasd"));
+            assertEquals(true, uv.checkExistUserCode("admin01"));
+            assertEquals(false, uv.checkExistUserCode("qweasd"));
         } catch (Exception ex) {
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-        @Test
+
+    @Test
     public void testCheckExistUserName() {
-        System.out.println("testCheckExistUser");
+        //System.out.println("testCheckExistUser");
         UserView uv = new UserView();
-        //UserController uc = new UserController();
         try {
-            assertEquals(false, uv.checkExistUserName("admin01"));
-            assertEquals(true, uv.checkExistUserName("qweasd"));
+            assertEquals("testCheckExistUserName_trueExpect", true, uv.checkExistUserName("admin01"));
+            assertEquals("testCheckExistUserName_falseExpect", false, uv.checkExistUserName("qweasd"));
         } catch (Exception ex) {
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-   
+
+    @Test
+    public void testAddUser() {
+        UserView uv = new UserView();
+        try{
+            assertEquals("testAddUser",true,uv.addUser(new User("qwerty", "qwerty", "qwe123", UserRole.USER)));
+        }catch(Exception ex){
+            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     @Test
-    public void testDeletedUser() {
-        System.out.println("test deleted user by user code");
+    public void testUpdateUser() {
         UserView uv = new UserView();
-        int startSize = uv.getUsers().size();
-        uv.deleteUser("admin02");
-        assertEquals(startSize - 1, uv.getUsers().size());
+        try{
+            assertEquals("testUpdateUser",true,uv.updateUser(new User("qwerty", "qwerty", "123456", UserRole.USER)));
+        }catch(Exception ex){
+            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void testDeletedUser() {
+        //System.out.println("test deleted user by user code");
+        try {
+            UserView uv = new UserView();
+            int startSize = uv.getUsers().size();
+            uv.deleteUser("admin02");
+            assertEquals("testDeletedUser", startSize - 1, uv.getUsers().size());
+        } catch (Exception ex) {
+            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
