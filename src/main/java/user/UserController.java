@@ -60,25 +60,26 @@ public class UserController {
         this.newUser = null;
     }
 
-    public boolean validatePassword(String userCode, String oldPassword) throws Exception{
+    public boolean validatePassword(String userCode, String oldPassword) throws Exception {
         List<User> users = userDataIO.readData();
 
         for (User u : users) {
             if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(userCode)) {
-                return newUser.getPassword().equals(oldPassword);
+                return u.getPassword().equals(oldPassword);
             }
         }
 
         return false;
     }
 
-    public boolean changePassword(String userCode, String newPassword) throws Exception{
+    public boolean changePassword(String userCode, String newPassword) throws Exception {
         User user = UserController.getInstance().getLoggedInUser();
-        user.setPassword(newPassword);
-        if (UserView.getInstance().updateUser(user)) {
-            return true;
+        if (userCode.equals(user.getUserCode())) {
+            user.setPassword(newPassword);
+            if (UserView.getInstance().updateUser(user)) {
+                return true;
+            }
         }
-
         return false;
 
     }
