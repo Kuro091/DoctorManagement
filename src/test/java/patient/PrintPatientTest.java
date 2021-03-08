@@ -48,19 +48,10 @@ public class PrintPatientTest {
     @Ignore("Vì hàm này chỉ dùng để gọi các hàm còn lại, không có code riêng nên không cần test")
     @Test
     public void testCallPrintPatientByDiseaseType() {
-        System.out.println("callPrintPatientByDiseaseType");
         List<User> userList = null;
         PrintPatient.callPrintPatientByDiseaseType(userList);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
-
-    private void printPatientList(ArrayList<Patient> patientList) {
-        for (Patient patient : patientList) {
-            if (patient != null) {
-                System.out.println(patient.toString());
-            }
-        }
     }
 
     /**
@@ -68,6 +59,7 @@ public class PrintPatientTest {
      */
     @Test
     public void testPrintPatientsByDiseaseType() {
+
         // ↓  UTCID1 | ArrayList đầu vào null 
         List<Patient> patientList = null;
         String expResult = "No patient found";
@@ -127,7 +119,6 @@ public class PrintPatientTest {
         // --- UTCID3 | ArrayList đầu vào size > 0 nhưng không có bệnh nhân ↑
 
         // --- UTCID4 | ArrayList size > 0 và có bệnh nhân bình thường ↓
-        System.out.println("getAllPatientsFromDoctors");
         Doctor doc1 = new Doctor();
         doc1.setUserRole(UserRole.AUTHORIZED_DOCTOR);
         Doctor doc2 = new Doctor();
