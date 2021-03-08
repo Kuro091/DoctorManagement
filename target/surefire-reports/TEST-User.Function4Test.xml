@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="user.Function4Test" time="0.188" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="user.Function4Test" time="0.194" tests="7" errors="0" skipped="0" failures="2">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_231\jre\bin"/>
@@ -62,9 +62,19 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testDeletedUser" classname="user.Function4Test" time="0.07"/>
-  <testcase name="testAddUser" classname="user.Function4Test" time="0.003"/>
-  <testcase name="testShowAllUser" classname="user.Function4Test" time="0.006"/>
-  <testcase name="testCheckExistUserCode" classname="user.Function4Test" time="0.006"/>
-  <testcase name="testCheckExistUserName" classname="user.Function4Test" time="0.005"/>
+  <testcase name="testDeletedUser" classname="user.Function4Test" time="0.075"/>
+  <testcase name="testShowAllUser" classname="user.Function4Test" time="0.004"/>
+  <testcase name="testUpdateUser" classname="user.Function4Test" time="0.011">
+    <failure message="testUpdateUser expected:&lt;true&gt; but was:&lt;false&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: testUpdateUser expected:<true> but was:<false>
+	at user.Function4Test.testUpdateUser(Function4Test.java:132)
+]]></failure>
+  </testcase>
+  <testcase name="testAddUser_false" classname="user.Function4Test" time="0.005">
+    <failure message="testAddUser expected:&lt;false&gt; but was:&lt;true&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: testAddUser expected:<false> but was:<true>
+	at user.Function4Test.testAddUser_false(Function4Test.java:122)
+]]></failure>
+  </testcase>
+  <testcase name="testAddUser_true" classname="user.Function4Test" time="0.005"/>
+  <testcase name="testCheckExistUserCode" classname="user.Function4Test" time="0.005"/>
+  <testcase name="testCheckExistUserName" classname="user.Function4Test" time="0.006"/>
 </testsuite>

@@ -1,4 +1,12 @@
 -------------------------------------------------------------------------------
 Test set: user.Function4Test
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.188 sec - in user.Function4Test
+Tests run: 7, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.194 sec <<< FAILURE! - in user.Function4Test
+testUpdateUser(user.Function4Test)  Time elapsed: 0.011 sec  <<< FAILURE!
+java.lang.AssertionError: testUpdateUser expected:<true> but was:<false>
+	at user.Function4Test.testUpdateUser(Function4Test.java:132)
+
+testAddUser_false(user.Function4Test)  Time elapsed: 0.005 sec  <<< FAILURE!
+java.lang.AssertionError: testAddUser expected:<false> but was:<true>
+	at user.Function4Test.testAddUser_false(Function4Test.java:122)
+

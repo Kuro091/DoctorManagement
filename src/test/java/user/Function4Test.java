@@ -110,6 +110,9 @@ public class Function4Test {
         UserView uv = new UserView();
         try{
             assertEquals("testAddUser",true,uv.addUser(new User("qwerty", "qwerty", "qwe123", UserRole.USER)));
+            assertEquals("testAddAdmin",true,uv.addUser(new User("newadmin", "newadmin", "qwe123", UserRole.ADMIN)));
+            assertEquals("testAddAuthDoctor",true,uv.addUser(new User("newAuthDoc", "newAuthDoc", "qwe123", UserRole.AUTHORIZED_DOCTOR)));
+            assertEquals("testAddUser",true,uv.addUser(new User("newNormalDoc", "newNormalDoc", "qwe123", UserRole.USER)));
         }catch(Exception ex){
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,7 +122,7 @@ public class Function4Test {
     public void testUpdateUser() {
         UserView uv = new UserView();
         try{
-            assertEquals("testUpdateUser",true,uv.updateUser(new User("qwerty", "qwerty", "123456", UserRole.USER)));
+            assertEquals("testUpdateUser",true,uv.updateUser(new User("qwerty", "newname", "123456", UserRole.USER)));
         }catch(Exception ex){
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
         }
