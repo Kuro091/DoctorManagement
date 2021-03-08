@@ -222,7 +222,7 @@ public class PrintPatientTest {
         assertArrayEquals(expResult.toArray(), result.toArray());
         // ↑  UTCID 4 | ArrayList đầu vào size > 0, các bệnh nhân đều bình thường 
 
-        // ↓  UTCID3 | ArrayList đầu vào size > 0, có bệnh nhân diseaseType = null
+        // ↓  UTCID3 | ArrayList đầu vào size > 0, có bệnh nhân diseaseType = null và bệnh nhân = null
         Patient p9 = new Patient(9, "p9", null, java.sql.Date.valueOf(LocalDate.of(2021, 9, 14)), "patient 9");
         patientList = new ArrayList<>();
         patientList.add(p8);
@@ -234,8 +234,10 @@ public class PrintPatientTest {
         patientList.add(p4);
         patientList.add(p3);
         patientList.add(p9);
+        patientList.add(null);
         expResult = new ArrayList<>();
         expResult.add(p9);
+        expResult.add(null);
         expResult.add(p2);
         expResult.add(p1);
         expResult.add(p4);
@@ -246,7 +248,7 @@ public class PrintPatientTest {
         expResult.add(p7);
         result = PrintPatient.sortByDiseaseType(patientList);
         assertArrayEquals(expResult.toArray(), result.toArray());
-        // ↑  UTCID3 | ArrayList đầu vào size > 0, có bệnh nhân diseaseType = null 
+        // ↑  UTCID3 | ArrayList đầu vào size > 0, có bệnh nhân diseaseType = null và bệnh nhân = null
     }
 
 }

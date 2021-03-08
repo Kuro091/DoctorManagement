@@ -110,6 +110,12 @@ class SortByDiseaseType implements Comparator<Patient> {
 
     @Override
     public int compare(Patient o1, Patient o2) {
+        if (o1 == null) {
+            o1 = new Patient();
+        }
+        if (o2 == null) {
+            o2 = new Patient();
+        }
         if (o1.getDiseaseType() == null) {
             o1.setDiseaseType("");
         }
