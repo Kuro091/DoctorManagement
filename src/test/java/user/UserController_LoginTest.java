@@ -97,10 +97,9 @@ public class UserController_LoginTest {
      *
      * @param user
      */
-    @Test
+    @Test(expected = Exception.class)
     @Parameters(method = "parametersForLogin_Exception")
-    public void testLoginReturnsException(User user) {
-        try {
+    public void testLoginReturnsException(User user) throws Exception {
             //Arrange
             UserController instance = new UserController();
 
@@ -110,9 +109,6 @@ public class UserController_LoginTest {
             //Assert
             //assertEquals(expResult, result);
             fail("Expected Exception");
-        } catch (Exception ex) {
-            Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private Object[] parametersForLogin_Exception() {

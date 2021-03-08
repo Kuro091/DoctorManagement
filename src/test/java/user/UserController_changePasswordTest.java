@@ -31,16 +31,11 @@ import org.junit.runner.RunWith;
 public class UserController_changePasswordTest {
 
     static UserController instance;
-    static DataIOForTest dataIO;
+   
     @BeforeClass
     public static void setUpClass() {
         try {
             instance = UserController.getInstance();
-            
-            List<User> users = new ArrayList<User>();
-            users.add(new User("admin01", "admin01", UserRole.ADMIN));
-            dataIO.writeData(users);
-            
             instance.login(new User("admin01", "admin01", UserRole.ADMIN));
             
             
