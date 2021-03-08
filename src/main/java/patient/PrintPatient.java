@@ -57,8 +57,9 @@ public class PrintPatient {
 
     /**
      * Get patient form one doctor into the list
+     *
      * @param currentDoctor
-     * @param patientList 
+     * @param patientList
      */
     private static void getPatientFromOneDoctor(Doctor currentDoctor, List<Patient> patientList) {
         ArrayList<Patient> tempPatientList = (ArrayList<Patient>) currentDoctor.getPatients();
@@ -107,7 +108,11 @@ class SortByDiseaseType implements Comparator<Patient> {
 
     @Override
     public int compare(Patient o1, Patient o2) {
-        return o1.getDiseaseType().compareTo(o2.getDiseaseType());
+        if ((o1.getDiseaseType() != null) && (o2.getDiseaseType() != null)) {
+            return o1.getDiseaseType().compareTo(o2.getDiseaseType());
+        } else {
+            return 0;
+        }
     }
 
 }
