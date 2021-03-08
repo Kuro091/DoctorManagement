@@ -55,24 +55,33 @@ public class PrintPatientTest {
         fail("The test case is a prototype.");
     }
 
+    private void printPatientList(ArrayList<Patient> patientList) {
+        for (Patient patient : patientList) {
+            if (patient != null) {
+                System.out.println(patient.toString());
+            }
+        }
+    }
+
     /**
      * Test of printPatientsByDiseaseType method, of class PrintPatient.
      */
     @Test
     public void testPrintPatientsByDiseaseType() {
-        // --- Test when list null ↓
+        // ↓  UTCID1 | ArrayList đầu vào null 
         List<Patient> patientList = null;
         String expResult = "No patient found";
         String result = PrintPatient.printPatientsByDiseaseType(patientList);
         assertEquals(expResult, result);
-        // --- Test when list null ↑
-        // --- Test when list have no patient ↓
+        // ↑  UTCID1 | ArrayList đầu vào null 
+
+        // ↓  UTCID2 | ArrayList size = 0 
         patientList = new ArrayList<>();
         result = PrintPatient.printPatientsByDiseaseType(patientList);
         assertEquals(expResult, result);
-        // --- Test when list have no patient ↑
-        // --- Test when patient list have patient ↓
-        System.out.println("printPatientsByDiseaseType");
+        // ↑  UTCID2 | ArrayList size = 0 
+
+        // ↓  UTCID3 | Trường hợp bình thường 
         patientList = new ArrayList<>();
         patientList.add(new Patient(1, "p1", "d1", java.sql.Date.valueOf(LocalDate.of(2020, 11, 10)), "patient 1"));
         patientList.add(new Patient(2, "p2", "d1", java.sql.Date.valueOf(LocalDate.of(2021, 1, 1)), "patient 2"));
@@ -87,7 +96,7 @@ public class PrintPatientTest {
         expResult += "3 | p3 | d3 | 2021/09/09 | patient 3" + System.lineSeparator();
         result = PrintPatient.printPatientsByDiseaseType(patientList);
         assertEquals(expResult, result);
-        // --- Test when patient list have patient ↑
+        // ↑  UTCID3 | Trường hợp bình thường 
     }
 
     /**
