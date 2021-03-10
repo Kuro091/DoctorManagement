@@ -65,7 +65,9 @@ public class PrintPatient {
         ArrayList<Patient> tempPatientList = (ArrayList<Patient>) currentDoctor.getPatients();
         if (tempPatientList != null) {
             for (Patient patient : tempPatientList) {
-                patientList.add(patient);
+                if (patient != null) {
+                    patientList.add(patient);
+                }
             }
         }
     }
