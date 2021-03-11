@@ -33,13 +33,13 @@ public class DoctorView {
         return userDataIO.readData();
     }
 
-    public void addUser(User user) {
+    public void addDoctor(User user) {
         users = userDataIO.readData();
         users.add(user);
         userDataIO.writeData(users);
     }
 
-    public void deleteUser(String userCode) {
+    public void deleteDoctor(String userCode) {
         users = userDataIO.readData();
         for (User u : users) {
             if (u.getUserCode().equals(userCode)) {
@@ -49,16 +49,20 @@ public class DoctorView {
         }
         userDataIO.writeData(users);
     }
-
-    public void updateUser(User userUpdate) {
+int count;
+   public boolean updateUser(User userUpdate) {
         users = userDataIO.readData();
+        count = 0;
         users.forEach(u -> {
-            if (u.getUserCode().equalsIgnoreCase(userUpdate.getUserCode())) {
+            if (u.getUserCode() != null && u.getUserCode().equalsIgnoreCase(userUpdate.getUserCode())) {
+                count++;
                 u.setUserName(userUpdate.getUserName());
                 u.setPassword(userUpdate.getPassword());
+                u.setUserRole(userUpdate.getUserRole());
             }
         });
         userDataIO.writeData(users);
+        return (count > 0);
     }
 
     public String inputUserCode() throws IOException {
@@ -140,7 +144,7 @@ public class DoctorView {
                     newAuthDoctor.setSpecialization(Validate.selectSpecialization());
                     newAuthDoctor.setAvailability(Validate.getDateCurrent(askDoctorAvailability));
 
-                    addUser(newAuthDoctor);
+                    addDoctor(newAuthDoctor);
                     break;
 
                 case 2:
@@ -152,7 +156,7 @@ public class DoctorView {
                     newDoctor.setSpecialization(Validate.selectSpecialization());
                     newDoctor.setAvailability(Validate.getDateCurrent(askDoctorAvailability));
 
-                    addUser(newDoctor);
+                    addDoctor(newDoctor);
                     break;
 
                 case 0:
@@ -270,5 +274,5 @@ public class DoctorView {
             userDataIO.writeData(users);
         }
     }
-
+  
 }
