@@ -6,7 +6,9 @@
 package doctor.newpackage;
 import common.DataIOForTest;
 import common.UserRole;
+import doctor.Doctor;
 import doctor.DoctorView;
+import static doctor.newpackage.DoctorView_UpdateDoctor.instance;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,20 +32,17 @@ import user.UserController_LoginTest;
  * @author nam35
  */
 @RunWith(JUnitParamsRunner.class)
-public class DoctorView_UpdateDoctor {
-
+public class DoctorView_DeleteDoctor {
     static DoctorView instance;
-
-    @BeforeClass
+     @BeforeClass
     public static void setUpClass() {
         instance = new DoctorView();
 
     }
-
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
@@ -59,14 +58,15 @@ public class DoctorView_UpdateDoctor {
      * @param newPassword
      */
     @Test
-    @Parameters(method="parametersForUpdateUser_True")
-    public void testUpdateDoctorReturnsTrue(User user) {
-        try {
-            //Arrange
+    @Parameters(method="parametersForDeleteDoctor_True")
+    
+    public void testDeleteDoctorReturnTrue(Doctor doctor)  {
+       try{
+          //Arrange
             Boolean expResult = Boolean.TRUE;
 
             //Act
-            Boolean result = instance.updateUser(user);
+            Boolean result = instance.updateUser(doctor);
 
             //Assert
             assertEquals(expResult, result);
@@ -75,17 +75,16 @@ public class DoctorView_UpdateDoctor {
         }
     }
     
-    @SuppressWarnings("unused")
-    private Object[] parametersForUpdateDoctor_True() {
-        return $($(new User("admin01", "updatedDoctorName", "updatedPassword", UserRole.ADMIN)),
-                $(new User("admin01", null, "updatedPassword", UserRole.ADMIN)),
-                $(new User("admin01", "updatedDoctorame", null, UserRole.ADMIN)),
-                $(new User("admin01", "updatedDoctorName", "updatedPassword", UserRole.AUTHORIZED_DOCTOR))
+     @SuppressWarnings("unused")
+    private Object[] parametersForDeleteDoctor_True() {
+        return $($(new Doctor("admin01", "DeleteDoctorName", "DeletePassword", UserRole.DOCTOR)),
+                $(new Doctor("admin01", null, "DeletePassword", UserRole.DOCTOR)),
+                $(new Doctor("admin01", "DeleteDoctorName", null, UserRole.DOCTOR)),
+                $(new Doctor("admin01", "DeleteDoctorName", "DeletePassword", UserRole.AUTHORIZED_DOCTOR))
                 
         );
     }
     
-
     /**
      * Test of validatePassword method, of class UserController.
      *
@@ -93,8 +92,8 @@ public class DoctorView_UpdateDoctor {
      * @param newPassword
      */
     @Test
-    @Parameters(method = "parametersForUpdateUser_False")
-    public void testUpdateUserReturnsFalse(User user) {
+    @Parameters(method = "parametersForDeleteDoctor_False")
+    public void testDeleteDoctorReturnsFalse(User user) {
         try {
             //Arrange
             Boolean expResult = Boolean.FALSE;
@@ -110,11 +109,14 @@ public class DoctorView_UpdateDoctor {
     }
 
     @SuppressWarnings("unused")
-    private Object[] parametersForUpdateUser_False() {
-        return $($(new User("adminNonExist", "updatedUserName", "updatedPassword", UserRole.ADMIN)),
-                $(new User("adminNonExist", "updatedUserName", null, UserRole.ADMIN)),
-                $(new User("adminNonExist", null, "updatedPassword", UserRole.ADMIN)),
-                $(new User(null, "updatedUserName", "updatedPassword", UserRole.ADMIN))
+    private Object[] parametersForDeleteDoctor_False() {
+        return $($(new Doctor("admin01NonExist", "DeleteDoctorName", "deletePassword", UserRole.DOCTOR)),
+                $(new Doctor("admin01NonExist", "DeleteDoctorName", null, UserRole.DOCTOR)),
+                $(new Doctor("admin01NonExist", null, "deletePassword", UserRole.DOCTOR)),
+                $(new Doctor(null, "DeleteDoctorName", "deletePassword", UserRole.DOCTOR))
         );
     }
+    
+    
+    
 }
