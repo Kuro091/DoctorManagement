@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static patient.PrintPatient.getAllPatientsFromDoctors;
+import static patient.PrintPatient.printPatientsByDiseaseType;
 
 /**
  *
@@ -32,7 +34,6 @@ public class Main {
     static AdminController adminController;
     static DoctorController doctorController;
 
-    
     public static void main(String[] args) {
         adminController = new AdminController();
         doctorController = new DoctorController();
@@ -121,7 +122,7 @@ public class Main {
                         doFunction4();
                         break;
                     case 5:
-                        PrintPatient.callPrintPatientByDiseaseType(users);
+                        PrintPatient.callPrintPatientByDiseaseType(adminController.getListUsers());
                         break;
                     case 6:
                         UserView.getInstance().getChangePasswordInfo();

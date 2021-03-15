@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 public class AdminController {
 
     ValidationAdminManager adminManager;
@@ -29,7 +28,11 @@ public class AdminController {
         dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
         initMemoryData();
     }
-
+    
+    public List<User> getListUsers() {
+        return listUsers;
+    }
+    
     public void addUpPatient() throws IOException {
         //--------Đọc data, xóa sau
         initMemoryData();
