@@ -20,8 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static patient.PrintPatient.getAllPatientsFromDoctors;
-import static patient.PrintPatient.printPatientsByDiseaseType;
 
 /**
  *
@@ -52,7 +50,7 @@ public class Main {
         users.add(new Doctor(6, "doctor06", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         users.add(new Doctor(7, "doctor07", Specialization.NHA_KHOA, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         users.add(new Doctor(8, "doctor08", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
-
+        
         //------------WRITE META DATA TO FILE
         new DataIO().writeData(users);
 
