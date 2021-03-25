@@ -28,11 +28,17 @@ public class AdminController {
         dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
         initMemoryData();
     }
-    
+
     public List<User> getListUsers() {
         return listUsers;
     }
+
+    public void setListUsers(List<User> listUsers) {
+        this.listUsers = listUsers;
+    }
     
+    
+
     public void addUpPatient() throws IOException {
         //--------Đọc data, xóa sau
         initMemoryData();

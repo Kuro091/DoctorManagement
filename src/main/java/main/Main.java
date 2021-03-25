@@ -36,7 +36,7 @@ public class Main {
         adminController = new AdminController();
         doctorController = new DoctorController();
         userController = UserController.getInstance();
-
+        
         //------------------ADD TAM DATA VAO FILE USERS.DAT DE TEST, XOA SAU
         users = new ArrayList<>();
         users.add(new Admin("admin01", "admin01", "admin01", UserRole.ADMIN));
@@ -50,10 +50,10 @@ public class Main {
         users.add(new Doctor(6, "doctor06", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         users.add(new Doctor(7, "doctor07", Specialization.NHA_KHOA, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         users.add(new Doctor(8, "doctor08", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
-        
-        //------------WRITE META DATA TO FILE
+        adminController.setListUsers(users);
         new DataIO().writeData(users);
-
+        //------------WRITE META DATA TO FILE
+        
         loginMenu();
         mainMenu();
 
