@@ -62,13 +62,10 @@ public class DoctorView_UpdateDoctor {
     @Parameters(method="parametersForUpdateUser_True")
     public void testUpdateDoctorReturnsTrue(User user) {
         try {
-            //Arrange
             Boolean expResult = Boolean.TRUE;
 
-            //Act
             Boolean result = instance.updateUser(user);
 
-            //Assert
             assertEquals(expResult, result);
         } catch (Exception ex) {
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,13 +93,10 @@ public class DoctorView_UpdateDoctor {
     @Parameters(method = "parametersForUpdateUser_False")
     public void testUpdateUserReturnsFalse(User user) {
         try {
-            //Arrange
             Boolean expResult = Boolean.FALSE;
 
-            //Act
             Boolean result = instance.updateUser(user);
 
-            //Assert
             assertEquals(expResult, result);
         } catch (Exception ex) {
            

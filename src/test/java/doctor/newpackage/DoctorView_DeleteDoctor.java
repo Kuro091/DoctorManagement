@@ -62,13 +62,10 @@ public class DoctorView_DeleteDoctor {
     
     public void testDeleteDoctorReturnTrue(Doctor doctor)  {
        try{
-          //Arrange
             Boolean expResult = Boolean.TRUE;
 
-            //Act
             Boolean result = instance.updateUser(doctor);
 
-            //Assert
             assertEquals(expResult, result);
         } catch (Exception ex) {
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,13 +92,10 @@ public class DoctorView_DeleteDoctor {
     @Parameters(method = "parametersForDeleteDoctor_False")
     public void testDeleteDoctorReturnsFalse(User user) {
         try {
-            //Arrange
             Boolean expResult = Boolean.FALSE;
 
-            //Act
             Boolean result = instance.updateUser(user);
 
-            //Assert
             assertEquals(expResult, result);
         } catch (Exception ex) {
            

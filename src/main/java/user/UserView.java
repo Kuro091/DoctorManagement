@@ -28,7 +28,8 @@ public class UserView {
     Scanner in = new Scanner(System.in);
     List<User> users;
     private static UserView userView = null;
-
+    
+    
     public UserView() {
         users = new ArrayList<>();
         userDataIO = new DataIO();

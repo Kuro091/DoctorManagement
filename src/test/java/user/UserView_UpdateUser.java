@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author Admin
+ * @author MinhLC
  */
 @RunWith(JUnitParamsRunner.class)
 public class UserView_UpdateUser {
@@ -53,8 +53,6 @@ public class UserView_UpdateUser {
     /**
      * Test of validatePassword method, of class UserController.
      *
-     * @param userCode
-     * @param newPassword
      */
     @Test
     @Parameters(method="parametersForUpdateUser_True")
@@ -87,8 +85,6 @@ public class UserView_UpdateUser {
     /**
      * Test of validatePassword method, of class UserController.
      *
-     * @param userCode
-     * @param newPassword
      */
     @Test
     @Parameters(method = "parametersForUpdateUser_False")
@@ -115,30 +111,4 @@ public class UserView_UpdateUser {
                 $(new User(null, "updatedUserName", "updatedPassword", UserRole.ADMIN))
         );
     }
-
-//    @Test
-//    @Parameters(method = "parametersForChangePassword_Exception")
-//    public void testUpdateUserReturnsException(String userCode, String newPassword) {
-//        try {
-//            //Arrange
-//            Boolean expResult = Boolean.FALSE;
-//
-//            //Act
-//            Boolean result = instance.changePassword(userCode, newPassword);
-//
-//            //Assert
-//            fail("Expected exception");
-//        } catch (Exception ex) {
-//            Logger.getLogger(UserView_UpdateUser.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    @SuppressWarnings("unused")
-//    private Object[] parametersForChangePassword_Exception() {
-//        return $($("admin01", null),
-//                $("adminNonExist", null),
-//                $(null, "adminNewPassword"),
-//                $(null, null)
-//        );
-//    }
 }
