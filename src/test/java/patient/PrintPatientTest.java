@@ -119,13 +119,13 @@ public class PrintPatientTest {
         // --- UTCID3 | ArrayList đầu vào size > 0 nhưng không có bệnh nhân ↑
 
         // --- UTCID4 | ArrayList size > 0 và có bệnh nhân bình thường ↓
-        Doctor doc1 = new Doctor();
+        Doctor doc1 = new Doctor("doc1", "doctor01", UserRole.AUTHORIZED_DOCTOR);
         doc1.setUserRole(UserRole.AUTHORIZED_DOCTOR);
-        Doctor doc2 = new Doctor();
+        Doctor doc2 = new Doctor("doc2", "doctor02", UserRole.DOCTOR);
         doc2.setUserRole(UserRole.AUTHORIZED_DOCTOR);
-        Doctor doc3 = new Doctor();
+        Doctor doc3 = new Doctor("doc3", "doctor03", UserRole.AUTHORIZED_DOCTOR);
         doc3.setUserRole(UserRole.AUTHORIZED_DOCTOR);
-        Doctor doc4 = new Doctor();
+        Doctor doc4 = new Doctor("doc4", "doctor04", UserRole.DOCTOR);
         doc4.setUserRole(UserRole.AUTHORIZED_DOCTOR);
         Patient p1 = new Patient(1, "p1", "d1", java.sql.Date.valueOf(LocalDate.of(2020, 11, 10)), "patient 1");
         Patient p2 = new Patient(2, "p2", "d1", java.sql.Date.valueOf(LocalDate.of(2021, 1, 1)), "patient 2");

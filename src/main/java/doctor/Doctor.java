@@ -25,9 +25,6 @@ public class Doctor extends User implements Serializable {
     private Date availability; //
     private List<Patient> patients;
 
-    public Doctor() {
-    }
-
     public Doctor(String userName, String password, UserRole userRole) {
         super(userName, password, userRole);
     }

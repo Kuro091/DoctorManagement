@@ -32,12 +32,11 @@ public class Main {
     static AdminController adminController;
     static DoctorController doctorController;
 
-    
     public static void main(String[] args) {
         adminController = new AdminController();
         doctorController = new DoctorController();
         userController = UserController.getInstance();
-
+        
         //------------------ADD TAM DATA VAO FILE USERS.DAT DE TEST, XOA SAU
         users = new ArrayList<>();
         users.add(new Admin("admin01", "admin01", "admin01", UserRole.ADMIN));
@@ -51,10 +50,10 @@ public class Main {
         users.add(new Doctor(6, "doctor06", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         users.add(new Doctor(7, "doctor07", Specialization.NHA_KHOA, new Date(), new ArrayList<>(), UserRole.DOCTOR));
         users.add(new Doctor(8, "doctor08", Specialization.TIM_MACH, new Date(), new ArrayList<>(), UserRole.DOCTOR));
-
-        //------------WRITE META DATA TO FILE
+        adminController.setListUsers(users);
         new DataIO().writeData(users);
-
+        //------------WRITE META DATA TO FILE
+        
         loginMenu();
         mainMenu();
 
@@ -121,7 +120,7 @@ public class Main {
                         doFunction4();
                         break;
                     case 5:
-                        PrintPatient.callPrintPatientByDiseaseType(users);
+                        PrintPatient.callPrintPatientByDiseaseType(adminController.getListUsers());
                         break;
                     case 6:
                         UserView.getInstance().getChangePasswordInfo();
