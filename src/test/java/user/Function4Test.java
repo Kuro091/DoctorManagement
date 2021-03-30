@@ -109,10 +109,13 @@ public class Function4Test {
     public void testAddUser() {
         UserView uv = new UserView();
         try{
+            int startSize = uv.getUsers().size();
             assertEquals("testAddUser",true,uv.addUser(new User("qwerty", "qwerty", "qwe123", UserRole.USER)));
             assertEquals("testAddAdmin",true,uv.addUser(new User("newadmin", "newadmin", "qwe123", UserRole.ADMIN)));
             assertEquals("testAddAuthDoctor",true,uv.addUser(new User("newAuthDoc", "newAuthDoc", "qwe123", UserRole.AUTHORIZED_DOCTOR)));
             assertEquals("testAddUser",true,uv.addUser(new User("newNormalDoc", "newNormalDoc", "qwe123", UserRole.USER)));
+            
+            assertEquals("check_size_after_add", startSize +4, uv.getUsers().size());
         }catch(Exception ex){
             Logger.getLogger(UserController_LoginTest.class.getName()).log(Level.SEVERE, null, ex);
         }
