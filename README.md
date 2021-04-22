@@ -1,6 +1,8 @@
 # Project Description:
 Learn, test, research testing software
-# Tool Suport
+# Technologies Used:
+- Netbeans
+# Tool Testing
 - SonarQube
 - JUnit
 - Selenium WebDriver
